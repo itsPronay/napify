@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Blanket Mobile"
+rootProject.name = "Napify - Listen to different sounds"
 include(":app")

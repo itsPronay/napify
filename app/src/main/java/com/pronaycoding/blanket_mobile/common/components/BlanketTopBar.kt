@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Pause
+import androidx.compose.material.icons.filled.PauseCircleOutline
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -18,6 +19,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -27,36 +33,30 @@ import com.pronaycoding.blanket_mobile.R
 @Composable
 fun BlanketTopBar(
     scrollBehavior: TopAppBarScrollBehavior,
-    onMusicActionButtonClick: () -> Unit,
-    isPlaying: Boolean,
+//    onMusicActionButtonClick: () -> Unit,
+    pauseAllSounds: () -> Unit,
+    resumeAllSounds: () -> Unit,
     resetSongs: () -> Unit
 ) {
+    var canPlay by rememberSaveable { mutableStateOf(true) }
+
     TopAppBar(
         scrollBehavior = scrollBehavior,
         title = {
-            Row {
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(
-                        modifier = Modifier.size(32.dp), painter = painterResource(
-                            id = R.drawable.blanket__1_
-                        ), contentDescription = ""
 
-                    )
-                }
 
-                Column(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = "Blanket", style = MaterialTheme.typography.labelLarge
-                    )
-                    Text(
-                        text = "Listen to different sounds",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.inverseSurface.copy(alpha = .7f)
-                    )
+            Column(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "Napify", style = MaterialTheme.typography.labelLarge
+                )
+                Text(
+                    text = "Listen to different sounds",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.inverseSurface.copy(alpha = .7f)
+                )
 
-                }
             }
 
         }, navigationIcon = {
@@ -72,9 +72,12 @@ fun BlanketTopBar(
                     )
                 }
 
-                IconButton(onClick = { onMusicActionButtonClick() }) {
+                IconButton(onClick = {
+                    canPlay = !canPlay
+                    if (canPlay) resumeAllSounds() else pauseAllSounds()
+                }) {
                     Icon(
-                        imageVector = if (isPlaying) Icons.Filled.Pause else Icons.Filled.PlayArrow,
+                        imageVector = if (canPlay) Icons.Filled.Pause else Icons.Filled.PlayArrow,
                         contentDescription = ""
                     )
                 }

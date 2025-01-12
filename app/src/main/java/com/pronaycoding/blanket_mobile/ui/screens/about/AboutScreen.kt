@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Card
@@ -27,9 +28,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
@@ -59,22 +62,25 @@ fun AboutScreen(
         ) {
             Image(
                 modifier = Modifier
-                    .size(200.dp)
-                    .align(Alignment.CenterHorizontally),
+                    .size(100.dp)
+                    .align(Alignment.CenterHorizontally).clip(
+                        RoundedCornerShape(30.dp)
+                    ),
                 painter = painterResource(
-                    id = R.drawable.logo_
+                    id = R.drawable.logo
                 ),
                 contentDescription = "",
             )
 
             Text(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                text = "Blanket Mobile",
-                style = MaterialTheme.typography.bodyLarge
+                modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 16.dp),
+                text = "Napify",
+                style = MaterialTheme.typography.titleLarge
             )
             Text(
                 text = "Listen to different sounds. Improve focus and increase your productivity.",
                 color = MaterialTheme.colorScheme.inverseSurface.copy(0.5f),
+                textAlign = TextAlign.Center
             )
 
 
@@ -109,7 +115,7 @@ fun AboutScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "View License", style = MaterialTheme.typography.bodyLarge
+                        text = "MIT License", style = MaterialTheme.typography.bodyLarge
                     )
                 }
             }
@@ -189,11 +195,8 @@ fun AboutScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "Credits", style = MaterialTheme.typography.bodyLarge
-                    )
-                    Text(
-                        text = "This app is a clone of Rafael Mardojai's Blanket, which is originally a GNOME application.",
-                        color = MaterialTheme.colorScheme.inverseSurface.copy(0.5f),
+                        text = "Inspired by Rafael Mardojai's Blanket, which is originally a GNOME application.",
+//                        color = MaterialTheme.colorScheme.inverseSurface.copy(0.5f),
                     )
                 }
             }

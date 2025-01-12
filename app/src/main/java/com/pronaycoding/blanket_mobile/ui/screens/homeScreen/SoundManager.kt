@@ -5,9 +5,7 @@ import android.media.AudioAttributes
 import android.media.SoundPool
 import android.util.Log
 
-class
-
-SoundManager {
+class SoundManager (val context: Context) {
 
     private val soundPool: SoundPool
     private val soundIds = mutableMapOf<Int, Int>()
@@ -16,96 +14,117 @@ SoundManager {
     init {
         val audioAttributes = AudioAttributes.Builder()
             .setUsage(AudioAttributes.USAGE_MEDIA)
-            .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
             .build()
 
         soundPool = SoundPool.Builder()
-            .setMaxStreams(15)  // Set the max number of sounds you want to play simultaneously
+            .setMaxStreams(15) // Adjust max streams as needed
             .setAudioAttributes(audioAttributes)
             .build()
     }
 
-    fun loadSounds(context: Context) {
+    /**
+     * Loads a list of sounds into the sound pool.
+     * @param context The context required to access resources.
+     */
+    fun loadSounds() {
         getCardList().forEachIndexed { index, item ->
             Log.d("debugUwu", "loading sound: $index")
             soundIds[index] = soundPool.load(context, item.audioSource, 1)
         }
     }
 
+    /**
+     * Checks if a sound is currently playing.
+     */
     private fun isSoundPlaying(soundIndex: Int): Boolean {
-        Log.d("debugUwU", "isSoundPlaying: $soundIndex")
         return activeSounds.containsKey(soundIndex)
     }
 
+    /**
+     * Checks if any sound is playing.
+     */
     fun isAnySoundPlaying(): Boolean {
-        getCardList().forEachIndexed { index, _ ->
-            if (isSoundPlaying(index)) {
-                return true
-            }
-        }
-        return false
+        return activeSounds.isNotEmpty()
     }
 
-
+    /**
+     * Plays a sound if it's not already playing.
+     */
     fun playSound(soundIndex: Int, volume: Float) {
-        Log.d("debugUwU","playing:  "+  isSoundPlaying(soundIndex))
-
         if (!isSoundPlaying(soundIndex)) {
             val soundId = soundIds[soundIndex]
-            Log.d("debugUwU","soundId:  "+  soundId)
-
             soundId?.let {
                 val streamId = soundPool.play(it, volume, volume, 0, -1, 1f)
-                activeSounds[soundIndex] = streamId
-            }
+                if (streamId != 0) { // Check if the stream was successfully played
+                    activeSounds[soundIndex] = streamId
+                    Log.d("SoundManager", "Playing sound at index: $soundIndex")
+                } else {
+                    Log.e("SoundManager", "Failed to play sound at index: $soundIndex")
+                }
+            } ?: Log.e("SoundManager", "Sound ID not found for index: $soundIndex")
         }
     }
 
+    /**
+     * Adjusts the volume of a currently playing sound.
+     */
     fun controlSound(soundIndex: Int, volume: Float) {
-        if (isSoundPlaying(soundIndex)) {
-            val streamId = activeSounds[soundIndex]
-            streamId?.let {
-                soundPool.setVolume(streamId, volume, volume)
-            }
-        }
+        activeSounds[soundIndex]?.let {
+            soundPool.setVolume(it, volume, volume)
+        } ?: Log.e("SoundManager", "Cannot control sound at index: $soundIndex, not playing.")
     }
 
+    /**
+     * Stops a currently playing sound.
+     */
     fun stopSound(soundIndex: Int) {
-        if (isSoundPlaying(soundIndex)) {
-            val streamId = activeSounds[soundIndex]
-            streamId?.let {
-                soundPool.stop(it)
-                activeSounds.remove(soundIndex)
-            }
-        }
+        activeSounds[soundIndex]?.let {
+            soundPool.stop(it)
+            activeSounds.remove(soundIndex)
+            Log.d("SoundManager", "Stopped sound at index: $soundIndex")
+        } ?: Log.e("SoundManager", "Cannot stop sound at index: $soundIndex, not playing.")
     }
 
+    /**
+     * Pauses all currently playing sounds.
+     */
     fun pauseAllSounds() {
         activeSounds.values.forEach { streamId ->
             soundPool.pause(streamId)
         }
+        Log.d("SoundManager", "All sounds paused.")
     }
 
+    /**
+     * Resumes all paused sounds.
+     */
     fun resumeAllSounds() {
         activeSounds.values.forEach { streamId ->
             soundPool.resume(streamId)
         }
+        Log.d("SoundManager", "All sounds resumed.")
     }
 
-    fun pauseAllSound() {
-        activeSounds.values.forEach { streamId ->
-            soundPool.pause(streamId)
-        }
-    }
-
+    /**
+     * Stops all currently playing sounds and clears active sound records.
+     */
     fun stopAllSounds() {
         activeSounds.values.forEach { streamId ->
             soundPool.stop(streamId)
         }
         activeSounds.clear()
+        Log.d("SoundManager", "All sounds stopped.")
     }
 
+    /**
+     * Releases resources used by the SoundPool.
+     * This must be called when the SoundManager is no longer needed to avoid memory leaks.
+     */
     fun release() {
         soundPool.release()
+        soundIds.clear()
+        activeSounds.clear()
+        Log.d("SoundManager", "SoundManager resources released.")
     }
 }

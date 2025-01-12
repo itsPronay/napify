@@ -44,7 +44,6 @@ fun TitleCardView(
                 color = Color(0xFF27a157),
                 style = MaterialTheme.typography.titleLarge
             )
-            Divider()
         }
     }
 }

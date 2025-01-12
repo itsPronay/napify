@@ -6,48 +6,58 @@ import androidx.lifecycle.ViewModel
 import com.pronaycoding.blanket_mobile.common.model.CardItems
 import com.pronaycoding.blanket_mobile.common.model.DrawerItems
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 
 @HiltViewModel
 class BlanketViewModel @Inject constructor(
-    private val soundManager: SoundManager
+    private val soundManager: SoundManager,
 ) : ViewModel() {
+
+    //    val _isSoundPlaying = MutableStateFlow(fal)
+    private val _mainUiState = MutableStateFlow<MainUiState>(MainUiState.Initial)
+    val mainUiState = _mainUiState.asStateFlow()
 
 
     init {
-        initializeSoundpoll()
-    }
-    fun initializeSoundpoll(context: Context){
-        soundManager.loadSounds(context)
+        soundManager.loadSounds()
     }
 
-    fun setVolume(id : Int, volume: Float){
+    fun setVolume(id: Int, volume: Float) {
         soundManager.controlSound(id, volume)
     }
 
-    fun stopSound(int : Int){
+    fun stopSound(int: Int) {
         soundManager.stopSound(int)
     }
 
-    fun playSound(int: Int, volume: Float){
+    fun playSound(int: Int, volume: Float) {
         soundManager.playSound(int, volume)
         Log.d("debugUwU", "playing sound")
     }
 
-    fun isAnySongPlaying( ) : Boolean {
+    fun isAnySongPlaying(): Boolean {
         return soundManager.isAnySoundPlaying()
     }
 
     fun resetSongs() {
         soundManager.stopAllSounds()
+//        _mainUiState.value = MainUiState.ResetAllSound
+//        _mainUiState.value = MainUiState.Initial
     }
-    fun pauseAllSongs(){
-        soundManager.pauseAllSound()
+
+    fun pauseAllSongs() {
+        soundManager.pauseAllSounds()
+        _mainUiState.value = MainUiState.PausePlay(play = false)
     }
 
     fun resumeAllSound() {
         soundManager.resumeAllSounds()
+        _mainUiState.value = MainUiState.PausePlay(true)
     }
 
     fun getDrawerItems(): List<DrawerItems> {
