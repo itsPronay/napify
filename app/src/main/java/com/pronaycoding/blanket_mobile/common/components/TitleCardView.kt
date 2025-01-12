@@ -1,4 +1,4 @@
-package com.pronaycoding.blanket_mobile.ui.theme.styles
+package com.pronaycoding.blanket_mobile.common.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

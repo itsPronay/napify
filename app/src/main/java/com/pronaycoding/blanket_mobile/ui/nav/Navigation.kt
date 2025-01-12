@@ -1,17 +1,17 @@
-package com.pronaycoding.blanket_mobile.nav
+package com.pronaycoding.blanket_mobile.ui.nav
 
+//import com.pronaycoding.blanket_mobile.ui.homeScreen.MainScreen
 import androidx.compose.runtime.Composable
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.pronaycoding.blanket_mobile.ui.about.AboutScreen
-import com.pronaycoding.blanket_mobile.ui.homeScreen.CardItems
-import com.pronaycoding.blanket_mobile.ui.homeScreen.Dashboard
-import com.pronaycoding.blanket_mobile.ui.homeScreen.DrawerItems
-//import com.pronaycoding.blanket_mobile.ui.homeScreen.MainScreen
-import com.pronaycoding.blanket_mobile.ui.settings.SettingsScreen
+import com.pronaycoding.blanket_mobile.common.model.CardItems
+import com.pronaycoding.blanket_mobile.common.model.DrawerItems
+import com.pronaycoding.blanket_mobile.ui.screens.about.AboutScreen
+import com.pronaycoding.blanket_mobile.ui.screens.homeScreen.Dashboard
+import com.pronaycoding.blanket_mobile.ui.screens.settings.SettingsScreen
 
 @Composable
 fun Navigation(
@@ -23,12 +23,7 @@ fun Navigation(
 
     NavHost(navController = navController, startDestination = Routes.Home.name) {
         composable(Routes.Home.name) {
-            Dashboard(cardLists = cardItems, drawerItems = drawerItems,
-                navigateTo = {
-                    navController.navigate(it)
-                },
-//                audioPlayer = audioPlayer
-            )
+            Dashboard()
         }
 
         composable(Routes.Settings.name) {

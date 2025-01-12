@@ -1,4 +1,4 @@
-package com.pronaycoding.blanket_mobile.ui.settings
+package com.pronaycoding.blanket_mobile.ui.screens.settings
 
 import android.widget.Switch
 import androidx.compose.foundation.isSystemInDarkTheme

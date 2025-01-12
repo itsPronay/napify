@@ -1,4 +1,4 @@
-package com.pronaycoding.blanket_mobile.ui.about
+package com.pronaycoding.blanket_mobile.ui.screens.about
 
 import android.content.ActivityNotFoundException
 import android.content.Intent

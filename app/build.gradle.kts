@@ -2,6 +2,10 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
 
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.compose.compiler)
+
     //hilt
 //    id ("kotlin-kapt")
 //    id("com.google.dagger.hilt.android")
@@ -9,7 +13,7 @@ plugins {
 
 android {
     namespace = "com.pronaycoding.blanket_mobile"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.pronaycoding.blanket_mobile"
@@ -34,11 +38,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -91,9 +95,17 @@ dependencies {
 //    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
 
 //    //hilt
+    implementation("com.google.dagger:hilt-android:2.54")
+    kapt("com.google.dagger:hilt-android-compiler:2.54")
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    // extra icons
+    implementation("androidx.compose.material:material-icons-extended:1.5.1")
+
 //    implementation("com.google.dagger:hilt-android:2.44")
 //    kapt("com.google.dagger:hilt-android-compiler:2.44")
 }
+
 //kapt {
 //    correctErrorTypes = true
 //}
