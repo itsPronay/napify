@@ -26,12 +26,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.pronaycoding.blanket_mobile.common.model.CardItems
-import com.pronaycoding.blanket_mobile.ui.screens.homeScreen.BlanketViewModel
+import com.pronaycoding.blanket_mobile.ui.screens.homeScreen.HomeViewmodel
 import com.pronaycoding.blanket_mobile.ui.screens.homeScreen.MainUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,7 +39,7 @@ fun PrettyCardView(
     uiState: MainUiState,
     index: Int,
     cardItem: CardItems,
-    viewModel: BlanketViewModel = hiltViewModel(),
+    viewModel: HomeViewmodel = hiltViewModel(),
 ) {
     var isPlaying by rememberSaveable { mutableStateOf(false) }
     var soundVolumeSlider by rememberSaveable { mutableFloatStateOf(0F) }

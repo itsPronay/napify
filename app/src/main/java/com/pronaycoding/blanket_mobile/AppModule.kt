@@ -2,6 +2,7 @@ package com.pronaycoding.blanket_mobile
 
 import android.content.Context
 import com.pronaycoding.blanket_mobile.ui.screens.homeScreen.SoundManager
+import com.pronaycoding.blanket_mobile.ui.screens.homeScreen.SoundManager2
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,6 +21,12 @@ object AppModule {
     @Singleton
     fun provideSoundManager(@ApplicationContext context: Context): SoundManager {
         return SoundManager(context) // Provide context here if SoundManager needs it
+    }
+
+    @Provides
+    @Singleton
+    fun provideSoundManager2(@ApplicationContext context: Context): SoundManager2 {
+        return SoundManager2(context) // Provide context here if SoundManager needs it
     }
 
 }

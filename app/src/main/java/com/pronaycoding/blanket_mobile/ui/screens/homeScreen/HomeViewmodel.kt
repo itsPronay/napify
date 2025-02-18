@@ -1,21 +1,18 @@
 package com.pronaycoding.blanket_mobile.ui.screens.homeScreen
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.pronaycoding.blanket_mobile.common.model.CardItems
 import com.pronaycoding.blanket_mobile.common.model.DrawerItems
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 
 @HiltViewModel
-class BlanketViewModel @Inject constructor(
-    private val soundManager: SoundManager,
+class HomeViewmodel @Inject constructor(
+    private val soundManager: SoundManager2,
 ) : ViewModel() {
 
     //    val _isSoundPlaying = MutableStateFlow(fal)

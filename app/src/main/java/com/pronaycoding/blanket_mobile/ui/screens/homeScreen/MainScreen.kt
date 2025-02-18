@@ -5,17 +5,27 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -23,34 +33,42 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.pronaycoding.blanket_mobile.common.components.BlanketTopBar
+import com.pronaycoding.blanket_mobile.common.Utils
+import com.pronaycoding.blanket_mobile.common.components.NapifyTopAppBar
 import com.pronaycoding.blanket_mobile.common.components.PrettyCardView
 import com.pronaycoding.blanket_mobile.common.components.TitleCardView
 import com.pronaycoding.blanket_mobile.common.model.CardItems
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreenRoute(
-    viewModel: BlanketViewModel = hiltViewModel()
+    viewModel: HomeViewmodel = hiltViewModel(),
+    navigateToAboutScreen : () -> Unit,
+    navigateToSettings : ( ) -> Unit
 ) {
     val uiState by viewModel.mainUiState.collectAsStateWithLifecycle()
 
-    Dashboard(
+    HomeScreen(
         uiState = uiState,
         resetAllSongs = viewModel::resetSongs,
         isAnySongPlaying = viewModel::isAnySongPlaying,
         pauseAllSongs = viewModel::pauseAllSongs,
-        resumeAllSongs = viewModel::resumeAllSound
+        resumeAllSongs = viewModel::resumeAllSound,
+        navigateToAboutScreen = navigateToAboutScreen,
+        navigateToSettings = navigateToSettings
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Dashboard(
+private fun HomeScreen(
     uiState: MainUiState,
     resetAllSongs: () -> Unit,
     isAnySongPlaying: () -> Boolean,
     pauseAllSongs: () -> Unit,
-    resumeAllSongs: () -> Unit
+    resumeAllSongs: () -> Unit,
+    navigateToAboutScreen : () -> Unit,
+    navigateToSettings : ( ) -> Unit
 ) {
 
     var scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -58,82 +76,122 @@ fun Dashboard(
     var previousCardTitle by rememberSaveable { mutableStateOf("") }
     var canPlayMusic by rememberSaveable { mutableStateOf(true) }
 
-    Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            BlanketTopBar(
-                scrollBehavior = scrollBehavior,
-                resumeAllSounds = resumeAllSongs,
-                pauseAllSounds = pauseAllSongs,
-                resetSongs = resetAllSongs
-            )
-        }
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(it)
-                .padding(horizontal = 16.dp, vertical = 8.dp)
-        ) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)
-                    )
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+
+    var selectedDrawerIndex by rememberSaveable { mutableStateOf(-1 ) }
+
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet(
+                modifier = Modifier.width(200.dp)
             ) {
+                Text("Napify", modifier = Modifier.padding(horizontal = 16.dp))
 
-                item {
-                    TitleCardView("Nature")
+//                Icon(imageVector = Icons.Default.Info, contentDescription = "")
+                HorizontalDivider()
 
-                    CustomCard {
-                        getNatureCards().forEachIndexed { _, cardItems ->
-                            PrettyCardView(
-                                uiState = uiState,
-                                index = getCardList().indexOf(cardItems),
-                                cardItem = cardItems,
-                            )
+                Utils.getDrawerItems().forEachIndexed { index, drawerItems ->
+                    NavigationDrawerItem(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        icon = {
+                            Icon(drawerItems.icon, contentDescription = "")
+                        },
+                        label = { Text(text = drawerItems.title) },
+                        selected = index == selectedDrawerIndex,
+                        onClick = { selectedDrawerIndex = index}
+                    )
+                }
+            }
+        },
+    ) {
+        Scaffold(
+            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+            topBar = {
+                NapifyTopAppBar(
+                    scrollBehavior = scrollBehavior,
+                    resumeAllSounds = resumeAllSongs,
+                    pauseAllSounds = pauseAllSongs,
+                    resetSongs = resetAllSongs,
+                    navigationButtonClicked = {
+                        scope.launch {
+                            drawerState.apply {
+                                if (isClosed) open() else close()
+                            }
+                        }
+                    },
+                    navigateToAboutScreen = navigateToAboutScreen,
+                    navigateToSettingsScreen = navigateToSettings
+                )
+            }
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(it)
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+            ) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)
+                        )
+                ) {
+
+                    item {
+                        TitleCardView("Nature")
+
+                        CustomCard {
+                            getNatureCards().forEachIndexed { _, cardItems ->
+                                PrettyCardView(
+                                    uiState = uiState,
+                                    index = getCardList().indexOf(cardItems),
+                                    cardItem = cardItems,
+                                )
+                            }
                         }
                     }
-                }
 
-                item {
-                    TitleCardView("Travel")
+                    item {
+                        TitleCardView("Travel")
 
-                    CustomCard {
-                        getTravelCards().forEachIndexed { _, cardItems ->
-                            PrettyCardView(
-                                uiState = uiState,
-                                index = getCardList().indexOf(cardItems),
-                                cardItem = cardItems,
-                            )
+                        CustomCard {
+                            getTravelCards().forEachIndexed { _, cardItems ->
+                                PrettyCardView(
+                                    uiState = uiState,
+                                    index = getCardList().indexOf(cardItems),
+                                    cardItem = cardItems,
+                                )
+                            }
                         }
                     }
-                }
 
-                item {
-                    TitleCardView("Indoor")
+                    item {
+                        TitleCardView("Indoor")
 
-                    CustomCard {
-                        getIndoorCards().forEachIndexed { _, cardItems ->
-                            PrettyCardView(
-                                uiState = uiState,
-                                index = getCardList().indexOf(cardItems),
-                                cardItem = cardItems,
-                            )
+                        CustomCard {
+                            getIndoorCards().forEachIndexed { _, cardItems ->
+                                PrettyCardView(
+                                    uiState = uiState,
+                                    index = getCardList().indexOf(cardItems),
+                                    cardItem = cardItems,
+                                )
+                            }
                         }
                     }
-                }
 
-                item {
-                    TitleCardView("Noise")
+                    item {
+                        TitleCardView("Noise")
 
-                    CustomCard {
-                        getNoiseCards().forEachIndexed { _, cardItems ->
-                            PrettyCardView(
-                                uiState = uiState,
-                                index = getCardList().indexOf(cardItems),
-                                cardItem = cardItems,
-                            )
+                        CustomCard {
+                            getNoiseCards().forEachIndexed { _, cardItems ->
+                                PrettyCardView(
+                                    uiState = uiState,
+                                    index = getCardList().indexOf(cardItems),
+                                    cardItem = cardItems,
+                                )
+                            }
                         }
                     }
                 }

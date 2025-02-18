@@ -22,6 +22,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -86,8 +87,7 @@ fun AboutScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Card(
-                onClick = { /*TODO*/ },
+            OutlinedCard(
                 elevation = CardDefaults.cardElevation(10.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -103,12 +103,8 @@ fun AboutScreen(
 
             Spacer(modifier = Modifier.height(2.dp))
 
-            Card(
-                onClick = { /*TODO*/ },
+            OutlinedCard(
                 elevation = CardDefaults.cardElevation(10.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = Color(0xFF27a157).copy(alpha = .6f)
-                ),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
@@ -122,40 +118,24 @@ fun AboutScreen(
 
             Spacer(modifier = Modifier.height(2.dp))
 
-            Card(
-                onClick = {
-
-                    val url = "https://github.com/itsPronay/Blanket-Mobile/issues"
-                    try {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                        context.startActivity(intent)
-                    } catch (e: ActivityNotFoundException) {
-                        Toast.makeText(
-                            context,
-                            "No application can handle this request. Please install a web browser.",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    } catch (e: Exception) {
-                        Toast.makeText(context, "An unexpected error occurred.", Toast.LENGTH_LONG)
-                            .show()
-                    }
-
-                }, elevation = CardDefaults.cardElevation(10.dp), modifier = Modifier.fillMaxWidth()
+            OutlinedCard(
+                elevation = CardDefaults.cardElevation(10.dp),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "Request feature", style = MaterialTheme.typography.bodyLarge
+                        text = "Inspired by Rafael Mardojai's Blanket, which is originally a GNOME application.",
                     )
                 }
             }
 
             Spacer(modifier = Modifier.height(2.dp))
 
-            Card(
+            OutlinedCard(
                 onClick = {
-                    val url = "https://github.com/itsPronay/Blanket-Mobile"
+                    val url = "https://github.com/itsPronay/napify"
                     try {
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                         context.startActivity(intent)
@@ -180,23 +160,6 @@ fun AboutScreen(
                     Text(
                         text = "View source code of this app in github",
                         color = MaterialTheme.colorScheme.inverseSurface.copy(0.5f),
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(2.dp))
-
-            Card(
-                onClick = { /*TODO*/ },
-                elevation = CardDefaults.cardElevation(10.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp)
-                ) {
-                    Text(
-                        text = "Inspired by Rafael Mardojai's Blanket, which is originally a GNOME application.",
-//                        color = MaterialTheme.colorScheme.inverseSurface.copy(0.5f),
                     )
                 }
             }

@@ -5,7 +5,7 @@ import android.media.AudioAttributes
 import android.media.SoundPool
 import android.util.Log
 
-class SoundManager (val context: Context) {
+class SoundManager (private val context: Context) {
 
     private val soundPool: SoundPool
     private val soundIds = mutableMapOf<Int, Int>()
@@ -13,8 +13,8 @@ class SoundManager (val context: Context) {
 
     init {
         val audioAttributes = AudioAttributes.Builder()
-            .setUsage(AudioAttributes.USAGE_MEDIA)
-            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+            .setUsage(AudioAttributes.USAGE_MEDIA )
+            .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
             .build()
 
         soundPool = SoundPool.Builder()
@@ -52,10 +52,11 @@ class SoundManager (val context: Context) {
      * Plays a sound if it's not already playing.
      */
     fun playSound(soundIndex: Int, volume: Float) {
+        Log.d("UwUpronay", "SoundManager playing called ")
         if (!isSoundPlaying(soundIndex)) {
             val soundId = soundIds[soundIndex]
             soundId?.let {
-                val streamId = soundPool.play(it, volume, volume, 0, -1, 1f)
+                val streamId = soundPool.play(it, volume, volume, 1, -1, 1f)
                 if (streamId != 0) { // Check if the stream was successfully played
                     activeSounds[soundIndex] = streamId
                     Log.d("SoundManager", "Playing sound at index: $soundIndex")
