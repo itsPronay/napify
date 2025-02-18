@@ -1,7 +1,6 @@
 package com.pronaycoding.blanket_mobile
 
 import android.content.Context
-import com.pronaycoding.blanket_mobile.ui.screens.homeScreen.SoundManager
 import com.pronaycoding.blanket_mobile.ui.screens.homeScreen.SoundManager2
 import dagger.Module
 import dagger.Provides
@@ -16,12 +15,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class) // Specify the Hilt component where this module will be installed
 object AppModule {
-
-    @Provides
-    @Singleton
-    fun provideSoundManager(@ApplicationContext context: Context): SoundManager {
-        return SoundManager(context) // Provide context here if SoundManager needs it
-    }
 
     @Provides
     @Singleton

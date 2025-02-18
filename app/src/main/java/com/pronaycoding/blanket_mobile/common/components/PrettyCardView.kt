@@ -1,7 +1,5 @@
 package com.pronaycoding.blanket_mobile.common.components
 
-//import androidx.compose.foundation.layout.ColumnScopeInstance.align
-//import androidx.compose.foundation.layout.FlowRowScopeInstance.align
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -31,19 +29,15 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.pronaycoding.blanket_mobile.common.model.CardItems
 import com.pronaycoding.blanket_mobile.ui.screens.homeScreen.HomeViewmodel
-import com.pronaycoding.blanket_mobile.ui.screens.homeScreen.MainUiState
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PrettyCardView(
-    uiState: MainUiState,
     index: Int,
     cardItem: CardItems,
     viewModel: HomeViewmodel = hiltViewModel(),
 ) {
     var isPlaying by rememberSaveable { mutableStateOf(false) }
     var soundVolumeSlider by rememberSaveable { mutableFloatStateOf(0F) }
-    var canPlay by rememberSaveable { mutableStateOf(true) }
 
 
     LaunchedEffect(key1 = isPlaying) {
@@ -84,37 +78,16 @@ fun PrettyCardView(
             ),
             value = soundVolumeSlider,
             onValueChange = { newValue ->
-//                if (canPlay){
                     soundVolumeSlider = newValue
                     isPlaying = newValue > 0
                     viewModel.setVolume(index, soundVolumeSlider)
-//                }
             },
-            onValueChangeFinished = {
-                // Your custom logic if needed
-            },
+            onValueChangeFinished = { },
             valueRange = 0f..1f,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(8.dp) // Adjusted track height
         )
 
-    }
-
-    when (uiState){
-        MainUiState.Initial -> Unit
-
-        is MainUiState.PausePlay -> {
-            canPlay = uiState.play
-//            if (canPlay){
-//                viewModel.resumeAllSound()
-//            } else {
-//                viewModel.pauseAllSongs()
-//            }
-        }
-        MainUiState.ResetAllSound -> {
-//            isPlaying = false
-            soundVolumeSlider = 0F
-        }
     }
 }

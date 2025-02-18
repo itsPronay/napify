@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-//@Preview (showBackground = true)
 fun TitleCardView(
     text: String
 ) {
@@ -34,10 +33,8 @@ fun TitleCardView(
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
-//            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-//            modifier = Modifier.size(10.dp),
                 text = text,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Bold,

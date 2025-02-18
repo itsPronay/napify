@@ -3,10 +3,7 @@ package com.pronaycoding.blanket_mobile.ui.screens.homeScreen
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.pronaycoding.blanket_mobile.common.model.CardItems
-import com.pronaycoding.blanket_mobile.common.model.DrawerItems
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 
@@ -14,11 +11,6 @@ import javax.inject.Inject
 class HomeViewmodel @Inject constructor(
     private val soundManager: SoundManager2,
 ) : ViewModel() {
-
-    //    val _isSoundPlaying = MutableStateFlow(fal)
-    private val _mainUiState = MutableStateFlow<MainUiState>(MainUiState.Initial)
-    val mainUiState = _mainUiState.asStateFlow()
-
 
     init {
         soundManager.loadSounds()
@@ -35,37 +27,6 @@ class HomeViewmodel @Inject constructor(
     fun playSound(int: Int, volume: Float) {
         soundManager.playSound(int, volume)
         Log.d("debugUwU", "playing sound")
-    }
-
-    fun isAnySongPlaying(): Boolean {
-        return soundManager.isAnySoundPlaying()
-    }
-
-    fun resetSongs() {
-        soundManager.stopAllSounds()
-//        _mainUiState.value = MainUiState.ResetAllSound
-//        _mainUiState.value = MainUiState.Initial
-    }
-
-    fun pauseAllSongs() {
-        soundManager.pauseAllSounds()
-        _mainUiState.value = MainUiState.PausePlay(play = false)
-    }
-
-    fun resumeAllSound() {
-        soundManager.resumeAllSounds()
-        _mainUiState.value = MainUiState.PausePlay(true)
-    }
-
-    fun getDrawerItems(): List<DrawerItems> {
-        return listOf(
-            DrawerItems.Home,
-            DrawerItems.SourceCode,
-            DrawerItems.RequestFeature,
-            DrawerItems.About,
-            DrawerItems.Settings,
-            DrawerItems.Quit,
-        )
     }
 
 }

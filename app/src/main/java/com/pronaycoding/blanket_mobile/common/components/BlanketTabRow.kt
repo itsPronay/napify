@@ -1,10 +1,5 @@
-package com.pronaycoding.blanket_mobile.ui.homeScreen
+package com.pronaycoding.blanket_mobile.common.components
 
-//import androidx.compose.foundation.layout.ColumnScopeInstance.align
-//import androidx.compose.foundation.layout.FlowRowScopeInstance.align
-//import androidx.compose.ui.Modifier
-
-//import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,7 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BlanketTabRow(modifier: Modifier = Modifier) {
     val titles = listOf("Home", "Settings")

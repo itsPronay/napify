@@ -21,21 +21,16 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         lifecycleScope.launch {
 
         }
-//        val v : HomeViewmodel = viewModel
         setContent {
             NapifyAppTheme {
                 Surface {
                     Navigation()
-//                    AboutScreen(
-//                        onBackPressed = {}
-//                    )
                 }
             }
         }

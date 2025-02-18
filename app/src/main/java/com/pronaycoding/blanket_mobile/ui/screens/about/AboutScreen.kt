@@ -100,22 +100,6 @@ fun AboutScreen(
                 }
             }
 
-
-            Spacer(modifier = Modifier.height(2.dp))
-
-            OutlinedCard(
-                elevation = CardDefaults.cardElevation(10.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp)
-                ) {
-                    Text(
-                        text = "MIT License", style = MaterialTheme.typography.bodyLarge
-                    )
-                }
-            }
-
             Spacer(modifier = Modifier.height(2.dp))
 
             OutlinedCard(
