@@ -1,4 +1,4 @@
-# Napify
+# Napify 
 
 🎵 *Immerse yourself in soothing sounds to enhance focus and relaxation*
 
@@ -25,8 +25,8 @@ Napify is a sound-based productivity and relaxation app designed to help you foc
 ## Contributing
 We welcome open-source contributions! Feel free to submit pull requests, report issues, or suggest new features. **Contributors are welcome!**
 
-## Credits
-Developed by **[Pronay Sarker](https://github.com/itsPronay)**
-
 ## Inspiration
 Napify is inspired by **[Blanket](https://github.com/rafaelmardojai/blanket)**, a GNOME application developed by **Rafael Mardojai**. This project brings a similar experience to Android devices.
+> \[!Note]
+> The sounds used in this app are not original. They have been sourced from others. Special thanks to the original creators of these sounds for making them available. Please see [SOUNDS_LICENSING.md](https://github.com/itsPronay/napify/blob/play_store/SOUNDS_LICENSING.md) for more info.
+
