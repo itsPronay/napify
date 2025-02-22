@@ -1,21 +1,32 @@
-
-
 # Napify
-**Listen to different sounds** 
 
-## Description
-Improve focus and increase your productivity by listening to different sounds. Or allows you to fall asleep in a noisy environment.
+🎵 *Immerse yourself in soothing sounds to enhance focus and relaxation*
 
-## This app is still under development. But new contributions are most welcome.
+![Android](https://img.shields.io/badge/Android-3DDC84?logo=android&logoColor=white)
+![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?logo=kotlin&logoColor=white)
+![Jetpack Compose](https://img.shields.io/badge/Jetpack_Compose-03D2A8?logo=jetpack&logoColor=white)
+![Open Source](https://img.shields.io/badge/Open%20Source-89CFF0?logo=github&logoColor=white)
 
-# Requirements
-minimum API level 24 <br>
-Built with Kotlin compose
+## Overview
+Napify is a sound-based productivity and relaxation app designed to help you focus, boost productivity, or fall asleep in noisy environments. Built with **Jetpack Compose** and **Kotlin**, Napify provides an intuitive and seamless user experience.
+
+🚧 *This app is currently under development. Contributors are welcome!* 🚧
+
+## Features
+- 🎧 Listen to a variety of ambient sounds
+- 🔄 Seamless looping for uninterrupted experience
+- 🌙 Designed for both focus and relaxation
+- 📱 Built with modern **Jetpack Compose** UI
+
+## Requirements
+- **Minimum API Level**: 24 (Android 7.0 and above)
+- **Built With**: Kotlin, Jetpack Compose
+
+## Contributing
+We welcome open-source contributions! Feel free to submit pull requests, report issues, or suggest new features. **Contributors are welcome!**
 
 ## Credits
-Developed by **[Pronay sarker](https://github.com/itsPronay)**
+Developed by **[Pronay Sarker](https://github.com/itsPronay)**
 
-## More about this app
-This app is essentially the unofficial Android version of Rafael Mardojai's [Blanket](https://github.com/rafaelmardojai/blanket), which is originally a GNOME application. <br>
-
-
+## Inspiration
+Napify is inspired by **[Blanket](https://github.com/rafaelmardojai/blanket)**, a GNOME application developed by **Rafael Mardojai**. This project brings a similar experience to Android devices.
