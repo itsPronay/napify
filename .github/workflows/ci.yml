@@ -1,10 +1,12 @@
 name: Build Check
 
 on:
+  push:
+    branches:
+      - master
   pull_request:
     branches:
       - master
-      - develop
 
 jobs:
   build:
@@ -20,5 +22,14 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build the project
-        run: ./gradlew build
+      - name: Grant execute permission for Gradle wrapper
+        run: chmod +x gradlew
+
+      - name: Build APK
+        run: ./gradlew assembleDebug
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
