@@ -14,10 +14,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pronaycoding.blanket_mobile.common.components.NapifyTopAppBar
 import com.pronaycoding.blanket_mobile.common.components.PrettyCardView
 import com.pronaycoding.blanket_mobile.common.components.TitleCardView
@@ -26,10 +29,14 @@ import com.pronaycoding.blanket_mobile.common.model.CardItems
 @Composable
 fun HomeScreenRoute(
     navigateToAboutScreen: () -> Unit,
+    viewmodel: HomeViewmodel = hiltViewModel()
 ) {
+    val canPlaySound by viewmodel.canPlay.collectAsStateWithLifecycle()
 
     HomeScreen(
         navigateToAboutScreen = navigateToAboutScreen,
+        handlePlayPause = { viewmodel.handlePlayPause(it) },
+        canPlaySound = canPlaySound
     )
 }
 
@@ -37,6 +44,8 @@ fun HomeScreenRoute(
 @Composable
 private fun HomeScreen(
     navigateToAboutScreen: () -> Unit,
+    handlePlayPause: (Boolean) -> Unit,
+    canPlaySound : Boolean
 ) {
     var scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
@@ -46,6 +55,7 @@ private fun HomeScreen(
             NapifyTopAppBar(
                 scrollBehavior = scrollBehavior,
                 navigateToAboutScreen = navigateToAboutScreen,
+                buttonClicked = handlePlayPause
             )
         }
     ) {
@@ -70,6 +80,7 @@ private fun HomeScreen(
                             PrettyCardView(
                                 index = getCardList().indexOf(cardItems),
                                 cardItem = cardItems,
+                                canPlaySound
                             )
                         }
                     }
@@ -83,6 +94,7 @@ private fun HomeScreen(
                             PrettyCardView(
                                 index = getCardList().indexOf(cardItems),
                                 cardItem = cardItems,
+                                canPlaySound
                             )
                         }
                     }
@@ -96,6 +108,7 @@ private fun HomeScreen(
                             PrettyCardView(
                                 index = getCardList().indexOf(cardItems),
                                 cardItem = cardItems,
+                                canPlaySound
                             )
                         }
                     }
@@ -109,6 +122,7 @@ private fun HomeScreen(
                             PrettyCardView(
                                 index = getCardList().indexOf(cardItems),
                                 cardItem = cardItems,
+                                canPlaySound
                             )
                         }
                     }

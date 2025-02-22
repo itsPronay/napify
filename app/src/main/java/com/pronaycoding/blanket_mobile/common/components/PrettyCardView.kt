@@ -1,5 +1,6 @@
 package com.pronaycoding.blanket_mobile.common.components
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
@@ -24,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -34,19 +35,21 @@ import com.pronaycoding.blanket_mobile.ui.screens.homeScreen.HomeViewmodel
 fun PrettyCardView(
     index: Int,
     cardItem: CardItems,
+    playOrPause: Boolean,
     viewModel: HomeViewmodel = hiltViewModel(),
 ) {
-    var isPlaying by rememberSaveable { mutableStateOf(false) }
+    val context = LocalContext.current
+    var shouldPlaySound by rememberSaveable { mutableStateOf(false) }
     var soundVolumeSlider by rememberSaveable { mutableFloatStateOf(0F) }
 
 
-    LaunchedEffect(key1 = isPlaying) {
-        if (isPlaying) {
+    LaunchedEffect(key1 = shouldPlaySound) {
+        if (shouldPlaySound) {
             viewModel.playSound(index, soundVolumeSlider)
         } else viewModel.stopSound(index)
     }
 
-    Column(modifier = Modifier.padding(16.dp) ) {
+    Column(modifier = Modifier.padding(16.dp)) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
@@ -55,7 +58,7 @@ fun PrettyCardView(
                 painter = painterResource(id = cardItem.icon),
                 contentDescription = "Icon",
                 modifier = Modifier.size(32.dp),
-                tint = if (isPlaying) Color(0xFF27a157) else MaterialTheme.colorScheme.onBackground
+                tint = if (shouldPlaySound) Color(0xFF27a157) else MaterialTheme.colorScheme.onBackground
             )
 
             Spacer(modifier = Modifier.width(16.dp))
@@ -69,20 +72,34 @@ fun PrettyCardView(
 
         Slider(
             colors = SliderDefaults.colors(
-                thumbColor = Color(0xFF27a157),
-                activeTrackColor = Color(0xFF27a157),
+                thumbColor = when (playOrPause) {
+                    true -> Color(0xFF27a157)
+                    false -> Color.Gray
+                },
+                activeTrackColor = when (playOrPause) {
+                    true -> Color(0xFF27a157)
+                    false -> Color.Gray
+                },
                 inactiveTrackColor = Color(0xFF27a157).copy(alpha = 0.2f),
-                disabledThumbColor = Color.Gray, // Optional for disabled state
-                disabledActiveTrackColor = Color.Gray, // Optional for disabled state
-                disabledInactiveTrackColor = Color.Gray // Optional for disabled state
+                disabledThumbColor = Color.Gray,
+                disabledActiveTrackColor = Color.Gray,
+                disabledInactiveTrackColor = Color.Gray
             ),
             value = soundVolumeSlider,
             onValueChange = { newValue ->
+                if (playOrPause) {
                     soundVolumeSlider = newValue
-                    isPlaying = newValue > 0
+                    shouldPlaySound = newValue > 0
                     viewModel.setVolume(index, soundVolumeSlider)
+                }
             },
-            onValueChangeFinished = { },
+            onValueChangeFinished = {
+                if (!playOrPause) {
+                    Toast.makeText(context, "Can't play sound, Sound on pause", Toast.LENGTH_SHORT)
+                        .show()
+
+                }
+            },
             valueRange = 0f..1f,
             modifier = Modifier
                 .fillMaxWidth()
