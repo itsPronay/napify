@@ -4,7 +4,7 @@ import android.content.Context
 import android.media.MediaPlayer
 import android.util.Log
 
-class SoundManager2(private val context: Context) {
+class SoundManager(private val context: Context) {
 
     private val mediaPlayers = mutableMapOf<Int, MediaPlayer>()
 
@@ -42,6 +42,7 @@ class SoundManager2(private val context: Context) {
             if (!mediaPlayer.isPlaying) {
                 mediaPlayer.setVolume(volume, volume)
                 mediaPlayer.start()
+                mediaPlayer.isLooping = true
                 Log.d("SoundManager", "Playing sound at index: $soundIndex")
             } else {
                 Log.d("SoundManager", "Sound at index: $soundIndex is already playing.")

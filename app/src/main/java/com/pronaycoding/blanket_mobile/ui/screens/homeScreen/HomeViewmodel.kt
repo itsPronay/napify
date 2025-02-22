@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewmodel @Inject constructor(
-    private val soundManager: SoundManager2,
+    private val soundManager: SoundManager,
 ) : ViewModel() {
 
     init {
