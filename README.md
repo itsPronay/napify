@@ -10,7 +10,7 @@
 ## Overview
 Napify is a sound-based productivity and relaxation app designed to help you focus, boost productivity, or fall asleep in noisy environments. Built with **Jetpack Compose** and **Kotlin**, Napify provides an intuitive and seamless user experience.
 
-🚧 *This app is currently under development. Contributors are welcome!* 🚧
+🚧 *This app is currently under development. But Contributors are still welcome!* 🚧
 
 ## Features
 - 🎧 Listen to a variety of ambient sounds
@@ -25,8 +25,6 @@ Napify is a sound-based productivity and relaxation app designed to help you foc
 ## Contributing
 We welcome open-source contributions! Feel free to submit pull requests, report issues, or suggest new features. **Contributors are welcome!**
 
-## Credits
-Developed by **[Pronay Sarker](https://github.com/itsPronay)**
-
 ## Inspiration
 Napify is inspired by **[Blanket](https://github.com/rafaelmardojai/blanket)**, a GNOME application developed by **Rafael Mardojai**. This project brings a similar experience to Android devices.
+``````
