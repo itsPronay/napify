@@ -7,6 +7,7 @@ import android.util.Log
 class SoundManager(private val context: Context) {
 
     private val mediaPlayers = mutableMapOf<Int, MediaPlayer>()
+    private var currentlyPlayingSounds: MutableList<Int> = mutableListOf()
 
     /**
      * Loads a list of sounds into the media players.
@@ -72,26 +73,28 @@ class SoundManager(private val context: Context) {
         } ?: Log.e("SoundManager", "Cannot stop sound at index: $soundIndex, not found.")
     }
 
-    /**
-     * Pauses all currently playing sounds.
-     */
     fun pauseAllSounds() {
-        mediaPlayers.values.forEach { mediaPlayer ->
+        mediaPlayers.entries.forEach { (index, mediaPlayer) ->
             if (mediaPlayer.isPlaying) {
                 mediaPlayer.pause()
+                currentlyPlayingSounds.add(index)
+                Log.d("SoundManager", "Paused sound at index: $index")
             }
         }
         Log.d("SoundManager", "All sounds paused.")
     }
 
+
     /**
      * Resumes all paused sounds.
      */
     fun resumeAllSounds() {
-        mediaPlayers.values.forEach { mediaPlayer ->
-            mediaPlayer.start()
+        mediaPlayers.entries.forEach { (index, mediaPlayer) ->
+            if (currentlyPlayingSounds.contains(index)) {
+                mediaPlayer.start()
+            }
         }
-        Log.d("SoundManager", "All sounds resumed.")
+        currentlyPlayingSounds = mutableListOf()
     }
 
     /**

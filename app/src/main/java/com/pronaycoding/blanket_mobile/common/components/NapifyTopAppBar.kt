@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Pause
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,8 +28,10 @@ import androidx.compose.ui.Modifier
 fun NapifyTopAppBar(
     scrollBehavior: TopAppBarScrollBehavior,
     navigateToAboutScreen: () -> Unit,
+    buttonClicked: (canPlay: Boolean) -> Unit
 ) {
     var showDropdown by rememberSaveable { mutableStateOf(false) }
+    var canPlay by rememberSaveable { mutableStateOf(true) }
 
     TopAppBar(
         scrollBehavior = scrollBehavior,
@@ -48,6 +52,20 @@ fun NapifyTopAppBar(
 
         actions = {
             Row {
+                IconButton(
+                    onClick = {
+                        canPlay = !canPlay
+                        buttonClicked.invoke(canPlay)
+                    }
+                ) {
+                    Icon(
+                        imageVector = when (canPlay) {
+                            true -> Icons.Default.Pause
+                            false -> Icons.Default.PlayArrow
+                        },
+                        contentDescription = null
+                    )
+                }
                 IconButton(
                     onClick = {
                         showDropdown = true

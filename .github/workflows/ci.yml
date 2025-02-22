@@ -3,8 +3,8 @@ name: Build Check
 on:
   pull_request:
     branches:
-      - main
-      - develop  # Specify branches you want to check PRs for
+      - master
+      - develop
 
 jobs:
   build:
