@@ -77,7 +77,7 @@ sealed class CardItems(
     data object Boat : CardItems(
         title = "Boat",
         icon = R.drawable.sailboat,
-        audioSource = R.raw.boat,
+        audioSource = R.raw.travel_boat,
         type = "Travel"
     )
 
@@ -95,7 +95,7 @@ sealed class CardItems(
     data object CoffeeShop : CardItems(
         title = "Coffee Shop",
         icon = R.drawable.coffee,
-        audioSource = R.raw.interior_coffeeshop,
+        audioSource = R.raw.indoor_interior_coffeeshop,
         type = "Interiors",
         firstInType = true
     )
@@ -103,14 +103,14 @@ sealed class CardItems(
     data object FirePlace : CardItems(
         title = "Fireplace",
         icon = R.drawable.fireplace,
-        audioSource = R.raw.interior_fireplace,
+        audioSource = R.raw.indoor_interior_fireplace,
         type = "Interiors"
     )
 
     data object BusyRestaurant : CardItems(
         title = "Busy Restaurant",
         icon = R.drawable.food_delivery,
-        audioSource = R.raw.busy_restaurant,
+        audioSource = R.raw.indoor_busy_restaurant,
         type = "Interiors"
     )
 
