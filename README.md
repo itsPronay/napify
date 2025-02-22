@@ -1,13 +1,11 @@
 
-
-
-<div style="display: flex; justify-content: center; gap: 20px;">
-  <img src="https://github.com/user-attachments/assets/878d385a-ceaa-4709-9f0a-04fbc70e4308" alt="App Launch Your Story in White Black Simple Style" width="300"/>
-  <img src="https://github.com/user-attachments/assets/533c1647-4c52-4504-bfac-518df2bea68a" alt="App Launch Your Story in White Black Simple Style2" width="300"/>
-  <img src="https://github.com/user-attachments/assets/dd622aac-0f12-40aa-b8d7-019ef1db2aa4" alt="App Launch Your Story in White Black Simple Style3" width="300"/>
-</div>
-
-
+<table style="width: 100%; border: none; text-align: center;">
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/878d385a-ceaa-4709-9f0a-04fbc70e4308" alt="App Launch Your Story in White Black Simple Style" width="300" /></td>
+    <td><img src="https://github.com/user-attachments/assets/533c1647-4c52-4504-bfac-518df2bea68a" alt="App Launch Your Story in White Black Simple Style2" width="300" /></td>
+    <td><img src="https://github.com/user-attachments/assets/dd622aac-0f12-40aa-b8d7-019ef1db2aa4" alt="App Launch Your Story in White Black Simple Style3" width="300" /></td>
+  </tr>
+</table>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Android-3DDC84?logo=android&logoColor=white" alt="Android">
