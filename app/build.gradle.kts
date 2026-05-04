@@ -47,6 +47,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -61,6 +62,7 @@ android {
 dependencies {
 
     implementation(libs.androidx.core.ktx)
+    implementation("androidx.media:media:1.7.0")
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
@@ -103,8 +105,24 @@ dependencies {
     // extra icons
     implementation("androidx.compose.material:material-icons-extended:1.5.1")
 
+    // Room Database
+    val room_version = "2.7.0-alpha08"
+    implementation("androidx.room:room-runtime:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+
+    // Kotlinx Metadata JVM for Kotlin 2.1.0 compatibility
+    kapt("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.9.0")
+//
 //    implementation("com.google.dagger:hilt-android:2.44")
-//    kapt("com.google.dagger:hilt-android-compiler:2.44")
+//    }
+//}
+//
+//kapt {
+//    useBuildCache = true
+//    arguments {
+//        arg("org.jetbrains.kotlin.kapt.use.light.analysis", true)
+//    }
 }
 
 //kapt {

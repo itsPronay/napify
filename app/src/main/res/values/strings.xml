@@ -1,3 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Napify</string>
+    <string name="app_title">Napify</string>
+    <string name="app_subtitle">Relax and focus</string>
+
+    <string name="menu_settings">Settings</string>
+    <string name="menu_about">About</string>
+    <string name="menu_pause">Pause sounds</string>
+    <string name="menu_play">Play sounds</string>
+    <string name="menu_timer">Sleep timer</string>
+    <string name="menu_reset">Reset sounds</string>
+    <string name="content_desc_more_options">More options</string>
+
+    <string name="tab_home">Home</string>
+    <string name="tab_settings">Settings</string>
+
+    <string name="category_nature">Nature</string>
+    <string name="category_travel">Travel</string>
+    <string name="category_indoor">Indoor</string>
+    <string name="category_interiors">Interiors</string>
+    <string name="category_noise">Noise</string>
+    <string name="category_custom">Custom sounds</string>
+
+    <string name="sound_rain">Rain</string>
+    <string name="sound_wind">Wind</string>
+    <string name="sound_storm">Storm</string>
+    <string name="sound_wave">Waves</string>
+    <string name="sound_stream">Stream</string>
+    <string name="sound_birds">Birds</string>
+    <string name="sound_summer_night">Summer night</string>
+
+    <string name="sound_train">Train</string>
+    <string name="sound_boat">Boat</string>
+    <string name="sound_city">City</string>
+
+    <string name="sound_coffee_shop">Coffee shop</string>
+    <string name="sound_fireplace">Fireplace</string>
+    <string name="sound_busy_restaurant">Busy restaurant</string>
+
+    <string name="sound_pink_noise">Pink noise</string>
+    <string name="sound_white_noise">White noise</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_section_display">Display</string>
+    <string name="settings_section_language">Language</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_hint">Dark is the default. System follows your device light/dark mode.</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_language_hint">Applies immediately. The app restarts to load the new language.</string>
+    <string name="language_system">Use system language</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_system">System</string>
+    <string name="language_english">English</string>
+    <string name="language_bengali">Bengali</string>
+    <string name="language_hindi">Hindi</string>
+    <string name="language_spanish">Spanish</string>
+
+    <string name="add_custom_sound">Add custom sound</string>
+    <string name="custom_sound_default_name">Custom %1$d</string>
+    <string name="sound_added">Sound added: %1$s</string>
+    <string name="could_not_add_sound">Could not add sound</string>
+    <string name="sounds_reset">All sounds reset</string>
+    <string name="cant_play_sound_on_pause">Can\'t play sound while paused</string>
+    <string name="delete_sound">Delete custom sound</string>
+    <string name="delete_sound_dialog_title">Delete sound?</string>
+    <string name="delete_sound_dialog_message">Remove \"%1$s\" from custom sounds?</string>
+    <string name="delete_sound_confirm">Delete</string>
+    <string name="rename_sound">Rename sound</string>
+    <string name="sound_name_label">Sound name</string>
+    <string name="rename_sound_confirm">Rename</string>
+
+    <string name="no_browser_installed">No app can open this link. Please install a web browser.</string>
+    <string name="error_unexpected">An unexpected error occurred.</string>
+
+    <string name="inspired_text">Inspired by Rafael Mardojai\'s Blanket, originally a GNOME application.</string>
+    <string name="app_description">Listen to different sounds. Improve focus and increase your productivity.</string>
+
+    <string name="about_title">About us</string>
+    <string name="about_version">Version %1$s</string>
+    <string name="about_source_code">Source code</string>
+    <string name="about_source_code_subtitle">View this app\'s source code on GitHub</string>
+    <string name="content_desc_back">Back</string>
+    <string name="content_desc_logo">App logo</string>
+    <string name="content_desc_sound_icon">Sound icon</string>
+    <string name="content_desc_add_custom_sound">Add custom sound</string>
+
+    <string name="presets_title">Presets</string>
+    <string name="presets_hint">Save your current mix, then load it anytime.</string>
+    <string name="presets_empty">No presets yet.</string>
+    <string name="presets_save_mix">Save current mix</string>
+    <string name="preset_load">Load</string>
+    <string name="preset_delete_desc">Delete preset</string>
+    <string name="preset_untitled">Untitled mix</string>
+    <string name="preset_saved">Preset saved</string>
+    <string name="preset_nothing_to_save">Turn up at least one sound before saving.</string>
+    <string name="save_preset_dialog_title">Save mix</string>
+    <string name="preset_name_label">Preset name</string>
+    <string name="preset_dialog_save">Save</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="timer_dialog_title">Set sleep timer</string>
+    <string name="timer_custom">Custom</string>
+    <string name="timer_custom_label">Minutes</string>
+    <string name="timer_minutes_format">%1$d m</string>
+    <string name="timer_start">Start</string>
+    <string name="timer_set">Timer set for %1$d minutes</string>
+    <string name="timer_invalid_input">Enter a valid timer duration</string>
+    <string name="sleep_timer_finished">Timer finished. Sounds stopped.</string>
+    <string name="timer_countdown_label">Sleep timer: %1$s</string>
+    <string name="timer_cancel">Cancel timer</string>
+    <string name="timer_cancel_confirm_title">Cancel sleep timer?</string>
+    <string name="timer_cancel_confirm_message">Do you want to stop the current timer?</string>
+
+    <string name="notification_channel_name">Playback</string>
+    <string name="notification_channel_desc">Shows when your Napify mix is active</string>
+    <string name="notification_playing">Mix playing</string>
+    <string name="notification_paused">Mix paused</string>
+    <string name="notification_action_play">Play</string>
+    <string name="notification_action_pause">Pause</string>
+
+    <string name="empty_string" translatable="false"></string>
 </resources>

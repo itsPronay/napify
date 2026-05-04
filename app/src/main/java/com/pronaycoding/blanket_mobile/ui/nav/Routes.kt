@@ -3,4 +3,5 @@ package com.pronaycoding.blanket_mobile.ui.nav
 enum class Routes {
     Home,
     AboutUs,
+    Settings,
 }

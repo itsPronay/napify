@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Napify</string>
+    <string name="app_title">Napify</string>
+    <string name="app_subtitle">Relájate y concéntrate</string>
+
+    <string name="menu_settings">Ajustes</string>
+    <string name="menu_about">Acerca de</string>
+    <string name="menu_pause">Pausar sonidos</string>
+    <string name="menu_play">Reproducir sonidos</string>
+    <string name="menu_reset">Restablecer sonidos</string>
+    <string name="content_desc_more_options">Más opciones</string>
+
+    <string name="tab_home">Inicio</string>
+    <string name="tab_settings">Ajustes</string>
+
+    <string name="category_nature">Naturaleza</string>
+    <string name="category_travel">Viajes</string>
+    <string name="category_indoor">Interior</string>
+    <string name="category_interiors">Interiores</string>
+    <string name="category_noise">Ruido</string>
+    <string name="category_custom">Sonidos personalizados</string>
+
+    <string name="sound_rain">Lluvia</string>
+    <string name="sound_wind">Viento</string>
+    <string name="sound_storm">Tormenta</string>
+    <string name="sound_wave">Olas</string>
+    <string name="sound_stream">Arroyo</string>
+    <string name="sound_birds">Pájaros</string>
+    <string name="sound_summer_night">Noche de verano</string>
+
+    <string name="sound_train">Tren</string>
+    <string name="sound_boat">Barco</string>
+    <string name="sound_city">Ciudad</string>
+
+    <string name="sound_coffee_shop">Cafetería</string>
+    <string name="sound_fireplace">Chimenea</string>
+    <string name="sound_busy_restaurant">Restaurante concurrido</string>
+
+    <string name="sound_pink_noise">Ruido rosa</string>
+    <string name="sound_white_noise">Ruido blanco</string>
+
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_section_display">Pantalla</string>
+    <string name="settings_section_language">Idioma</string>
+    <string name="settings_theme">Tema</string>
+    <string name="settings_theme_hint">Oscuro por defecto. Sistema sigue el modo claro/oscuro del dispositivo.</string>
+    <string name="settings_language">Idioma</string>
+    <string name="settings_language_hint">Se aplica al instante. La app se reinicia para cargar el nuevo idioma.</string>
+    <string name="language_system">Usar idioma del sistema</string>
+    <string name="theme_light">Claro</string>
+    <string name="theme_dark">Oscuro</string>
+    <string name="theme_system">Sistema</string>
+    <string name="language_english">Inglés</string>
+    <string name="language_bengali">Bengalí</string>
+    <string name="language_hindi">Hindi</string>
+    <string name="language_spanish">Español</string>
+
+    <string name="add_custom_sound">Añadir sonido personalizado</string>
+    <string name="custom_sound_default_name">Custom %1$d</string>
+    <string name="sound_added">Sonido añadido: %1$s</string>
+    <string name="could_not_add_sound">No se pudo añadir el sonido</string>
+    <string name="sounds_reset">Todos los sonidos se restablecieron</string>
+    <string name="cant_play_sound_on_pause">No se puede reproducir mientras está en pausa</string>
+    <string name="delete_sound">Eliminar sonido personalizado</string>
+
+    <string name="no_browser_installed">Ninguna aplicación puede abrir este enlace. Instala un navegador web.</string>
+    <string name="error_unexpected">Ocurrió un error inesperado.</string>
+
+    <string name="inspired_text">Inspirado en Blanket de Rafael Mardojai, originalmente una aplicación de GNOME.</string>
+    <string name="app_description">Escucha distintos sonidos. Mejora la concentración y aumenta tu productividad.</string>
+
+    <string name="about_title">Acerca de nosotros</string>
+    <string name="about_version">Versión %1$s</string>
+    <string name="about_source_code">Código fuente</string>
+    <string name="about_source_code_subtitle">Ver el código fuente de esta app en GitHub</string>
+    <string name="content_desc_back">Volver</string>
+    <string name="content_desc_logo">Logotipo de la app</string>
+    <string name="content_desc_sound_icon">Icono de sonido</string>
+    <string name="content_desc_add_custom_sound">Añadir sonido personalizado</string>
+
+    <string name="presets_title">Preajustes</string>
+    <string name="presets_hint">Guarda tu mezcla actual y cárgala cuando quieras.</string>
+    <string name="presets_empty">Aún no hay preajustes.</string>
+    <string name="presets_save_mix">Guardar mezcla actual</string>
+    <string name="preset_load">Cargar</string>
+    <string name="preset_delete_desc">Eliminar preajuste</string>
+    <string name="preset_untitled">Mezcla sin título</string>
+    <string name="preset_saved">Preajuste guardado</string>
+    <string name="preset_nothing_to_save">Sube al menos un sonido antes de guardar.</string>
+    <string name="save_preset_dialog_title">Guardar mezcla</string>
+    <string name="preset_name_label">Nombre del preajuste</string>
+    <string name="preset_dialog_save">Guardar</string>
+    <string name="dialog_cancel">Cancelar</string>
+
+    <string name="notification_channel_name">Reproducción</string>
+    <string name="notification_channel_desc">Se muestra cuando tu mezcla de Napify está activa</string>
+    <string name="notification_playing">Mezcla en reproducción</string>
+    <string name="notification_paused">Mezcla en pausa</string>
+    <string name="notification_action_play">Reproducir</string>
+    <string name="notification_action_pause">Pausar</string>
+</resources>

@@ -9,61 +9,112 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import com.pronaycoding.blanket_mobile.core.theme.AppThemeStore
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+
+// Dark theme - Calm and minimalist like Blanket app
 private val DarkColorScheme = darkColorScheme(
-    primary = Color(0xFF4A148C),  // Muted Purple
-    secondary = Color(0xFF00796B),  // Muted Teal
-    tertiary = Color(0xFF80CBC4),  // Soft Mint Green
-    background = Color(0xFF121212),  // Very Dark Grey for background
-    surface = Color(0xFF1C1B1F),  // Dark surface color for cards and other surfaces
+    primary = Primary,  // Soft Blue
     onPrimary = Color.White,
+    primaryContainer = PrimaryDark,
+    onPrimaryContainer = Color.White,
+
+    secondary = Secondary,  // Cyan
     onSecondary = Color.White,
-    onTertiary = Color(0xFF1C1B1F),  // Dark for tertiary elements
-    onBackground = Color.White,
-    onSurface = Color.White
+    secondaryContainer = SecondaryDark,
+    onSecondaryContainer = Color.White,
+
+    tertiary = Tertiary,  // Soft Green
+    onTertiary = Color.White,
+    tertiaryContainer = TertiaryLight,
+    onTertiaryContainer = Color.White,
+
+    error = Error,
+    onError = Color.White,
+    errorContainer = Color(0xFFF9DEDC),
+    onErrorContainer = Color(0xFF410E0B),
+
+    background = DarkBackground,  // Almost black
+    onBackground = LightText,
+
+    surface = DarkSurface,  // Dark card background
+    onSurface = LightText,
+    surfaceVariant = DarkSurfaceVariant,
+    onSurfaceVariant = TextSecondary,
+
+    outline = Color(0xFF79747E),
+    outlineVariant = Color(0xFF49454E)
 )
 
+// Light theme
 private val LightColorScheme = lightColorScheme(
-    primary = Color(0xFF673AB7),  // Soft Purple
-    secondary = Color(0xFF26A69A),  // Calm Teal
-    tertiary = Color(0xFF80CBC4),  // Soft Mint Green
-    background = Color(0xFFF0F0F0),  // Light Grey for background
-    surface = Color(0xFFFFFFFF),  // White surface for cards
+    primary = Primary,  // Soft Blue
     onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color(0xFF1C1B1F),  // Dark text on tertiary elements
-    onBackground = Color(0xFF1C1B1F),  // Dark text on light background
-    onSurface = Color(0xFF1C1B1F)  // Dark text on white surfaces
-)
+    primaryContainer = PrimaryLight,
+    onPrimaryContainer = Color(0xFF062D5E),
 
+    secondary = Secondary,  // Cyan
+    onSecondary = Color.White,
+    secondaryContainer = SecondaryLight,
+    onSecondaryContainer = Color(0xFF003D47),
+
+    tertiary = Tertiary,  // Soft Green
+    onTertiary = Color.White,
+    tertiaryContainer = TertiaryLight,
+    onTertiaryContainer = Color.White,
+
+    error = Error,
+    onError = Color.White,
+    errorContainer = Color(0xFFFCDEDB),
+    onErrorContainer = Color(0xFF370B1E),
+
+    background = LightBackground,  // Off-white
+    onBackground = DarkText,
+
+    surface = LightSurface,  // Pure white
+    onSurface = DarkText,
+    surfaceVariant = LightSurfaceVariant,
+    onSurfaceVariant = TextSecondary,
+
+    outline = Color(0xFF79747E),
+    outlineVariant = Color(0xFFCAC7D0)
+)
 
 @Composable
 fun NapifyAppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,  // Disabled for consistent branding
     content: @Composable () -> Unit
 ) {
+    val context = LocalContext.current
+    val systemDark = isSystemInDarkTheme()
+    val darkTheme = when (AppThemeStore.getSavedMode(context)) {
+        AppThemeStore.MODE_LIGHT -> false
+        AppThemeStore.MODE_DARK -> true
+        AppThemeStore.MODE_SYSTEM -> systemDark
+        else -> true
+    }
+
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
+
     val view = LocalView.current
     if (!view.isInEditMode) {
+        @Suppress("DEPRECATION")
         SideEffect {
             val window = (view.context as Activity).window
             window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+            WindowCompat.getInsetsController(window, view)!!.isAppearanceLightStatusBars = !darkTheme
         }
     }
 

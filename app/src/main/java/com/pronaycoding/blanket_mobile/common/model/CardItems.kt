@@ -1,19 +1,27 @@
 package com.pronaycoding.blanket_mobile.common.model
 
+import androidx.annotation.StringRes
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import com.pronaycoding.blanket_mobile.R
 
 sealed class CardItems(
-    var title: String,
+    @StringRes val titleResId: Int,
     var icon: Int,
     val audioSource: Int,
     val type: String = "",
-    val firstInType: Boolean = false
+    val firstInType: Boolean = false,
+    val customSoundId: Int? = null,
+    val filePath: String? = null
 ) {
-    /*
-     * Nature
-     */
+    @Composable
+    fun localizedTitle(): String = when (this) {
+        is CustomCardItem -> displayName
+        else -> stringResource(titleResId)
+    }
+
     data object Rain : CardItems(
-        title = "Rain",
+        titleResId = R.string.sound_rain,
         icon = R.drawable.rain,
         audioSource = R.raw.nature_rain,
         type = "Nature",
@@ -21,53 +29,49 @@ sealed class CardItems(
     )
 
     data object SummerNight : CardItems(
-        title = "Summer night",
+        titleResId = R.string.sound_summer_night,
         icon = R.drawable.moon,
         audioSource = R.raw.nature_summernight,
         type = "Nature"
     )
 
     data object Wind : CardItems(
-        title = "Wind",
+        titleResId = R.string.sound_wind,
         icon = R.drawable.wind,
         audioSource = R.raw.nature_wind,
         type = "Nature"
     )
 
     data object Wave : CardItems(
-        title = "Waves",
+        titleResId = R.string.sound_wave,
         icon = R.drawable.wave,
         audioSource = R.raw.nature_waves,
         type = "Nature"
     )
 
     data object Stream : CardItems(
-        title = "Stream",
+        titleResId = R.string.sound_stream,
         icon = R.drawable.stream,
         audioSource = R.raw.nature_stream,
         type = "Nature"
     )
 
     data object Storm : CardItems(
-        title = "Storm",
+        titleResId = R.string.sound_storm,
         icon = R.drawable.storm,
         audioSource = R.raw.nature_storm,
         type = "Nature"
     )
 
     data object Birds : CardItems(
-        title = "Birds",
+        titleResId = R.string.sound_birds,
         icon = R.drawable.birds,
         audioSource = R.raw.nature_birds,
         type = "Nature"
     )
 
-    /*
-    Travel
-     */
-
     data object Train : CardItems(
-        title = "Train",
+        titleResId = R.string.sound_train,
         icon = R.drawable.train,
         audioSource = R.raw.travel_train,
         type = "Travel",
@@ -75,25 +79,21 @@ sealed class CardItems(
     )
 
     data object Boat : CardItems(
-        title = "Boat",
+        titleResId = R.string.sound_boat,
         icon = R.drawable.sailboat,
         audioSource = R.raw.travel_boat,
         type = "Travel"
     )
 
     data object City : CardItems(
-        title = "City",
+        titleResId = R.string.sound_city,
         icon = R.drawable.city,
         audioSource = R.raw.travel_city,
         type = "Travel"
     )
 
-
-    /*
-    Interiors
-     */
     data object CoffeeShop : CardItems(
-        title = "Coffee Shop",
+        titleResId = R.string.sound_coffee_shop,
         icon = R.drawable.coffee,
         audioSource = R.raw.indoor_interior_coffeeshop,
         type = "Interiors",
@@ -101,25 +101,21 @@ sealed class CardItems(
     )
 
     data object FirePlace : CardItems(
-        title = "Fireplace",
+        titleResId = R.string.sound_fireplace,
         icon = R.drawable.fireplace,
         audioSource = R.raw.indoor_interior_fireplace,
         type = "Interiors"
     )
 
     data object BusyRestaurant : CardItems(
-        title = "Busy Restaurant",
+        titleResId = R.string.sound_busy_restaurant,
         icon = R.drawable.food_delivery,
         audioSource = R.raw.indoor_busy_restaurant,
         type = "Interiors"
     )
 
-
-    /*
-    Noise
-     */
     data object PinkNoise : CardItems(
-        title = "Pink Noise",
+        titleResId = R.string.sound_pink_noise,
         icon = R.drawable.pink_noise,
         audioSource = R.raw.noise_pink_noise,
         type = "Noise",
@@ -127,19 +123,29 @@ sealed class CardItems(
     )
 
     data object WhiteNoise : CardItems(
-        title = "White Noise",
+        titleResId = R.string.sound_white_noise,
         icon = R.drawable.white_noise,
         audioSource = R.raw.noise_white_noise,
         type = "Noise"
     )
 
-    /*
-    custom
-     */
     data object Custom : CardItems(
-        title = "",
+        titleResId = R.string.empty_string,
         icon = R.drawable.white_noise,
         audioSource = R.raw.noise_white_noise,
         type = "Custom"
+    )
+
+    data class CustomCardItem(
+        val id: Int,
+        val displayName: String,
+        val soundFilePath: String
+    ) : CardItems(
+        titleResId = R.string.empty_string,
+        icon = R.drawable.white_noise,
+        audioSource = R.raw.noise_white_noise,
+        type = "Custom",
+        customSoundId = id,
+        filePath = soundFilePath
     )
 }

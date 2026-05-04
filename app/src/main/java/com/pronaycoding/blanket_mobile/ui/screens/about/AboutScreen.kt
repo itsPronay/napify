@@ -15,12 +15,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
@@ -33,10 +31,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
+import com.pronaycoding.blanket_mobile.BuildConfig
 import com.pronaycoding.blanket_mobile.R
 
 
@@ -48,10 +47,13 @@ fun AboutScreen(
     val context = LocalContext.current
     Scaffold(topBar = {
         TopAppBar(title = {
-            Text(text = "About us")
+            Text(text = stringResource(R.string.about_title))
         }, navigationIcon = {
             IconButton(onClick = { onBackPressed.invoke() }) {
-                Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "")
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = stringResource(R.string.content_desc_back)
+                )
             }
         })
     }) {
@@ -70,16 +72,16 @@ fun AboutScreen(
                 painter = painterResource(
                     id = R.drawable.logo
                 ),
-                contentDescription = "",
+                contentDescription = stringResource(R.string.content_desc_logo),
             )
 
             Text(
                 modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 16.dp),
-                text = "Napify",
+                text = stringResource(R.string.app_title),
                 style = MaterialTheme.typography.titleLarge
             )
             Text(
-                text = "Listen to different sounds. Improve focus and increase your productivity.",
+                text = stringResource(R.string.app_description),
                 color = MaterialTheme.colorScheme.inverseSurface.copy(0.5f),
                 textAlign = TextAlign.Center
             )
@@ -95,7 +97,8 @@ fun AboutScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "App Version 1.0", style = MaterialTheme.typography.bodyLarge
+                        text = stringResource(R.string.about_version, BuildConfig.VERSION_NAME),
+                        style = MaterialTheme.typography.bodyLarge
                     )
                 }
             }
@@ -110,7 +113,7 @@ fun AboutScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "Inspired by Rafael Mardojai's Blanket, which is originally a GNOME application.",
+                        text = stringResource(R.string.inspired_text),
                     )
                 }
             }
@@ -126,12 +129,15 @@ fun AboutScreen(
                     } catch (e: ActivityNotFoundException) {
                         Toast.makeText(
                             context,
-                            "No application can handle this request. Please install a web browser.",
+                            context.getString(R.string.no_browser_installed),
                             Toast.LENGTH_LONG
                         ).show()
                     } catch (e: Exception) {
-                        Toast.makeText(context, "An unexpected error occurred.", Toast.LENGTH_LONG)
-                            .show()
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.error_unexpected),
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 }, elevation = CardDefaults.cardElevation(10.dp), modifier = Modifier.fillMaxWidth()
             ) {
@@ -139,10 +145,11 @@ fun AboutScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "Source code", style = MaterialTheme.typography.bodyLarge
+                        text = stringResource(R.string.about_source_code),
+                        style = MaterialTheme.typography.bodyLarge
                     )
                     Text(
-                        text = "View source code of this app in github",
+                        text = stringResource(R.string.about_source_code_subtitle),
                         color = MaterialTheme.colorScheme.inverseSurface.copy(0.5f),
                     )
                 }

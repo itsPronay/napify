@@ -21,27 +21,22 @@ import androidx.compose.ui.unit.dp
 fun TitleCardView(
     text: String
 ) {
-    Card(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 10.dp, start = 8.dp)
-            .padding(8.dp),
-
-        colors = CardDefaults.cardColors(
-            containerColor = Color.Transparent
-        )
+            .padding(top = 20.dp, bottom = 12.dp, start = 4.dp)
     ) {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Text(
-                text = text,
-                fontFamily = FontFamily.Monospace,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF27a157),
-                style = MaterialTheme.typography.titleLarge
-            )
-        }
+        Text(
+            text = text,
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.primary,
+            style = MaterialTheme.typography.titleLarge
+        )
+        HorizontalDivider(
+            modifier = Modifier.padding(top = 8.dp),
+            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+            thickness = 2.dp
+        )
     }
 }
 
