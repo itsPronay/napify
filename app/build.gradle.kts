@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.google.ksp)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.google.firebase.crashlytics)
 }
 
 android {
@@ -23,9 +25,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("boolean", "CUSTOM_SOUNDS_PREMIUM_LOCKED", "false")
+        }
         release {
             isShrinkResources = true
             isMinifyEnabled = true
+            buildConfigField("boolean", "CUSTOM_SOUNDS_PREMIUM_LOCKED", "true")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -74,6 +80,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.runtime.compose.android)
+    implementation(libs.firebase.crashlytics)
 //    implementation(libs.androidx.material3.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -84,31 +91,31 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     //navigation
-    val nav_version = "2.7.7"
-    implementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation(libs.androidx.navigation.compose)
 
     //Exoplayer
-    implementation("androidx.media3:media3-exoplayer:1.3.1")
-    implementation("androidx.media3:media3-exoplayer-dash:1.3.1")
-    implementation("androidx.media3:media3-ui:1.3.1")
-
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.exoplayer.dash)
+    implementation(libs.androidx.media3.ui)
 
     //await
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+    implementation (libs.kotlinx.coroutines.core)
+    implementation (libs.kotlinx.coroutines.android)
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
 //    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
 
     // Koin
-    implementation("io.insert-koin:koin-android:3.5.6")
-    implementation("io.insert-koin:koin-androidx-compose:3.5.6")
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
 
     // extra icons
-    implementation("androidx.compose.material:material-icons-extended:1.5.1")
+    implementation(libs.androidx.compose.material.icons.extended)
 
     // Room Database (KSP avoids Kotlin 2.x + kapt processor issues)
-    val room_version = "2.7.0-alpha08"
-    implementation("androidx.room:room-runtime:$room_version")
-    ksp("androidx.room:room-compiler:$room_version")
-    implementation("androidx.room:room-ktx:$room_version")
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+
+    implementation(libs.billing)
+    implementation(libs.billing.ktx)
 }

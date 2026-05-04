@@ -20,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Blanketmobile"
         tools:targetApi="35">
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -33,12 +36,12 @@
         </activity>
 
         <service
-            android:name=".playback.BlankeeMediaPlaybackService"
+            android:name=".core.service.playback.BlankeeMediaPlaybackService"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback" />
 
         <receiver
-            android:name=".playback.MediaPlaybackActionReceiver"
+            android:name=".core.service.playback.MediaPlaybackActionReceiver"
             android:exported="false" />
     </application>
 

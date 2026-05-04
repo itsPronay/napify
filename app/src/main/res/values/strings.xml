@@ -58,6 +58,17 @@
     <string name="language_spanish">Spanish</string>
 
     <string name="add_custom_sound">Add custom sound</string>
+    <string name="custom_sounds_premium_message">Custom sounds are part of Premium. Unlock them with a one-time purchase.</string>
+    <string name="buy_premium">Buy Premium</string>
+    <string name="content_desc_buy_premium">Buy Premium to unlock custom sounds</string>
+    <string name="restore_purchases">Restore purchases</string>
+    <string name="premium_active">Premium is active. Thank you for your support.</string>
+    <string name="settings_section_premium">Premium</string>
+    <string name="billing_not_ready">Billing is not ready yet. Try again in a moment.</string>
+    <string name="billing_product_not_loaded">Store listing not loaded. Check your connection and try again.</string>
+    <string name="billing_launch_failed">Could not open the purchase screen.</string>
+    <string name="billing_restored">Purchases restored.</string>
+    <string name="billing_restore_none">No active purchases found for this account.</string>
     <string name="custom_sound_default_name">Custom %1$d</string>
     <string name="sound_added">Sound added: %1$s</string>
     <string name="could_not_add_sound">Could not add sound</string>

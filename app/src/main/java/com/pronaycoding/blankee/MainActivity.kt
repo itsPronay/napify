@@ -15,12 +15,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import com.pronaycoding.blankee.common.components.EnjoyBlankeePrompt
-import com.pronaycoding.blankee.core.PreferenceManagerRepositoryImpl
-import com.pronaycoding.blankee.core.constants.AppConstants
-import com.pronaycoding.blankee.core.locale.AppLanguageStore
-import com.pronaycoding.blankee.ui.nav.Navigation
-import com.pronaycoding.blankee.ui.theme.BlankeeAppTheme
+import com.pronaycoding.blankee.core.common.Constants
+import com.pronaycoding.blankee.core.ui.components.EnjoyBlankeePrompt
+import com.pronaycoding.blankee.core.ui.theme.BlankeeAppTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
@@ -33,15 +30,18 @@ class MainActivity : ComponentActivity() {
     private val showNotificationPrimerFlow = MutableStateFlow(false)
 
     override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(AppLanguageStore.wrapContext(newBase))
+        super.attachBaseContext(_root_ide_package_.com.pronaycoding.blankee.core.datastore.PreferenceManagerRepositoryImpl.wrapContextWithStoredLanguage(newBase))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val preferenceManager = PreferenceManagerRepositoryImpl(this)
+        val preferenceManager =
+            _root_ide_package_.com.pronaycoding.blankee.core.datastore.PreferenceManagerRepositoryImpl(
+                this
+            )
         lifecycleScope.launch {
             val launchCount = preferenceManager.incrementLaunchCount()
-            val shouldShowEnjoyPrompt = launchCount == AppConstants.ENJOY_PROMPT_TRIGGER_LAUNCH &&
+            val shouldShowEnjoyPrompt = launchCount == Constants.ENJOY_PROMPT_TRIGGER_LAUNCH &&
                 !preferenceManager.isEnjoyPromptShown()
             shouldShowEnjoyPromptFlow.value = shouldShowEnjoyPrompt
         }
