@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Napify</string>
-    <string name="app_title">Napify</string>
+    <string name="app_name">Blankee</string>
+    <string name="app_title">Blankee</string>
     <string name="app_subtitle">Relax and focus</string>
 
     <string name="menu_settings">Settings</string>
@@ -92,6 +92,8 @@
     <string name="presets_save_mix">Save current mix</string>
     <string name="preset_load">Load</string>
     <string name="preset_delete_desc">Delete preset</string>
+    <string name="preset_delete_confirm_title">Delete preset?</string>
+    <string name="preset_delete_confirm_message">Delete \"%1$s\" permanently?</string>
     <string name="preset_untitled">Untitled mix</string>
     <string name="preset_saved">Preset saved</string>
     <string name="preset_nothing_to_save">Turn up at least one sound before saving.</string>
@@ -113,11 +115,44 @@
     <string name="timer_cancel_confirm_message">Do you want to stop the current timer?</string>
 
     <string name="notification_channel_name">Playback</string>
-    <string name="notification_channel_desc">Shows when your Napify mix is active</string>
+    <string name="notification_channel_desc">Shows when your Blankee mix is active</string>
     <string name="notification_playing">Mix playing</string>
     <string name="notification_paused">Mix paused</string>
     <string name="notification_action_play">Play</string>
     <string name="notification_action_pause">Pause</string>
+    <string name="notification_primer_title">Allow notifications?</string>
+    <string name="notification_primer_message">Notifications keep your playback controls available while sounds are running.</string>
+    <string name="notification_primer_grant">Grant</string>
+    <string name="notification_primer_continue_anyway">Continue anyway</string>
+
+    <string name="enjoy_prompt_title">Enjoying Blankee?</string>
+    <string name="enjoy_prompt_message">If you like it, would you like to star the project on GitHub?</string>
+    <string name="enjoy_prompt_yes">Yes</string>
+    <string name="enjoy_prompt_no">No</string>
+    <string name="star_github_title">Star on GitHub</string>
+    <string name="star_github_message">It helps a lot and keeps the project growing.</string>
+    <string name="star_github_confirm">Star now</string>
+    <string name="star_github_later">Maybe later</string>
+
+    <string name="onboarding_title">Welcome to Blankee</string>
+    <string name="onboarding_subtitle">A quick tour to get you started.</string>
+    <string name="onboarding_feature_mix_title">Mix relaxing sounds</string>
+    <string name="onboarding_feature_mix_body">Combine multiple sounds and control volume to create your perfect ambience.</string>
+    <string name="onboarding_feature_timer_title">Sleep timer</string>
+    <string name="onboarding_feature_timer_body">Set a timer so your mix stops automatically.</string>
+    <string name="onboarding_feature_presets_title">Presets</string>
+    <string name="onboarding_feature_presets_body">Save your favorite mixes and load them anytime.</string>
+    <string name="onboarding_feature_custom_title">Custom sounds</string>
+    <string name="onboarding_feature_custom_body">Import your own audio files and add them to your mix.</string>
+    <string name="onboarding_language_title">Choose language</string>
+    <string name="onboarding_language_body">You can change this later in Settings.</string>
+    <string name="onboarding_back">Back</string>
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_start">Start</string>
+    <string name="settings_section_others">Others</string>
+    <string name="settings_report_bug_feature">Report a bug or request a feature</string>
+    <string name="settings_report_bug_feature_hint">Open the GitHub repository to create an issue.</string>
+    <string name="made_with_love_by_pronay">Made with love by Pronay</string>
 
     <string name="empty_string" translatable="false"></string>
 </resources>

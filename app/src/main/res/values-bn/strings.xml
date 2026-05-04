@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Napify</string>
-    <string name="app_title">Napify</string>
+    <string name="app_name">Blankee</string>
+    <string name="app_title">Blankee</string>
     <string name="app_subtitle">আরাম করুন এবং মনোযোগ দিন</string>
 
     <string name="menu_settings">সেটিংস</string>
@@ -94,9 +94,18 @@
     <string name="dialog_cancel">বাতিল</string>
 
     <string name="notification_channel_name">প্লেব্যাক</string>
-    <string name="notification_channel_desc">আপনার Napify মিক্স সক্রিয় থাকলে দেখান</string>
+    <string name="notification_channel_desc">আপনার Blankee মিক্স সক্রিয় থাকলে দেখান</string>
     <string name="notification_playing">মিক্স বাজছে</string>
     <string name="notification_paused">মিক্স বন্ধ</string>
     <string name="notification_action_play">চালু</string>
     <string name="notification_action_pause">বিরতি</string>
+
+    <string name="enjoy_prompt_title">Blankee কেমন লাগছে?</string>
+    <string name="enjoy_prompt_message">আপনার পছন্দ হলে, GitHub-এ প্রোজেক্টটা স্টার করবেন?</string>
+    <string name="enjoy_prompt_yes">হ্যাঁ</string>
+    <string name="enjoy_prompt_no">না</string>
+    <string name="star_github_title">GitHub-এ স্টার দিন</string>
+    <string name="star_github_message">এটা আমাদের অনেক সাহায্য করে এবং প্রোজেক্ট এগোতে সহায়তা করে।</string>
+    <string name="star_github_confirm">এখনই স্টার দিন</string>
+    <string name="star_github_later">পরে</string>
 </resources>

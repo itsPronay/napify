@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Napify</string>
-    <string name="app_title">Napify</string>
+    <string name="app_name">Blankee</string>
+    <string name="app_title">Blankee</string>
     <string name="app_subtitle">Relájate y concéntrate</string>
 
     <string name="menu_settings">Ajustes</string>
@@ -94,9 +94,18 @@
     <string name="dialog_cancel">Cancelar</string>
 
     <string name="notification_channel_name">Reproducción</string>
-    <string name="notification_channel_desc">Se muestra cuando tu mezcla de Napify está activa</string>
+    <string name="notification_channel_desc">Se muestra cuando tu mezcla de Blankee está activa</string>
     <string name="notification_playing">Mezcla en reproducción</string>
     <string name="notification_paused">Mezcla en pausa</string>
     <string name="notification_action_play">Reproducir</string>
     <string name="notification_action_pause">Pausar</string>
+
+    <string name="enjoy_prompt_title">¿Te está gustando Blankee?</string>
+    <string name="enjoy_prompt_message">Si te gusta, ¿quieres darle una estrella al proyecto en GitHub?</string>
+    <string name="enjoy_prompt_yes">Sí</string>
+    <string name="enjoy_prompt_no">No</string>
+    <string name="star_github_title">Dale una estrella en GitHub</string>
+    <string name="star_github_message">Ayuda mucho y hace que el proyecto siga creciendo.</string>
+    <string name="star_github_confirm">Dar estrella</string>
+    <string name="star_github_later">Quizá después</string>
 </resources>

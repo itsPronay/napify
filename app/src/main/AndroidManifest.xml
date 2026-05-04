@@ -33,7 +33,7 @@
         </activity>
 
         <service
-            android:name=".playback.NapifyMediaPlaybackService"
+            android:name=".playback.BlankeeMediaPlaybackService"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback" />
 
