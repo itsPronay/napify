@@ -2,9 +2,29 @@
 plugins {
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
-
-    //hilt
-    id("com.google.dagger.hilt.android") version "2.54" apply false
     alias(libs.plugins.compose.compiler) apply false
+    alias(libs.plugins.google.ksp) apply false
+    alias(libs.plugins.google.gms.google.services) apply false
+    alias(libs.plugins.google.firebase.crashlytics) apply false
+    alias(libs.plugins.spotless)
+}
 
+spotless {
+    kotlin {
+        target("**/src/**/*.kt")
+        targetExclude("**/build/**")
+        ktlint(libs.versions.ktlint.get())
+            .setEditorConfigPath("$rootDir/.editorconfig")
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+
+    kotlinGradle {
+        target("*.gradle.kts", "**/*.gradle.kts")
+        targetExclude("**/build/**")
+        ktlint(libs.versions.ktlint.get())
+            .setEditorConfigPath("$rootDir/.editorconfig")
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
 }

@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Napify - Listen to different sounds"
+rootProject.name = "Blankee - Listen to different sounds"
 include(":app")

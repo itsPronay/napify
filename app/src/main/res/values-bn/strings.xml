@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Blankee</string>
+    <string name="app_title">Blankee</string>
+    <string name="app_subtitle">আরাম করুন এবং মনোযোগ দিন</string>
+
+    <string name="menu_settings">সেটিংস</string>
+    <string name="menu_about">সম্পর্কে</string>
+    <string name="menu_pause">শব্দ বন্ধ করুন</string>
+    <string name="menu_play">শব্দ চালান</string>
+    <string name="menu_timer">ঘুমের টাইমার</string>
+    <string name="menu_reset">শব্দ রিসেট করুন</string>
+    <string name="content_desc_more_options">আরও বিকল্প</string>
+
+    <string name="tab_home">হোম</string>
+    <string name="tab_settings">সেটিংস</string>
+
+    <string name="category_nature">প্রকৃতি</string>
+    <string name="category_travel">ভ্রমণ</string>
+    <string name="category_indoor">ইনডোর</string>
+    <string name="category_interiors">ইন্টেরিয়র</string>
+    <string name="category_noise">শোর</string>
+    <string name="category_custom">কাস্টম শব্দ</string>
+
+    <string name="sound_rain">বৃষ্টি</string>
+    <string name="sound_wind">বাতাস</string>
+    <string name="sound_storm">ঝড়</string>
+    <string name="sound_wave">ঢেউ</string>
+    <string name="sound_stream">স্রোত</string>
+    <string name="sound_birds">পাখির ডাক</string>
+    <string name="sound_summer_night">গ্রীষ্মের রাত</string>
+
+    <string name="sound_train">ট্রেন</string>
+    <string name="sound_boat">নৌকা</string>
+    <string name="sound_city">শহর</string>
+
+    <string name="sound_coffee_shop">কফি শপ</string>
+    <string name="sound_fireplace">আগুনকুণ্ড</string>
+    <string name="sound_busy_restaurant">ব্যস্ত রেস্তোরাঁ</string>
+
+    <string name="sound_pink_noise">পিঙ্ক নয়েজ</string>
+    <string name="sound_white_noise">হোয়াইট নয়েজ</string>
+
+    <string name="settings_title">সেটিংস</string>
+    <string name="settings_section_display">ডিসপ্লে</string>
+    <string name="settings_section_language">ভাষা</string>
+    <string name="settings_theme">থিম</string>
+    <string name="settings_theme_hint">ডিফল্ট গাঢ়। সিস্টেম আপনার ডিভাইসের লাইট/ডার্ক মোড অনুসরণ করে।</string>
+    <string name="settings_language">ভাষা</string>
+    <string name="settings_language_hint">সঙ্গে সঙ্গে প্রযোজ্য। নতুন ভাষা লোড করতে অ্যাপ পুনরায় শুরু হয়।</string>
+    <string name="language_system">সিস্টেম ভাষা ব্যবহার করুন</string>
+    <string name="theme_light">হালকা</string>
+    <string name="theme_dark">গাঢ়</string>
+    <string name="theme_system">সিস্টেম অনুযায়ী</string>
+    <string name="language_english">ইংরেজি</string>
+    <string name="language_bengali">বাংলা</string>
+    <string name="language_hindi">হিন্দি</string>
+    <string name="language_spanish">স্প্যানিশ</string>
+
+    <string name="add_custom_sound">কাস্টম শব্দ যোগ করুন</string>
+    <string name="custom_sounds_premium_message">কাস্টম শব্দ প্রিমিয়ামের অংশ। একবার কিনে সেগুলি আনলক করুন।</string>
+    <string name="buy_premium">প্রিমিয়াম কিনুন</string>
+    <string name="content_desc_buy_premium">কাস্টম শব্দ আনলক করতে প্রিমিয়াম কিনুন</string>
+    <string name="restore_purchases">ক্রয় পুনরুদ্ধার করুন</string>
+    <string name="premium_active">প্রিমিয়াম সক্রিয়। আপনার সমর্থনের জন্য ধন্যবাদ।</string>
+    <string name="settings_section_premium">প্রিমিয়াম</string>
+    <string name="billing_not_ready">বিলিং এখনও প্রস্তুত নয়। কয়েক মুহূর্তে আবার চেষ্টা করুন।</string>
+    <string name="billing_product_not_loaded">স্টোর তালিকা লোড হয়নি। আপনার সংযোগ পরীক্ষা করুন এবং আবার চেষ্টা করুন।</string>
+    <string name="billing_launch_failed">ক্রয় পর্দা খুলতে পারেনি।</string>
+    <string name="billing_restored">ক্রয় পুনরুদ্ধার করা হয়েছে।</string>
+    <string name="billing_restore_none">এই অ্যাকাউন্টের জন্য কোনো সক্রিয় ক্রয় পাওয়া যায়নি।</string>
+    <string name="custom_sound_default_name">Custom %1$d</string>
+    <string name="sound_added">শব্দ যোগ হয়েছে: %1$s</string>
+    <string name="could_not_add_sound">শব্দ যোগ করা যায়নি</string>
+    <string name="sounds_reset">সব শব্দ রিসেট হয়েছে</string>
+    <string name="cant_play_sound_on_pause">বিরত অবস্থায় শব্দ চালানো যাবে না</string>
+    <string name="delete_sound">কাস্টম শব্দ মুছুন</string>
+    <string name="delete_sound_dialog_title">শব্দ মুছবেন?</string>
+    <string name="delete_sound_dialog_message">কাস্টম শব্দ থেকে \"%1$s\" সরান?</string>
+    <string name="delete_sound_confirm">মুছে দিন</string>
+    <string name="rename_sound">শব্দ পুনঃনাম করুন</string>
+    <string name="sound_name_label">শব্দের নাম</string>
+    <string name="rename_sound_confirm">পুনঃনাম করুন</string>
+
+    <string name="no_browser_installed">এই লিঙ্ক খুলতে কোনো অ্যাপ নেই। দয়া করে একটি ওয়েব ব্রাউজার ইনস্টল করুন।</string>
+    <string name="error_unexpected">একটি অপ্রত্যাশিত ত্রুটি ঘটেছে।</string>
+
+    <string name="inspired_text">রাফায়েল মার্দোজাই-এর Blanket থেকে অনুপ্রাণিত, যা মূলত একটি GNOME অ্যাপ্লিকেশন।</string>
+    <string name="app_description">বিভিন্ন শব্দ শুনুন। মনোযোগ বাড়ান এবং উৎপাদনশীলতা বৃদ্ধি করুন।</string>
+
+    <string name="about_title">আমাদের সম্পর্কে</string>
+    <string name="about_version">সংস্করণ %1$s</string>
+    <string name="about_source_code">সোর্স কোড</string>
+    <string name="about_source_code_subtitle">GitHub-এ এই অ্যাপের সোর্স কোড দেখুন</string>
+    <string name="content_desc_back">পিছনে</string>
+    <string name="content_desc_logo">অ্যাপ লোগো</string>
+    <string name="content_desc_sound_icon">শব্দের আইকন</string>
+    <string name="content_desc_add_custom_sound">কাস্টম শব্দ যোগ করুন</string>
+
+    <string name="presets_title">প্রিসেট</string>
+    <string name="presets_hint">আপনার মিক্স সংরক্ষণ করুন, পরে যেকোনো সময় লোড করুন।</string>
+    <string name="presets_empty">এখনও কোনো প্রিসেট নেই।</string>
+    <string name="presets_save_mix">বর্তমান মিক্স সংরক্ষণ করুন</string>
+    <string name="preset_load">লোড</string>
+    <string name="preset_delete_desc">প্রিসেট মুছুন</string>
+    <string name="preset_delete_confirm_title">প্রিসেট মুছবেন?</string>
+    <string name="preset_delete_confirm_message">\"%1$s\" স্থায়ীভাবে মুছবেন?</string>
+    <string name="preset_untitled">শিরোনামহীন মিক্স</string>
+    <string name="preset_saved">প্রিসেট সংরক্ষিত হয়েছে</string>
+    <string name="preset_nothing_to_save">সংরক্ষণের আগে অন্তত একটি শব্দের ভলিউম বাড়ান।</string>
+    <string name="save_preset_dialog_title">মিক্স সংরক্ষণ</string>
+    <string name="preset_name_label">প্রিসেটের নাম</string>
+    <string name="preset_name_hint">খালি রেখে গেলে \"শিরোনামহীন মিক্স\" হিসাবে সংরক্ষিত হবে</string>
+    <string name="preset_dialog_save">সংরক্ষণ</string>
+    <string name="dialog_cancel">বাতিল</string>
+    <string name="timer_dialog_title">ঘুমের টাইমার সেট করুন</string>
+    <string name="timer_custom">কাস্টম</string>
+    <string name="timer_custom_label">মিনিট</string>
+    <string name="timer_minutes_format">%1$d মি</string>
+    <string name="timer_start">শুরু করুন</string>
+    <string name="timer_set">টাইমার সেট করা হয়েছে %1$d মিনিটের জন্য</string>
+    <string name="timer_invalid_input">টাইমারের জন্য একটি বৈধ সময়কাল প্রবেশ করুন</string>
+    <string name="sleep_timer_finished">টাইমার শেষ। শব্দ বন্ধ করা হয়েছে।</string>
+    <string name="timer_countdown_label">ঘুমের টাইমার: %1$s</string>
+    <string name="timer_cancel">টাইমার বাতিল করুন</string>
+    <string name="timer_cancel_confirm_title">ঘুমের টাইমার বাতিল করবেন?</string>
+    <string name="timer_cancel_confirm_message">আপনি বর্তমান টাইমার থামাতে চান?</string>
+
+    <string name="notification_channel_name">প্লেব্যাক</string>
+    <string name="notification_channel_desc">আপনার Blankee মিক্স সক্রিয় থাকলে দেখান</string>
+    <string name="notification_playing">মিক্স বাজছে</string>
+    <string name="notification_paused">মিক্স বন্ধ</string>
+    <string name="notification_action_play">চালু</string>
+    <string name="notification_action_pause">বিরতি</string>
+    <string name="notification_primer_title">বিজ্ঞপ্তি অনুমতি দেবেন?</string>
+    <string name="notification_primer_message">বিজ্ঞপ্তিগুলি শব্দ চালাকালীন আপনার প্লেব্যাক নিয়ন্ত্রণগুলি উপলব্ধ রাখে।</string>
+    <string name="notification_primer_grant">অনুমতি দিন</string>
+    <string name="notification_primer_continue_anyway">তবুও চালিয়ে যান</string>
+
+    <string name="enjoy_prompt_title">Blankee কেমন লাগছে?</string>
+    <string name="enjoy_prompt_message">আপনার পছন্দ হলে, GitHub-এ প্রোজেক্টটা স্টার করবেন?</string>
+    <string name="enjoy_prompt_yes">হ্যাঁ</string>
+    <string name="enjoy_prompt_no">না</string>
+    <string name="star_github_title">GitHub-এ স্টার দিন</string>
+    <string name="star_github_message">এটা আমাদের অনেক সাহায্য করে এবং প্রোজেক্ট এগোতে সহায়তা করে।</string>
+    <string name="star_github_confirm">এখনই স্টার দিন</string>
+    <string name="star_github_later">পরে</string>
+
+    <string name="onboarding_title">Blankee-তে স্বাগতম</string>
+    <string name="onboarding_subtitle">শুরু করতে দ্রুত ট্যুর।</string>
+    <string name="onboarding_feature_mix_title">শান্তিপূর্ণ শব্দ মিশ্রিত করুন</string>
+    <string name="onboarding_feature_mix_body">একাধিক শব্দ একত্রিত করুন এবং ভলিউম নিয়ন্ত্রণ করে আপনার নিখুঁত পরিবেশ তৈরি করুন।</string>
+    <string name="onboarding_feature_timer_title">ঘুমের টাইমার</string>
+    <string name="onboarding_feature_timer_body">একটি টাইমার সেট করুন যাতে আপনার মিক্স স্বয়ংক্রিয়ভাবে বন্ধ হয়।</string>
+    <string name="onboarding_feature_presets_title">প্রিসেট</string>
+    <string name="onboarding_feature_presets_body">আপনার প্রিয় মিক্সগুলি সংরক্ষণ করুন এবং যেকোনো সময় লোড করুন।</string>
+    <string name="onboarding_feature_custom_title">কাস্টম শব্দ</string>
+    <string name="onboarding_feature_custom_body">আপনার নিজের অডিও ফাইলগুলি আমদানি করুন এবং আপনার মিক্সে যোগ করুন।</string>
+    <string name="onboarding_language_title">ভাষা নির্বাচন করুন</string>
+    <string name="onboarding_language_body">আপনি এটি পরে সেটিংস-এ পরিবর্তন করতে পারেন।</string>
+    <string name="onboarding_back">পিছনে</string>
+    <string name="onboarding_next">পরবর্তী</string>
+    <string name="onboarding_start">শুরু করুন</string>
+    <string name="settings_section_others">অন্যান্য</string>
+    <string name="settings_report_bug_feature">একটি বাগ রিপোর্ট করুন বা বৈশিষ্ট্য অনুরোধ করুন</string>
+    <string name="settings_report_bug_feature_hint">একটি সমস্যা তৈরি করতে GitHub রিপোজিটরি খুলুন।</string>
+    <string name="made_with_love_by_pronay">Pronay দ্বারা ভালোবাসা দিয়ে তৈরি</string>
+
+    <string name="empty_string" translatable="false"></string>
+</resources>
