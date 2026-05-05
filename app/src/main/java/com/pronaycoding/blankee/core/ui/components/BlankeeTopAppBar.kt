@@ -1,25 +1,5 @@
 package com.pronaycoding.blankee.core.ui.components
 
-/**
- * Top app bar components and utilities for the Blankee application.
- *
- * This file contains:
- * - Composable functions for the app's header bar
- * - Preset management dialogs (save, load, delete, rename)
- * - Sleep timer controls
- * - Playback controls (play/pause, reset)
- * - Menu actions for presets
- *
- * The top app bar provides quick access to:
- * - Save current sound mix as preset
- * - Load saved presets
- * - Sleep timer configuration
- * - Play/Pause controls
- * - Settings navigation
- *
- * @see androidx.compose.material3.TopAppBar for Material Design top app bar
- */
-
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -38,7 +18,6 @@ import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Timer
-import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -46,7 +25,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -68,7 +46,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.pronaycoding.blankee.R
@@ -105,37 +82,37 @@ fun BlankeeTopAppBar(
     var presetPendingDeleteId by rememberSaveable { mutableStateOf<Long?>(null) }
     var presetPendingDeleteName by rememberSaveable { mutableStateOf("") }
 
-    if (showSavePresetDialog) {
-        AlertDialog(
-            onDismissRequest = { showSavePresetDialog = false },
-            title = { Text(stringResource(R.string.save_preset_dialog_title)) },
-            text = {
-                OutlinedTextField(
-                    value = presetNameInput,
-                    onValueChange = { presetNameInput = it },
-                    label = { Text(stringResource(R.string.preset_name_label)) },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        viewModel.savePreset(presetNameInput)
-                        presetNameInput = ""
-                        showSavePresetDialog = false
-                    }
-                ) {
-                    Text(stringResource(R.string.preset_dialog_save))
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showSavePresetDialog = false }) {
-                    Text(stringResource(R.string.dialog_cancel))
-                }
-            }
-        )
-    }
+//    if (showSavePresetDialog) {
+//        AlertDialog(
+//            onDismissRequest = { showSavePresetDialog = false },
+//            title = { Text(stringResource(R.string.save_preset_dialog_title)) },
+//            text = {
+//                OutlinedTextField(
+//                    value = presetNameInput,
+//                    onValueChange = { presetNameInput = it },
+//                    label = { Text(stringResource(R.string.preset_name_label)) },
+//                    singleLine = true,
+//                    modifier = Modifier.fillMaxWidth()
+//                )
+//            },
+//            confirmButton = {
+//                TextButton(
+//                    onClick = {
+//                        viewModel.savePreset(presetNameInput)
+//                        presetNameInput = ""
+//                        showSavePresetDialog = false
+//                    }
+//                ) {
+//                    Text(stringResource(R.string.preset_dialog_save))
+//                }
+//            },
+//            dismissButton = {
+//                TextButton(onClick = { showSavePresetDialog = false }) {
+//                    Text(stringResource(R.string.dialog_cancel))
+//                }
+//            }
+//        )
+//    }
 
     if (showTimerDialog) {
         AlertDialog(
@@ -249,35 +226,35 @@ fun BlankeeTopAppBar(
         )
     }
 
-    if (presetPendingDeleteId != null) {
-        AlertDialog(
-            onDismissRequest = { presetPendingDeleteId = null },
-            title = { Text(stringResource(R.string.preset_delete_confirm_title)) },
-            text = {
-                Text(
-                    stringResource(
-                        R.string.preset_delete_confirm_message,
-                        presetPendingDeleteName
-                    )
-                )
-            },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        viewModel.deletePreset(presetPendingDeleteId!!)
-                        presetPendingDeleteId = null
-                    }
-                ) {
-                    Text(stringResource(R.string.delete_sound_confirm))
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { presetPendingDeleteId = null }) {
-                    Text(stringResource(R.string.dialog_cancel))
-                }
-            }
-        )
-    }
+//    if (presetPendingDeleteId != null) {
+//        AlertDialog(
+//            onDismissRequest = { presetPendingDeleteId = null },
+//            title = { Text(stringResource(R.string.preset_delete_confirm_title)) },
+//            text = {
+//                Text(
+//                    stringResource(
+//                        R.string.preset_delete_confirm_message,
+//                        presetPendingDeleteName
+//                    )
+//                )
+//            },
+//            confirmButton = {
+//                TextButton(
+//                    onClick = {
+//                        viewModel.deletePreset(presetPendingDeleteId!!)
+//                        presetPendingDeleteId = null
+//                    }
+//                ) {
+//                    Text(stringResource(R.string.delete_sound_confirm))
+//                }
+//            },
+//            dismissButton = {
+//                TextButton(onClick = { presetPendingDeleteId = null }) {
+//                    Text(stringResource(R.string.dialog_cancel))
+//                }
+//            }
+//        )
+//    }
 
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
@@ -384,66 +361,66 @@ fun BlankeeTopAppBar(
                                 }
                             )
                             HorizontalDivider()
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.presets_save_mix)) },
-                                onClick = {
-                                    showDropdown = false
-                                    if (!canSavePreset) {
-                                        Toast.makeText(
-                                            context,
-                                            context.getString(R.string.preset_nothing_to_save),
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    } else {
-                                        presetNameInput = ""
-                                        showSavePresetDialog = true
-                                    }
-                                }
-                            )
-                            HorizontalDivider()
-                            if (presets.isEmpty()) {
-                                DropdownMenuItem(
-                                    text = {
-                                        Text(
-                                            stringResource(R.string.presets_empty),
-                                            style = MaterialTheme.typography.bodySmall,
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                                        )
-                                    },
-                                    onClick = { },
-                                    enabled = false
-                                )
-                            } else {
-                                presets.forEach { preset ->
-                                    DropdownMenuItem(
-                                        text = {
-                                            Text(
-                                                preset.name,
-                                                maxLines = 1,
-                                                overflow = TextOverflow.Ellipsis
-                                            )
-                                        },
-                                        onClick = {
-                                            showDropdown = false
-                                            viewModel.applyPreset(preset)
-                                        },
-                                        trailingIcon = {
-                                            IconButton(
-                                                onClick = {
-                                                    showDropdown = false
-                                                    presetPendingDeleteId = preset.id
-                                                    presetPendingDeleteName = preset.name
-                                                }
-                                            ) {
-                                                Icon(
-                                                    imageVector = Icons.Outlined.Delete,
-                                                    contentDescription = stringResource(R.string.preset_delete_desc)
-                                                )
-                                            }
-                                        }
-                                    )
-                                }
-                            }
+//                            DropdownMenuItem(
+//                                text = { Text(stringResource(R.string.presets_save_mix)) },
+//                                onClick = {
+//                                    showDropdown = false
+//                                    if (!canSavePreset) {
+//                                        Toast.makeText(
+//                                            context,
+//                                            context.getString(R.string.preset_nothing_to_save),
+//                                            Toast.LENGTH_SHORT
+//                                        ).show()
+//                                    } else {
+//                                        presetNameInput = ""
+//                                        showSavePresetDialog = true
+//                                    }
+//                                }
+//                            )
+//                            HorizontalDivider()
+//                            if (presets.isEmpty()) {
+//                                DropdownMenuItem(
+//                                    text = {
+//                                        Text(
+//                                            stringResource(R.string.presets_empty),
+//                                            style = MaterialTheme.typography.bodySmall,
+//                                            color = MaterialTheme.colorScheme.onSurfaceVariant
+//                                        )
+//                                    },
+//                                    onClick = { },
+//                                    enabled = false
+//                                )
+//                            } else {
+//                                presets.forEach { preset ->
+//                                    DropdownMenuItem(
+//                                        text = {
+//                                            Text(
+//                                                preset.name,
+//                                                maxLines = 1,
+//                                                overflow = TextOverflow.Ellipsis
+//                                            )
+//                                        },
+//                                        onClick = {
+//                                            showDropdown = false
+//                                            viewModel.applyPreset(preset)
+//                                        },
+//                                        trailingIcon = {
+//                                            IconButton(
+//                                                onClick = {
+//                                                    showDropdown = false
+//                                                    presetPendingDeleteId = preset.id
+//                                                    presetPendingDeleteName = preset.name
+//                                                }
+//                                            ) {
+//                                                Icon(
+//                                                    imageVector = Icons.Outlined.Delete,
+//                                                    contentDescription = stringResource(R.string.preset_delete_desc)
+//                                                )
+//                                            }
+//                                        }
+//                                    )
+//                                }
+//                            }
                         }
                     }
                 }
@@ -463,3 +440,4 @@ private fun formatRemainingTimerLabel(remainingMillis: Long): String {
         "%02d:%02d".format(minutes, seconds)
     }
 }
+

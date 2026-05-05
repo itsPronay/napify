@@ -16,6 +16,7 @@ import androidx.compose.material3.TextButton
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.pronaycoding.blankee.core.common.Constants
+import com.pronaycoding.blankee.core.datastore.PreferenceManagerRepositoryImpl
 import com.pronaycoding.blankee.core.ui.components.EnjoyBlankeePrompt
 import com.pronaycoding.blankee.core.ui.theme.BlankeeAppTheme
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,13 +31,13 @@ class MainActivity : ComponentActivity() {
     private val showNotificationPrimerFlow = MutableStateFlow(false)
 
     override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(_root_ide_package_.com.pronaycoding.blankee.core.datastore.PreferenceManagerRepositoryImpl.wrapContextWithStoredLanguage(newBase))
+        super.attachBaseContext(PreferenceManagerRepositoryImpl.wrapContextWithStoredLanguage(newBase))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val preferenceManager =
-            _root_ide_package_.com.pronaycoding.blankee.core.datastore.PreferenceManagerRepositoryImpl(
+            PreferenceManagerRepositoryImpl(
                 this
             )
         lifecycleScope.launch {

@@ -33,18 +33,9 @@ import com.pronaycoding.blankee.core.database.entities.PresetEntity
     exportSchema = false
 )
 abstract class BlankeeDatabase : RoomDatabase() {
-    /**
-     * Provides access to custom sound database operations.
-     *
-     * @return CustomSoundDao instance for performing CRUD operations on custom sounds
-     */
+
     abstract fun customSoundDao(): CustomSoundDao
 
-    /**
-     * Provides access to preset database operations.
-     *
-     * @return PresetDao instance for performing CRUD operations on presets
-     */
     abstract fun presetDao(): PresetDao
 
     companion object {
