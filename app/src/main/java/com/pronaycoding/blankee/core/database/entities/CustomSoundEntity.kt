@@ -24,5 +24,5 @@ data class CustomSoundEntity(
     val id: Int = 0,
     val displayName: String,
     val filePath: String,
-    val createdAt: Long = System.currentTimeMillis()
+    val createdAt: Long = System.currentTimeMillis(),
 )

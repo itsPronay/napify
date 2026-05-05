@@ -67,11 +67,12 @@ fun BlankeeTopAppBar(
     val customVolumes by viewModel.customVolumes.collectAsStateWithLifecycle()
     val sleepTimerRemainingMillis by viewModel.sleepTimerRemainingMillis.collectAsStateWithLifecycle()
 
-    val canSavePreset = remember(builtinVolumes, customVolumes) {
-        val until = getCardList().size - 1
-        builtinVolumes.any { (i, v) -> i in 0 until until && v > 0f } ||
+    val canSavePreset =
+        remember(builtinVolumes, customVolumes) {
+            val until = getCardList().size - 1
+            builtinVolumes.any { (i, v) -> i in 0 until until && v > 0f } ||
                 customVolumes.any { (_, v) -> v > 0f }
-    }
+        }
 
     var showDropdown by rememberSaveable { mutableStateOf(false) }
     var showSavePresetDialog by rememberSaveable { mutableStateOf(false) }
@@ -122,11 +123,12 @@ fun BlankeeTopAppBar(
                     Icon(
                         imageVector = Icons.Default.Timer,
                         contentDescription = null,
-                        tint = if (sleepTimerRemainingMillis != null) {
-                            MaterialTheme.colorScheme.error
-                        } else {
-                            MaterialTheme.colorScheme.primary
-                        }
+                        tint =
+                            if (sleepTimerRemainingMillis != null) {
+                                MaterialTheme.colorScheme.error
+                            } else {
+                                MaterialTheme.colorScheme.primary
+                            },
                     )
                     Spacer(modifier = Modifier.size(8.dp))
                     Text(stringResource(R.string.timer_dialog_title))
@@ -136,13 +138,14 @@ fun BlankeeTopAppBar(
                 Column {
                     if (sleepTimerRemainingMillis != null) {
                         Text(
-                            text = stringResource(
-                                R.string.timer_countdown_label,
-                                formatRemainingTimerLabel(sleepTimerRemainingMillis ?: 0L)
-                            ),
+                            text =
+                                stringResource(
+                                    R.string.timer_countdown_label,
+                                    formatRemainingTimerLabel(sleepTimerRemainingMillis ?: 0L),
+                                ),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.error,
-                            modifier = Modifier.padding(bottom = 10.dp)
+                            modifier = Modifier.padding(bottom = 10.dp),
                         )
                     }
 
@@ -150,31 +153,33 @@ fun BlankeeTopAppBar(
                     timerOptions.forEach { option ->
                         val isSelected = selectedTimerOption == option
                         Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 4.dp)
-                                .background(
-                                    color = if (isSelected) {
-                                        MaterialTheme.colorScheme.primary.copy(alpha = 0.10f)
-                                    } else {
-                                        MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.35f)
-                                    },
-                                    shape = RoundedCornerShape(12.dp)
-                                )
-                                .clickable { selectedTimerOption = option }
-                                .padding(horizontal = 8.dp, vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 4.dp)
+                                    .background(
+                                        color =
+                                            if (isSelected) {
+                                                MaterialTheme.colorScheme.primary.copy(alpha = 0.10f)
+                                            } else {
+                                                MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.35f)
+                                            },
+                                        shape = RoundedCornerShape(12.dp),
+                                    ).clickable { selectedTimerOption = option }
+                                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically,
                         ) {
                             RadioButton(
                                 selected = isSelected,
-                                onClick = { selectedTimerOption = option }
+                                onClick = { selectedTimerOption = option },
                             )
                             Text(
-                                text = if (option == -1) {
-                                    stringResource(R.string.timer_custom)
-                                } else {
-                                    stringResource(R.string.timer_minutes_format, option)
-                                }
+                                text =
+                                    if (option == -1) {
+                                        stringResource(R.string.timer_custom)
+                                    } else {
+                                        stringResource(R.string.timer_minutes_format, option)
+                                    },
                             )
                         }
                     }
@@ -185,7 +190,7 @@ fun BlankeeTopAppBar(
                             label = { Text(stringResource(R.string.timer_custom_label)) },
                             singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
                         )
                     }
                 }
@@ -193,27 +198,30 @@ fun BlankeeTopAppBar(
             confirmButton = {
                 TextButton(
                     onClick = {
-                        val selectedMinutes = if (selectedTimerOption == -1) {
-                            customTimerInput.toLongOrNull()
-                        } else {
-                            selectedTimerOption.toLong()
-                        }
+                        val selectedMinutes =
+                            if (selectedTimerOption == -1) {
+                                customTimerInput.toLongOrNull()
+                            } else {
+                                selectedTimerOption.toLong()
+                            }
                         if (selectedMinutes == null || selectedMinutes <= 0L) {
-                            Toast.makeText(
-                                context,
-                                context.getString(R.string.timer_invalid_input),
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast
+                                .makeText(
+                                    context,
+                                    context.getString(R.string.timer_invalid_input),
+                                    Toast.LENGTH_SHORT,
+                                ).show()
                             return@TextButton
                         }
                         viewModel.startSleepTimer(selectedMinutes * 60_000L)
-                        Toast.makeText(
-                            context,
-                            context.getString(R.string.timer_set, selectedMinutes),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast
+                            .makeText(
+                                context,
+                                context.getString(R.string.timer_set, selectedMinutes),
+                                Toast.LENGTH_SHORT,
+                            ).show()
                         showTimerDialog = false
-                    }
+                    },
                 ) {
                     Text(stringResource(R.string.timer_start))
                 }
@@ -222,7 +230,7 @@ fun BlankeeTopAppBar(
                 TextButton(onClick = { showTimerDialog = false }) {
                     Text(stringResource(R.string.dialog_cancel))
                 }
-            }
+            },
         )
     }
 
@@ -257,37 +265,42 @@ fun BlankeeTopAppBar(
 //    }
 
     TopAppBar(
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
-            scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainerLow,
-        ),
+        colors =
+            TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+            ),
         scrollBehavior = scrollBehavior,
         title = {
             Text(
                 text = stringResource(R.string.app_title),
                 style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onSurface,
             )
         },
         actions = {
             Row {
-                val btnColors = IconButtonDefaults.filledTonalIconButtonColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer.copy(.1f),
-                    contentColor = MaterialTheme.colorScheme.primaryContainer,
-                )
+                val btnColors =
+                    IconButtonDefaults.filledTonalIconButtonColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer.copy(.1f),
+                        contentColor = MaterialTheme.colorScheme.primaryContainer,
+                    )
                 FilledTonalIconButton(
                     onClick = {
                         viewModel.resetAllSounds()
-                        Toast.makeText(
-                            context,
-                            context.getString(R.string.sounds_reset),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }, colors = btnColors) {
+                        Toast
+                            .makeText(
+                                context,
+                                context.getString(R.string.sounds_reset),
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                    },
+                    colors = btnColors,
+                ) {
                     Icon(
                         imageVector = Icons.Default.Refresh,
                         contentDescription = stringResource(R.string.menu_reset),
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(20.dp),
                     )
                 }
                 Spacer(modifier = Modifier.size(8.dp))
@@ -297,44 +310,50 @@ fun BlankeeTopAppBar(
                     colors = btnColors,
                 ) {
                     Icon(
-                        imageVector = when (canPlay) {
-                            true -> Icons.Default.Pause
-                            false -> Icons.Default.PlayArrow
-                        },
-                        contentDescription = if (canPlay) {
-                            stringResource(R.string.menu_pause)
-                        } else {
-                            stringResource(R.string.menu_play)
-                        },
-                        modifier = Modifier.size(22.dp)
+                        imageVector =
+                            when (canPlay) {
+                                true -> Icons.Default.Pause
+                                false -> Icons.Default.PlayArrow
+                            },
+                        contentDescription =
+                            if (canPlay) {
+                                stringResource(R.string.menu_pause)
+                            } else {
+                                stringResource(R.string.menu_play)
+                            },
+                        modifier = Modifier.size(22.dp),
                     )
                 }
                 Spacer(modifier = Modifier.size(8.dp))
                 FilledTonalIconButton(
                     onClick = { showTimerDialog = true },
                     shape = CircleShape,
-                    colors = IconButtonDefaults.filledTonalIconButtonColors(
-                        containerColor = if (sleepTimerRemainingMillis != null) {
-                            MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.45f)
-                        } else {
-                            MaterialTheme.colorScheme.primaryContainer.copy(.1f)
-                        },
-                        contentColor = if (sleepTimerRemainingMillis != null) {
-                            MaterialTheme.colorScheme.error
-                        } else {
-                            MaterialTheme.colorScheme.primaryContainer
-                        },
-                    ),
+                    colors =
+                        IconButtonDefaults.filledTonalIconButtonColors(
+                            containerColor =
+                                if (sleepTimerRemainingMillis != null) {
+                                    MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.45f)
+                                } else {
+                                    MaterialTheme.colorScheme.primaryContainer.copy(.1f)
+                                },
+                            contentColor =
+                                if (sleepTimerRemainingMillis != null) {
+                                    MaterialTheme.colorScheme.error
+                                } else {
+                                    MaterialTheme.colorScheme.primaryContainer
+                                },
+                        ),
                 ) {
                     Icon(
                         imageVector = Icons.Default.Timer,
                         contentDescription = stringResource(R.string.menu_timer),
-                        tint = if (sleepTimerRemainingMillis != null) {
-                            MaterialTheme.colorScheme.error
-                        } else {
-                            MaterialTheme.colorScheme.primaryContainer
-                        },
-                        modifier = Modifier.size(20.dp)
+                        tint =
+                            if (sleepTimerRemainingMillis != null) {
+                                MaterialTheme.colorScheme.error
+                            } else {
+                                MaterialTheme.colorScheme.primaryContainer
+                            },
+                        modifier = Modifier.size(20.dp),
                     )
                 }
                 Spacer(modifier = Modifier.size(8.dp))
@@ -346,19 +365,19 @@ fun BlankeeTopAppBar(
                     Icon(
                         imageVector = Icons.Default.MoreVert,
                         contentDescription = stringResource(R.string.content_desc_more_options),
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(20.dp),
                     )
                     if (showDropdown) {
                         DropdownMenu(
                             expanded = showDropdown,
-                            onDismissRequest = { showDropdown = false }
+                            onDismissRequest = { showDropdown = false },
                         ) {
                             DropdownMenuItem(
                                 text = { Text(stringResource(R.string.menu_settings)) },
                                 onClick = {
                                     showDropdown = false
                                     navigateToSettings()
-                                }
+                                },
                             )
                             HorizontalDivider()
 //                            DropdownMenuItem(
@@ -425,7 +444,7 @@ fun BlankeeTopAppBar(
                     }
                 }
             }
-        }
+        },
     )
 }
 
@@ -440,4 +459,3 @@ private fun formatRemainingTimerLabel(remainingMillis: Long): String {
         "%02d:%02d".format(minutes, seconds)
     }
 }
-

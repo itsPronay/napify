@@ -27,47 +27,31 @@ import com.pronaycoding.blankee.core.database.entities.PresetEntity
 @Database(
     entities = [
         CustomSoundEntity::class,
-        PresetEntity::class
+        PresetEntity::class,
     ],
     version = 1,
-    exportSchema = false
+    exportSchema = false,
 )
 abstract class BlankeeDatabase : RoomDatabase() {
-
     abstract fun customSoundDao(): CustomSoundDao
 
     abstract fun presetDao(): PresetDao
 
     companion object {
         @Volatile
-        private var INSTANCE: BlankeeDatabase? = null
+        private var instance: BlankeeDatabase? = null
 
-        /**
-         * Returns the singleton instance of BlankeeDatabase.
-         *
-         * This method implements the thread-safe singleton pattern using double-checked locking.
-         * The first call initializes the database, and subsequent calls return the cached instance.
-         *
-         * The database is created with:
-         * - Database name: "blankee_database"
-         * - No schema export (schema is not exported to files for debugging)
-         *
-         * @param context The application context used to create the database
-         * @return The singleton instance of BlankeeDatabase
-         * @see Room.databaseBuilder for Room database builder configuration
-         */
-        fun getDatabase(context: Context): BlankeeDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    BlankeeDatabase::class.java,
-                    "blankee_database"
-                )
-                    .build()
-                INSTANCE = instance
-                instance
+        fun getDatabase(context: Context): BlankeeDatabase =
+            instance ?: synchronized(this) {
+                val db =
+                    Room
+                        .databaseBuilder(
+                            context.applicationContext,
+                            BlankeeDatabase::class.java,
+                            "blankee_database",
+                        ).build()
+                instance = db
+                db
             }
-        }
     }
 }
-

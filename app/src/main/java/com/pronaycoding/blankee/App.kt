@@ -38,13 +38,14 @@ class App : Application() {
         super.onCreate()
 
         // Initialize Firebase Crashlytics
-        FirebaseCrashlytics.getInstance()
+        FirebaseCrashlytics
+            .getInstance()
             .setCrashlyticsCollectionEnabled(BuildConfig.BUILD_TYPE == "release")
 
         // Start Koin dependency injection framework
         startKoin {
             if (BuildConfig.DEBUG) {
-                androidLogger(Level.DEBUG)  // Enable debug logging only in debug builds
+                androidLogger(Level.DEBUG) // Enable debug logging only in debug builds
             }
             androidContext(this@App)
             modules(KoinModule.allModules)
@@ -54,4 +55,3 @@ class App : Application() {
         GlobalContext.get().get<PlayBillingManager>().start()
     }
 }
-

@@ -38,7 +38,6 @@ import org.koin.dsl.module
  * @see allModules for the complete combined module
  */
 object KoinModule {
-
     /**
      * Repository Module - Data Access Layer.
      *
@@ -50,12 +49,13 @@ object KoinModule {
      *
      * Each repository is bound to its interface for dependency injection.
      */
-    private val repositoryModule = module {
-        singleOf(::PreferenceManagerRepositoryImpl) bind PreferenceManagerRepository::class
-        singleOf(::PresetRepositoryImpl) bind PresetRepository::class
-        singleOf(::CustomSoundRepositoryImpl) bind CustomSoundRepository::class
-        single { PlayBillingManager(get(), get()) }
-    }
+    private val repositoryModule =
+        module {
+            singleOf(::PreferenceManagerRepositoryImpl) bind PreferenceManagerRepository::class
+            singleOf(::PresetRepositoryImpl) bind PresetRepository::class
+            singleOf(::CustomSoundRepositoryImpl) bind CustomSoundRepository::class
+            single { PlayBillingManager(get(), get()) }
+        }
 
     /**
      * ViewModel Module - UI State Management.
@@ -67,10 +67,11 @@ object KoinModule {
      * ViewModels are created with viewModelOf() which automatically handles
      * lifecycle awareness and dependency injection.
      */
-    private val viewmodelModule = module {
-        viewModelOf(::HomeViewmodel)
-        viewModelOf(::SettingsViewModel)
-    }
+    private val viewmodelModule =
+        module {
+            viewModelOf(::HomeViewmodel)
+            viewModelOf(::SettingsViewModel)
+        }
 
     /**
      * Database Module - Persistence Layer.
@@ -82,11 +83,12 @@ object KoinModule {
      *
      * DAOs are extracted from the database singleton to avoid creating multiple instances.
      */
-    private val databaseModule = module{
-        single { BlankeeDatabase.getDatabase(get()) }
-        single<CustomSoundDao> { get<BlankeeDatabase>().customSoundDao() }
-        single<PresetDao> { get<BlankeeDatabase>().presetDao() }
-    }
+    private val databaseModule =
+        module {
+            single { BlankeeDatabase.getDatabase(get()) }
+            single<CustomSoundDao> { get<BlankeeDatabase>().customSoundDao() }
+            single<PresetDao> { get<BlankeeDatabase>().presetDao() }
+        }
 
     /**
      * Helper Classes Module - Services and Managers.
@@ -98,11 +100,12 @@ object KoinModule {
      *
      * These services are singletons to maintain consistent state across the app.
      */
-    private val helperClassModules = module{
-        single { SoundManager(get()) }
-        single { GlobalPlaybackState(get()) }
-        single { MediaPlaybackNotifications(get()) }
-    }
+    private val helperClassModules =
+        module {
+            single { SoundManager(get()) }
+            single { GlobalPlaybackState(get()) }
+            single { MediaPlaybackNotifications(get()) }
+        }
 
     /**
      * Complete Koin Module including all sub-modules.
@@ -119,13 +122,13 @@ object KoinModule {
      * @see databaseModule
      * @see helperClassModules
      */
-    val allModules = module {
-        includes(
-            repositoryModule,
-            viewmodelModule,
-            databaseModule,
-            helperClassModules,
-        )
-    }
-
+    val allModules =
+        module {
+            includes(
+                repositoryModule,
+                viewmodelModule,
+                databaseModule,
+                helperClassModules,
+            )
+        }
 }

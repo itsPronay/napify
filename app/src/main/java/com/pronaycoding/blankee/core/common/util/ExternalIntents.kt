@@ -25,21 +25,25 @@ import com.pronaycoding.blankee.R
  * @param context The context used to start the activity and show toasts
  * @param url The full URL to open (should start with http:// or https://)
  */
-fun openExternalUrl(context: Context, url: String) {
+fun openExternalUrl(
+    context: Context,
+    url: String,
+) {
     try {
         context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     } catch (e: ActivityNotFoundException) {
-        Toast.makeText(
-            context,
-            context.getString(R.string.no_browser_installed),
-            Toast.LENGTH_LONG
-        ).show()
+        Toast
+            .makeText(
+                context,
+                context.getString(R.string.no_browser_installed),
+                Toast.LENGTH_LONG,
+            ).show()
     } catch (e: Exception) {
-        Toast.makeText(
-            context,
-            context.getString(R.string.error_unexpected),
-            Toast.LENGTH_LONG
-        ).show()
+        Toast
+            .makeText(
+                context,
+                context.getString(R.string.error_unexpected),
+                Toast.LENGTH_LONG,
+            ).show()
     }
 }
-

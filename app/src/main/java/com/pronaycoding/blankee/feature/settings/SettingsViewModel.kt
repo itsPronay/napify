@@ -45,20 +45,21 @@ class SettingsViewModel(
     private val prefManager: PreferenceManagerRepository,
     private val billing: PlayBillingManager,
 ) : ViewModel() {
+    val themeChoices =
+        listOf(
+            ThemeChoice(Constants.MODE_LIGHT, R.string.theme_light),
+            ThemeChoice(Constants.MODE_DARK, R.string.theme_dark),
+            ThemeChoice(Constants.MODE_SYSTEM, R.string.theme_system),
+        )
 
-    val themeChoices = listOf(
-        ThemeChoice(Constants.MODE_LIGHT, R.string.theme_light),
-        ThemeChoice(Constants.MODE_DARK, R.string.theme_dark),
-        ThemeChoice(Constants.MODE_SYSTEM, R.string.theme_system),
-    )
-
-    val languageChoices = listOf(
-        LanguageChoice(Constants.LANGUAGE_TAG_SYSTEM, R.string.language_system),
-        LanguageChoice(Constants.LANGUAGE_TAG_ENGLISH, R.string.language_english),
-        LanguageChoice(Constants.LANGUAGE_TAG_HINDI, R.string.language_hindi),
-        LanguageChoice(Constants.LANGUAGE_TAG_BENGALI, R.string.language_bengali),
-        LanguageChoice(Constants.LANGUAGE_TAG_SPANISH, R.string.language_spanish),
-    )
+    val languageChoices =
+        listOf(
+            LanguageChoice(Constants.LANGUAGE_TAG_SYSTEM, R.string.language_system),
+            LanguageChoice(Constants.LANGUAGE_TAG_ENGLISH, R.string.language_english),
+            LanguageChoice(Constants.LANGUAGE_TAG_HINDI, R.string.language_hindi),
+            LanguageChoice(Constants.LANGUAGE_TAG_BENGALI, R.string.language_bengali),
+            LanguageChoice(Constants.LANGUAGE_TAG_SPANISH, R.string.language_spanish),
+        )
 
     private val _selectedTheme =
         MutableStateFlow(prefManager.getThemeModeBlocking(Constants.MODE_DARK))
@@ -66,17 +67,18 @@ class SettingsViewModel(
 
     private val _selectedLanguage =
         MutableStateFlow(
-            prefManager.getLanguageTagBlocking(Constants.LANGUAGE_TAG_SYSTEM)
+            prefManager.getLanguageTagBlocking(Constants.LANGUAGE_TAG_SYSTEM),
         )
     val selectedLanguage: StateFlow<String> = _selectedLanguage.asStateFlow()
 
     val customSoundsUnlocked: StateFlow<Boolean> =
-        prefManager.premiumUnlockedFlow()
+        prefManager
+            .premiumUnlockedFlow()
             .map { storedPremium -> !BuildConfig.CUSTOM_SOUNDS_PREMIUM_LOCKED || storedPremium }
             .stateIn(
                 viewModelScope,
                 SharingStarted.WhileSubscribed(5000),
-                !BuildConfig.CUSTOM_SOUNDS_PREMIUM_LOCKED
+                !BuildConfig.CUSTOM_SOUNDS_PREMIUM_LOCKED,
             )
 
     fun updateTheme(mode: String) {
@@ -102,23 +104,24 @@ class SettingsViewModel(
     fun restorePurchases(context: Context) {
         viewModelScope.launch {
             val has = billing.syncPremiumFromPlay()
-            Toast.makeText(
-                context,
-                context.getString(
-                    if (has) R.string.billing_restored else R.string.billing_restore_none
-                ),
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast
+                .makeText(
+                    context,
+                    context.getString(
+                        if (has) R.string.billing_restored else R.string.billing_restore_none,
+                    ),
+                    Toast.LENGTH_SHORT,
+                ).show()
         }
     }
 }
 
 data class ThemeChoice(
     val mode: String,
-    val labelRes: Int
+    val labelRes: Int,
 )
 
 data class LanguageChoice(
     val tag: String,
-    val labelRes: Int
+    val labelRes: Int,
 )

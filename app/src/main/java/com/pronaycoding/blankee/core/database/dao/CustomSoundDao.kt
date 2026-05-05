@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.Flow
  */
 @Dao
 interface CustomSoundDao {
-
     @Insert
     suspend fun insertCustomSound(sound: CustomSoundEntity)
 
@@ -35,5 +34,8 @@ interface CustomSoundDao {
     suspend fun deleteCustomSoundById(id: Int)
 
     @Query("UPDATE custom_sounds SET displayName = :displayName WHERE id = :id")
-    suspend fun updateCustomSoundDisplayName(id: Int, displayName: String)
+    suspend fun updateCustomSoundDisplayName(
+        id: Int,
+        displayName: String,
+    )
 }

@@ -28,7 +28,6 @@ class PlayBillingManager(
     private val appContext: Context,
     private val prefs: PreferenceManagerRepository,
 ) {
-
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     private lateinit var billingClient: BillingClient
@@ -36,40 +35,45 @@ class PlayBillingManager(
     @Volatile
     private var productDetails: ProductDetails? = null
 
-    private val purchasesUpdatedListener = PurchasesUpdatedListener { billingResult, purchases ->
-        if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
-            purchases.forEach { handlePurchase(it) }
-        } else if (billingResult.responseCode != BillingClient.BillingResponseCode.USER_CANCELED) {
-            Log.w(TAG, "Purchase update: ${billingResult.debugMessage}")
+    private val purchasesUpdatedListener =
+        PurchasesUpdatedListener { billingResult, purchases ->
+            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
+                purchases.forEach { handlePurchase(it) }
+            } else if (billingResult.responseCode != BillingClient.BillingResponseCode.USER_CANCELED) {
+                Log.w(TAG, "Purchase update: ${billingResult.debugMessage}")
+            }
         }
-    }
 
     fun start() {
-        billingClient = BillingClient.newBuilder(appContext)
-            .setListener(purchasesUpdatedListener)
-            .enablePendingPurchases(
-                PendingPurchasesParams.newBuilder()
-                    .enableOneTimeProducts()
-                    .build()
-            )
-            .build()
+        billingClient =
+            BillingClient
+                .newBuilder(appContext)
+                .setListener(purchasesUpdatedListener)
+                .enablePendingPurchases(
+                    PendingPurchasesParams
+                        .newBuilder()
+                        .enableOneTimeProducts()
+                        .build(),
+                ).build()
 
-        billingClient.startConnection(object : BillingClientStateListener {
-            override fun onBillingSetupFinished(billingResult: BillingResult) {
-                if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                    scope.launch {
-                        prefetchPremiumProduct()
-                        syncPremiumFromPlay()
+        billingClient.startConnection(
+            object : BillingClientStateListener {
+                override fun onBillingSetupFinished(billingResult: BillingResult) {
+                    if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                        scope.launch {
+                            prefetchPremiumProduct()
+                            syncPremiumFromPlay()
+                        }
+                    } else {
+                        Log.w(TAG, "Billing setup failed: ${billingResult.debugMessage}")
                     }
-                } else {
-                    Log.w(TAG, "Billing setup failed: ${billingResult.debugMessage}")
                 }
-            }
 
-            override fun onBillingServiceDisconnected() {
-                Log.w(TAG, "Billing service disconnected")
-            }
-        })
+                override fun onBillingServiceDisconnected() {
+                    Log.w(TAG, "Billing service disconnected")
+                }
+            },
+        )
     }
 
     suspend fun syncPremiumFromPlay(): Boolean {
@@ -92,14 +96,18 @@ class PlayBillingManager(
             scope.launch { prefetchPremiumProduct() }
             return
         }
-        val productDetailsParamsList = listOf(
-            BillingFlowParams.ProductDetailsParams.newBuilder()
-                .setProductDetails(details)
+        val productDetailsParamsList =
+            listOf(
+                BillingFlowParams.ProductDetailsParams
+                    .newBuilder()
+                    .setProductDetails(details)
+                    .build(),
+            )
+        val billingFlowParams =
+            BillingFlowParams
+                .newBuilder()
+                .setProductDetailsParamsList(productDetailsParamsList)
                 .build()
-        )
-        val billingFlowParams = BillingFlowParams.newBuilder()
-            .setProductDetailsParamsList(productDetailsParamsList)
-            .build()
         val result = billingClient.launchBillingFlow(activity, billingFlowParams)
         if (result.responseCode != BillingClient.BillingResponseCode.OK) {
             Toast.makeText(activity, appContext.getString(R.string.billing_launch_failed), Toast.LENGTH_SHORT).show()
@@ -108,13 +116,17 @@ class PlayBillingManager(
 
     private suspend fun prefetchPremiumProduct() {
         if (!billingClient.isReady) return
-        val product = QueryProductDetailsParams.Product.newBuilder()
-            .setProductId(PREMIUM_INAPP_PRODUCT_ID)
-            .setProductType(BillingClient.ProductType.INAPP)
-            .build()
-        val params = QueryProductDetailsParams.newBuilder()
-            .setProductList(listOf(product))
-            .build()
+        val product =
+            QueryProductDetailsParams.Product
+                .newBuilder()
+                .setProductId(PREMIUM_INAPP_PRODUCT_ID)
+                .setProductType(BillingClient.ProductType.INAPP)
+                .build()
+        val params =
+            QueryProductDetailsParams
+                .newBuilder()
+                .setProductList(listOf(product))
+                .build()
         val detailsList = queryProductDetails(params)
         productDetails = detailsList.firstOrNull()
     }
@@ -135,9 +147,10 @@ class PlayBillingManager(
     private suspend fun queryInAppPurchases(): List<Purchase> =
         suspendCancellableCoroutine { cont ->
             billingClient.queryPurchasesAsync(
-                QueryPurchasesParams.newBuilder()
+                QueryPurchasesParams
+                    .newBuilder()
                     .setProductType(BillingClient.ProductType.INAPP)
-                    .build()
+                    .build(),
             ) { billingResult, purchases ->
                 if (!cont.isActive) return@queryPurchasesAsync
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
@@ -162,9 +175,11 @@ class PlayBillingManager(
     }
 
     private fun acknowledge(purchase: Purchase) {
-        val params = AcknowledgePurchaseParams.newBuilder()
-            .setPurchaseToken(purchase.purchaseToken)
-            .build()
+        val params =
+            AcknowledgePurchaseParams
+                .newBuilder()
+                .setPurchaseToken(purchase.purchaseToken)
+                .build()
         billingClient.acknowledgePurchase(params) { result ->
             if (result.responseCode == BillingClient.BillingResponseCode.OK) {
                 scope.launch { prefs.setPremiumUnlocked(true) }

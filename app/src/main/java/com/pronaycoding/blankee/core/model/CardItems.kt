@@ -36,7 +36,7 @@ sealed class CardItems(
     val type: String = "",
     val firstInType: Boolean = false,
     val customSoundId: Int? = null,
-    val filePath: String? = null
+    val filePath: String? = null,
 ) {
     /**
      * Returns the localized title string for this sound.
@@ -47,10 +47,11 @@ sealed class CardItems(
      * @return The localized title string
      */
     @Composable
-    fun localizedTitle(): String = when (this) {
-        is CustomCardItem -> displayName
-        else -> stringResource(titleResId)
-    }
+    fun localizedTitle(): String =
+        when (this) {
+            is CustomCardItem -> displayName
+            else -> stringResource(titleResId)
+        }
 
     /**
      * Rain sound - Nature category.
@@ -61,7 +62,7 @@ sealed class CardItems(
         icon = R.drawable.rain,
         audioSource = R.raw.nature_rain,
         type = "Nature",
-        firstInType = true
+        firstInType = true,
     )
 
     /**
@@ -72,7 +73,7 @@ sealed class CardItems(
         titleResId = R.string.sound_summer_night,
         icon = R.drawable.moon,
         audioSource = R.raw.nature_summernight,
-        type = "Nature"
+        type = "Nature",
     )
 
     /**
@@ -83,7 +84,7 @@ sealed class CardItems(
         titleResId = R.string.sound_wind,
         icon = R.drawable.wind,
         audioSource = R.raw.nature_wind,
-        type = "Nature"
+        type = "Nature",
     )
 
     /**
@@ -94,7 +95,7 @@ sealed class CardItems(
         titleResId = R.string.sound_wave,
         icon = R.drawable.wave,
         audioSource = R.raw.nature_waves,
-        type = "Nature"
+        type = "Nature",
     )
 
     /**
@@ -105,7 +106,7 @@ sealed class CardItems(
         titleResId = R.string.sound_stream,
         icon = R.drawable.stream,
         audioSource = R.raw.nature_stream,
-        type = "Nature"
+        type = "Nature",
     )
 
     /**
@@ -116,7 +117,7 @@ sealed class CardItems(
         titleResId = R.string.sound_storm,
         icon = R.drawable.storm,
         audioSource = R.raw.nature_storm,
-        type = "Nature"
+        type = "Nature",
     )
 
     /**
@@ -127,7 +128,7 @@ sealed class CardItems(
         titleResId = R.string.sound_birds,
         icon = R.drawable.birds,
         audioSource = R.raw.nature_birds,
-        type = "Nature"
+        type = "Nature",
     )
 
     /**
@@ -139,7 +140,7 @@ sealed class CardItems(
         icon = R.drawable.train,
         audioSource = R.raw.travel_train,
         type = "Travel",
-        firstInType = true
+        firstInType = true,
     )
 
     /**
@@ -150,7 +151,7 @@ sealed class CardItems(
         titleResId = R.string.sound_boat,
         icon = R.drawable.sailboat,
         audioSource = R.raw.travel_boat,
-        type = "Travel"
+        type = "Travel",
     )
 
     /**
@@ -161,7 +162,7 @@ sealed class CardItems(
         titleResId = R.string.sound_city,
         icon = R.drawable.city,
         audioSource = R.raw.travel_city,
-        type = "Travel"
+        type = "Travel",
     )
 
     /**
@@ -173,7 +174,7 @@ sealed class CardItems(
         icon = R.drawable.coffee,
         audioSource = R.raw.indoor_interior_coffeeshop,
         type = "Interiors",
-        firstInType = true
+        firstInType = true,
     )
 
     /**
@@ -184,7 +185,7 @@ sealed class CardItems(
         titleResId = R.string.sound_fireplace,
         icon = R.drawable.fireplace,
         audioSource = R.raw.indoor_interior_fireplace,
-        type = "Interiors"
+        type = "Interiors",
     )
 
     /**
@@ -195,7 +196,7 @@ sealed class CardItems(
         titleResId = R.string.sound_busy_restaurant,
         icon = R.drawable.food_delivery,
         audioSource = R.raw.indoor_busy_restaurant,
-        type = "Interiors"
+        type = "Interiors",
     )
 
     /**
@@ -207,7 +208,7 @@ sealed class CardItems(
         icon = R.drawable.pink_noise,
         audioSource = R.raw.noise_pink_noise,
         type = "Noise",
-        firstInType = true
+        firstInType = true,
     )
 
     /**
@@ -218,7 +219,7 @@ sealed class CardItems(
         titleResId = R.string.sound_white_noise,
         icon = R.drawable.white_noise,
         audioSource = R.raw.noise_white_noise,
-        type = "Noise"
+        type = "Noise",
     )
 
     /**
@@ -227,9 +228,9 @@ sealed class CardItems(
      */
     data object Custom : CardItems(
         titleResId = R.string.empty_string,
-        icon = R.drawable.white_noise,
+        icon = R.drawable.city,
         audioSource = R.raw.noise_white_noise,
-        type = "Custom"
+        type = "Custom",
     )
 
     /**
@@ -247,13 +248,13 @@ sealed class CardItems(
     data class CustomCardItem(
         val id: Int,
         val displayName: String,
-        val soundFilePath: String
+        val soundFilePath: String,
     ) : CardItems(
-        titleResId = R.string.empty_string,
-        icon = R.drawable.white_noise,
-        audioSource = R.raw.noise_white_noise,
-        type = "Custom",
-        customSoundId = id,
-        filePath = soundFilePath
-    )
+            titleResId = R.string.empty_string,
+            icon = R.drawable.white_noise,
+            audioSource = R.raw.noise_white_noise,
+            type = "Custom",
+            customSoundId = id,
+            filePath = soundFilePath,
+        )
 }

@@ -36,7 +36,7 @@ import java.util.Locale
  * @see PreferenceManagerRepository for the interface contract
  */
 class PreferenceManagerRepositoryImpl(
-    private val context: Context
+    private val context: Context,
 ) : PreferenceManagerRepository {
     private val appContext = context.applicationContext
 
@@ -48,9 +48,10 @@ class PreferenceManagerRepositoryImpl(
      * @param defaultValue Default value if not set
      * @return The stored theme mode or defaultValue
      */
-    override fun getThemeModeBlocking(defaultValue: String): String = runBlocking {
-        appContext.dataStore.data.first()[Keys.themeMode] ?: defaultValue
-    }
+    override fun getThemeModeBlocking(defaultValue: String): String =
+        runBlocking {
+            appContext.dataStore.data.first()[Keys.themeMode] ?: defaultValue
+        }
 
     /**
      * Stores the theme mode preference.
@@ -72,9 +73,10 @@ class PreferenceManagerRepositoryImpl(
      * @param defaultValue Default value if not set
      * @return The stored language tag or defaultValue
      */
-    override fun getLanguageTagBlocking(defaultValue: String): String = runBlocking {
-        appContext.dataStore.data.first()[Keys.languageTag] ?: defaultValue
-    }
+    override fun getLanguageTagBlocking(defaultValue: String): String =
+        runBlocking {
+            appContext.dataStore.data.first()[Keys.languageTag] ?: defaultValue
+        }
 
     /**
      * Stores the language tag preference.
@@ -106,16 +108,14 @@ class PreferenceManagerRepositoryImpl(
      *
      * @return The launch count, or 0 if not yet set
      */
-    override suspend fun getLaunchCount(): Int =
-        appContext.dataStore.data.first()[Keys.launchCount] ?: 0
+    override suspend fun getLaunchCount(): Int = appContext.dataStore.data.first()[Keys.launchCount] ?: 0
 
     /**
      * Checks if the "Enjoy Blankee" prompt has been displayed.
      *
      * @return true if shown, false otherwise
      */
-    override suspend fun isEnjoyPromptShown(): Boolean =
-        appContext.dataStore.data.first()[Keys.enjoyPromptShown] ?: false
+    override suspend fun isEnjoyPromptShown(): Boolean = appContext.dataStore.data.first()[Keys.enjoyPromptShown] ?: false
 
     /**
      * Marks the "Enjoy Blankee" prompt as shown/hidden.
@@ -133,8 +133,7 @@ class PreferenceManagerRepositoryImpl(
      *
      * @return true if shown, false otherwise
      */
-    override suspend fun isNotificationPrimerShown(): Boolean =
-        appContext.dataStore.data.first()[Keys.notificationPrimerShown] ?: false
+    override suspend fun isNotificationPrimerShown(): Boolean = appContext.dataStore.data.first()[Keys.notificationPrimerShown] ?: false
 
     /**
      * Marks the notification permission primer as shown/hidden.

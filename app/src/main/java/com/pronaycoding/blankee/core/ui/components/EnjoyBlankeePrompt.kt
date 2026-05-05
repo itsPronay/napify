@@ -44,11 +44,12 @@ fun EnjoyBlankeePrompt(shouldShow: Boolean) {
     val context = LocalContext.current
     var showEnjoyDialog by rememberSaveable { mutableStateOf(false) }
     var showStarDialog by rememberSaveable { mutableStateOf(false) }
-    val preferenceManager = remember(context) {
-        PreferenceManagerRepositoryImpl(
-            context
-        )
-    }
+    val preferenceManager =
+        remember(context) {
+            PreferenceManagerRepositoryImpl(
+                context,
+            )
+        }
 
     LaunchedEffect(Unit) {
         // Mark as shown as soon as we decide to show, so it won't loop on restarts.
@@ -66,7 +67,7 @@ fun EnjoyBlankeePrompt(shouldShow: Boolean) {
                     onClick = {
                         showEnjoyDialog = false
                         showStarDialog = true
-                    }
+                    },
                 ) {
                     Text(stringResource(R.string.enjoy_prompt_yes))
                 }
@@ -75,7 +76,7 @@ fun EnjoyBlankeePrompt(shouldShow: Boolean) {
                 TextButton(onClick = { showEnjoyDialog = false }) {
                     Text(stringResource(R.string.enjoy_prompt_no))
                 }
-            }
+            },
         )
     }
 
@@ -89,7 +90,7 @@ fun EnjoyBlankeePrompt(shouldShow: Boolean) {
                     onClick = {
                         showStarDialog = false
                         openExternalUrl(context, Constants.GITHUB_REPO)
-                    }
+                    },
                 ) {
                     Text(stringResource(R.string.star_github_confirm))
                 }
@@ -98,7 +99,7 @@ fun EnjoyBlankeePrompt(shouldShow: Boolean) {
                 TextButton(onClick = { showStarDialog = false }) {
                     Text(stringResource(R.string.star_github_later))
                 }
-            }
+            },
         )
     }
 }

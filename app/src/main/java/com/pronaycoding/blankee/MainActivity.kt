@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
-
     private val requestNotificationPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
 
@@ -38,12 +37,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val preferenceManager =
             PreferenceManagerRepositoryImpl(
-                this
+                this,
             )
         lifecycleScope.launch {
             val launchCount = preferenceManager.incrementLaunchCount()
-            val shouldShowEnjoyPrompt = launchCount == Constants.ENJOY_PROMPT_TRIGGER_LAUNCH &&
-                !preferenceManager.isEnjoyPromptShown()
+            val shouldShowEnjoyPrompt =
+                launchCount == Constants.ENJOY_PROMPT_TRIGGER_LAUNCH &&
+                    !preferenceManager.isEnjoyPromptShown()
             shouldShowEnjoyPromptFlow.value = shouldShowEnjoyPrompt
         }
 
@@ -56,9 +56,10 @@ class MainActivity : ComponentActivity() {
         }
 
         enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.dark(
-                scrim = android.graphics.Color.TRANSPARENT
-            )
+            statusBarStyle =
+                SystemBarStyle.dark(
+                    scrim = android.graphics.Color.TRANSPARENT,
+                ),
         )
 
         setContent {
@@ -84,7 +85,7 @@ class MainActivity : ComponentActivity() {
                                             preferenceManager.setNotificationPrimerShown(true)
                                         }
                                         requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
-                                    }
+                                    },
                                 ) {
                                     Text(getString(R.string.notification_primer_grant))
                                 }
@@ -96,11 +97,11 @@ class MainActivity : ComponentActivity() {
                                         lifecycleScope.launch {
                                             preferenceManager.setNotificationPrimerShown(true)
                                         }
-                                    }
+                                    },
                                 ) {
                                     Text(getString(R.string.notification_primer_continue_anyway))
                                 }
-                            }
+                            },
                         )
                     }
                 }
@@ -108,5 +109,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-

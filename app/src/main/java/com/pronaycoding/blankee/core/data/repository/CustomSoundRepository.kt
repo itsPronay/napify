@@ -3,7 +3,6 @@ package com.pronaycoding.blankee.core.data.repository
 import com.pronaycoding.blankee.core.database.entities.CustomSoundEntity
 import kotlinx.coroutines.flow.Flow
 
-
 /**
  * Repository interface for custom sound data access operations.
  *
@@ -15,7 +14,6 @@ import kotlinx.coroutines.flow.Flow
  * @see CustomSoundDao for lower-level database access
  */
 interface CustomSoundRepository {
-
     /**
      * Observes all custom sounds as a continuous Flow.
      *
@@ -33,7 +31,10 @@ interface CustomSoundRepository {
      * @param filePath Full path or URI to the audio file
      * @throws Exception if the add operation fails
      */
-    suspend fun addCustomSound(displayName: String, filePath: String)
+    suspend fun addCustomSound(
+        displayName: String,
+        filePath: String,
+    )
 
     /**
      * Removes a custom sound by its ID.
@@ -67,5 +68,8 @@ interface CustomSoundRepository {
      * @param displayName The new display name for the custom sound
      * @throws Exception if the update operation fails
      */
-    suspend fun updateCustomSoundDisplayName(id: Int, displayName: String)
+    suspend fun updateCustomSoundDisplayName(
+        id: Int,
+        displayName: String,
+    )
 }

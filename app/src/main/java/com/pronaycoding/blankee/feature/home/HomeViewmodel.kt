@@ -68,7 +68,6 @@ class HomeViewmodel(
     private val preferenceManager: PreferenceManagerRepository,
     private val playBillingManager: PlayBillingManager,
 ) : ViewModel() {
-
     val canPlay: StateFlow<Boolean> = globalPlaybackState.canPlay
 
     private val _customSounds: MutableStateFlow<List<CustomSoundEntity>> = MutableStateFlow(emptyList())
@@ -80,8 +79,10 @@ class HomeViewmodel(
     private val _customVolumes: MutableStateFlow<Map<Int, Float>> = MutableStateFlow(emptyMap())
     val customVolumes: StateFlow<Map<Int, Float>> = _customVolumes.asStateFlow()
 
-    val presets: StateFlow<List<PresetEntity>> = presetRepository.observePresets()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    val presets: StateFlow<List<PresetEntity>> =
+        presetRepository
+            .observePresets()
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     private val loadedCustomSoundIds: MutableSet<Int> = mutableSetOf()
     private var customSoundsCollectionJob: Job? = null
@@ -92,12 +93,13 @@ class HomeViewmodel(
      * (synced from Play Billing into preferences).
      */
     val customSoundsUnlocked: StateFlow<Boolean> =
-        preferenceManager.premiumUnlockedFlow()
+        preferenceManager
+            .premiumUnlockedFlow()
             .map { storedPremium -> !BuildConfig.CUSTOM_SOUNDS_PREMIUM_LOCKED || storedPremium }
             .stateIn(
                 viewModelScope,
                 SharingStarted.WhileSubscribed(5000),
-                !BuildConfig.CUSTOM_SOUNDS_PREMIUM_LOCKED
+                !BuildConfig.CUSTOM_SOUNDS_PREMIUM_LOCKED,
             )
     private val _sleepTimerRemainingMillis: MutableStateFlow<Long?> = MutableStateFlow(null)
     val sleepTimerRemainingMillis: StateFlow<Long?> = _sleepTimerRemainingMillis.asStateFlow()
@@ -106,12 +108,12 @@ class HomeViewmodel(
         soundManager.loadSounds()
         viewModelScope.launch {
             customSoundsUnlocked.collect { unlocked ->
-                    if (unlocked) {
-                        startCustomSoundsCollection()
-                    } else {
-                        stopCustomSoundsCollection()
-                    }
+                if (unlocked) {
+                    startCustomSoundsCollection()
+                } else {
+                    stopCustomSoundsCollection()
                 }
+            }
         }
         // Always start from a clean playback state on app launch/re-entry.
         resetAllSounds()
@@ -121,35 +123,36 @@ class HomeViewmodel(
 
     private fun startCustomSoundsCollection() {
         if (customSoundsCollectionJob?.isActive == true) return
-        customSoundsCollectionJob = viewModelScope.launch {
-            customSoundRepository.getAllCustomSounds().collect { sounds ->
-                _customSounds.value = sounds
+        customSoundsCollectionJob =
+            viewModelScope.launch {
+                customSoundRepository.getAllCustomSounds().collect { sounds ->
+                    _customSounds.value = sounds
 
-                sounds.forEach { sound ->
-                    if (!loadedCustomSoundIds.contains(sound.id)) {
-                        val persistentPath = getPersistentFilePath(sound.id, sound.filePath)
+                    sounds.forEach { sound ->
+                        if (!loadedCustomSoundIds.contains(sound.id)) {
+                            val persistentPath = getPersistentFilePath(sound.id, sound.filePath)
 
-                        Log.d("HomeViewmodel", "Loading custom sound from: $persistentPath")
-                        soundManager.loadCustomSound(sound.id, persistentPath)
-                        loadedCustomSoundIds.add(sound.id)
-                        Log.d("HomeViewmodel", "Loaded new custom sound: ${sound.displayName}")
+                            Log.d("HomeViewmodel", "Loading custom sound from: $persistentPath")
+                            soundManager.loadCustomSound(sound.id, persistentPath)
+                            loadedCustomSoundIds.add(sound.id)
+                            Log.d("HomeViewmodel", "Loaded new custom sound: ${sound.displayName}")
+                        }
                     }
-                }
 
-                val soundIds = sounds.map { it.id }.toSet()
-                loadedCustomSoundIds.forEach { loadedId ->
-                    if (!soundIds.contains(loadedId)) {
-                        soundManager.unloadCustomSound(loadedId)
-                        Log.d("HomeViewmodel", "Unloaded deleted custom sound: $loadedId")
+                    val soundIds = sounds.map { it.id }.toSet()
+                    loadedCustomSoundIds.forEach { loadedId ->
+                        if (!soundIds.contains(loadedId)) {
+                            soundManager.unloadCustomSound(loadedId)
+                            Log.d("HomeViewmodel", "Unloaded deleted custom sound: $loadedId")
+                        }
                     }
+                    loadedCustomSoundIds.retainAll(soundIds)
+                    _customVolumes.update { current ->
+                        current.filterKeys { it in soundIds }
+                    }
+                    syncPlaybackNotification()
                 }
-                loadedCustomSoundIds.retainAll(soundIds)
-                _customVolumes.update { current ->
-                    current.filterKeys { it in soundIds }
-                }
-                syncPlaybackNotification()
             }
-        }
     }
 
     private fun stopCustomSoundsCollection() {
@@ -179,11 +182,14 @@ class HomeViewmodel(
         globalPlaybackState.lastHasAudibleMix = hasAudibleMix()
         mediaPlaybackNotifications.requestSync(
             globalPlaybackState.canPlay.value,
-            globalPlaybackState.lastHasAudibleMix
+            globalPlaybackState.lastHasAudibleMix,
         )
     }
 
-    private fun getPersistentFilePath(soundId: Int, originalPath: String): String {
+    private fun getPersistentFilePath(
+        soundId: Int,
+        originalPath: String,
+    ): String {
         val customSoundsDir = File(context.filesDir, "custom_sounds")
         if (!customSoundsDir.exists()) {
             customSoundsDir.mkdirs()
@@ -194,11 +200,12 @@ class HomeViewmodel(
         if (!persistentFile.exists()) {
             try {
                 Log.d("HomeViewmodel", "Copying sound from $originalPath to ${persistentFile.absolutePath}")
-                val inputStream = if (originalPath.startsWith("content://")) {
-                    context.contentResolver.openInputStream(originalPath.toUri())
-                } else {
-                    File(originalPath).inputStream()
-                }
+                val inputStream =
+                    if (originalPath.startsWith("content://")) {
+                        context.contentResolver.openInputStream(originalPath.toUri())
+                    } else {
+                        File(originalPath).inputStream()
+                    }
 
                 inputStream?.use { input ->
                     persistentFile.outputStream().use { output ->
@@ -228,7 +235,10 @@ class HomeViewmodel(
         syncPlaybackNotification()
     }
 
-    fun setBuiltinVolume(index: Int, volume: Float) {
+    fun setBuiltinVolume(
+        index: Int,
+        volume: Float,
+    ) {
         _builtinVolumes.update { current ->
             current.toMutableMap().apply { put(index, volume) }
         }
@@ -249,7 +259,10 @@ class HomeViewmodel(
      * Updates built-in sound audio only while dragging a slider. Avoids updating [builtinVolumes]
      * and notification sync on every frame (those caused heavy recomposition and service churn).
      */
-    fun previewBuiltinVolume(index: Int, volume: Float) {
+    fun previewBuiltinVolume(
+        index: Int,
+        volume: Float,
+    ) {
         if (!globalPlaybackState.canPlay.value) return
         if (volume <= 0f) {
             soundManager.stopSound(index)
@@ -275,7 +288,10 @@ class HomeViewmodel(
         setBuiltinVolume(index, targetVolume)
     }
 
-    fun setCustomSoundVolume(soundId: Int, volume: Float) {
+    fun setCustomSoundVolume(
+        soundId: Int,
+        volume: Float,
+    ) {
         _customVolumes.update { current ->
             current.toMutableMap().apply { put(soundId, volume) }
         }
@@ -293,7 +309,10 @@ class HomeViewmodel(
     }
 
     /** Same as [previewBuiltinVolume] for custom sounds. */
-    fun previewCustomSoundVolume(soundId: Int, volume: Float) {
+    fun previewCustomSoundVolume(
+        soundId: Int,
+        volume: Float,
+    ) {
         if (!globalPlaybackState.canPlay.value) return
         if (volume <= 0f) {
             soundManager.stopCustomSound(soundId)
@@ -327,25 +346,35 @@ class HomeViewmodel(
         soundManager.stopCustomSound(soundId)
     }
 
-    fun playSound(int: Int, volume: Float) {
+    fun playSound(
+        int: Int,
+        volume: Float,
+    ) {
         if (globalPlaybackState.canPlay.value) {
             soundManager.playSound(int, volume)
         }
     }
 
-    fun playCustomSound(soundId: Int, volume: Float) {
+    fun playCustomSound(
+        soundId: Int,
+        volume: Float,
+    ) {
         if (globalPlaybackState.canPlay.value) {
             soundManager.playCustomSound(soundId, volume)
         }
     }
 
-    fun addCustomSound(displayName: String, filePath: String) {
+    fun addCustomSound(
+        displayName: String,
+        filePath: String,
+    ) {
         if (!customSoundsUnlocked.value) {
-            Toast.makeText(
-                context,
-                context.getString(R.string.custom_sounds_premium_message),
-                Toast.LENGTH_LONG
-            ).show()
+            Toast
+                .makeText(
+                    context,
+                    context.getString(R.string.custom_sounds_premium_message),
+                    Toast.LENGTH_LONG,
+                ).show()
             return
         }
         viewModelScope.launch {
@@ -362,7 +391,10 @@ class HomeViewmodel(
         }
     }
 
-    fun renameCustomSound(soundId: Int, newDisplayName: String) {
+    fun renameCustomSound(
+        soundId: Int,
+        newDisplayName: String,
+    ) {
         val sanitizedName = newDisplayName.trim()
         if (sanitizedName.isEmpty()) return
         viewModelScope.launch {
@@ -372,14 +404,16 @@ class HomeViewmodel(
 
     fun snapshotForNewPreset(): Pair<Map<Int, Float>, Map<Int, Float>> {
         val end = builtInPresetIndexEndExclusive()
-        val builtIn = _builtinVolumes.value.filter { (idx, vol) ->
-            idx in 0 until end && vol > 0f
-        }
-        val custom = if (!customSoundsUnlocked.value) {
-            emptyMap()
-        } else {
-            _customVolumes.value.filter { (_, vol) -> vol > 0f }
-        }
+        val builtIn =
+            _builtinVolumes.value.filter { (idx, vol) ->
+                idx in 0 until end && vol > 0f
+            }
+        val custom =
+            if (!customSoundsUnlocked.value) {
+                emptyMap()
+            } else {
+                _customVolumes.value.filter { (_, vol) -> vol > 0f }
+            }
         return builtIn to custom
     }
 
@@ -391,26 +425,30 @@ class HomeViewmodel(
                 PresetEntity(
                     name = name.trim().ifEmpty { context.getString(R.string.preset_untitled) },
                     builtInVolumesJson = PresetJson.mapToJson(builtIn),
-                    customVolumesJson = PresetJson.mapToJson(custom)
-                )
+                    customVolumesJson = PresetJson.mapToJson(custom),
+                ),
             )
-            Toast.makeText(
-                context,
-                context.getString(R.string.preset_saved),
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast
+                .makeText(
+                    context,
+                    context.getString(R.string.preset_saved),
+                    Toast.LENGTH_SHORT,
+                ).show()
         }
     }
 
     fun applyPreset(preset: PresetEntity) {
         val endExclusive = builtInPresetIndexEndExclusive()
-        val builtIn = PresetJson.jsonToMap(preset.builtInVolumesJson)
-            .filterKeys { it in 0 until endExclusive }
-        val custom = if (!customSoundsUnlocked.value) {
-            emptyMap()
-        } else {
-            PresetJson.jsonToMap(preset.customVolumesJson)
-        }
+        val builtIn =
+            PresetJson
+                .jsonToMap(preset.builtInVolumesJson)
+                .filterKeys { it in 0 until endExclusive }
+        val custom =
+            if (!customSoundsUnlocked.value) {
+                emptyMap()
+            } else {
+                PresetJson.jsonToMap(preset.customVolumesJson)
+            }
 
         soundManager.stopAllSounds()
 
@@ -441,22 +479,24 @@ class HomeViewmodel(
         if (durationMillis <= 0L) return
         sleepTimerJob?.cancel()
         _sleepTimerRemainingMillis.value = durationMillis
-        sleepTimerJob = viewModelScope.launch {
-            val endTimeMillis = System.currentTimeMillis() + durationMillis
-            while (true) {
-                val remaining = (endTimeMillis - System.currentTimeMillis()).coerceAtLeast(0L)
-                _sleepTimerRemainingMillis.value = remaining
-                if (remaining <= 0L) break
-                delay(1000L)
+        sleepTimerJob =
+            viewModelScope.launch {
+                val endTimeMillis = System.currentTimeMillis() + durationMillis
+                while (true) {
+                    val remaining = (endTimeMillis - System.currentTimeMillis()).coerceAtLeast(0L)
+                    _sleepTimerRemainingMillis.value = remaining
+                    if (remaining <= 0L) break
+                    delay(1000L)
+                }
+                _sleepTimerRemainingMillis.value = null
+                resetAllSounds()
+                Toast
+                    .makeText(
+                        context,
+                        context.getString(R.string.sleep_timer_finished),
+                        Toast.LENGTH_SHORT,
+                    ).show()
             }
-            _sleepTimerRemainingMillis.value = null
-            resetAllSounds()
-            Toast.makeText(
-                context,
-                context.getString(R.string.sleep_timer_finished),
-                Toast.LENGTH_SHORT
-            ).show()
-        }
     }
 
     fun cancelSleepTimer() {

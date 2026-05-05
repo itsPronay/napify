@@ -26,5 +26,5 @@ data class PresetEntity(
     val name: String,
     val builtInVolumesJson: String,
     val customVolumesJson: String,
-    val createdAt: Long = System.currentTimeMillis()
+    val createdAt: Long = System.currentTimeMillis(),
 )

@@ -37,32 +37,41 @@ import com.pronaycoding.blankee.R
 
 @Composable
 fun BlanketTabRow(modifier: Modifier = Modifier) {
-    val titles = listOf(
-        stringResource(R.string.tab_home),
-        stringResource(R.string.tab_settings)
-    )
+    val titles =
+        listOf(
+            stringResource(R.string.tab_home),
+            stringResource(R.string.tab_settings),
+        )
     var state by remember { mutableStateOf(0) }
 
     Column(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
     ) {
-        TabRow(selectedTabIndex = state, divider = {},
+        TabRow(
+            selectedTabIndex = state,
+            divider = {},
             indicator = {
-
-            }
-            ) {
+            },
+        ) {
             titles.forEachIndexed { index, title ->
-                Tab(selectedContentColor = Color(0xFF27a157).copy(alpha = .5f),
+                Tab(
+                    selectedContentColor = Color(0xFF27a157).copy(alpha = .5f),
                     selected = (index == state),
                     onClick = { state = index },
                     text = {
                         Text(
                             text = title,
-                            color = if (state == index) Color(0xFF27a157) else MaterialTheme.colorScheme.inverseSurface.copy(
-                                alpha = .7f
-                            )
+                            color =
+                                if (state == index) {
+                                    Color(0xFF27a157)
+                                } else {
+                                    MaterialTheme.colorScheme.inverseSurface.copy(
+                                        alpha = .7f,
+                                    )
+                                },
                         )
-                    })
+                    },
+                )
             }
         }
         Spacer(modifier = Modifier.height(16.dp))

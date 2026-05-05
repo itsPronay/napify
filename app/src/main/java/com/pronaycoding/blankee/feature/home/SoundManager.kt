@@ -29,8 +29,9 @@ import java.io.File
  * @see MediaPlayer for the underlying audio playback mechanism
  * @see GlobalPlaybackState for overall app playback state management
  */
-class SoundManager(private val context: Context) {
-
+class SoundManager(
+    private val context: Context,
+) {
     private val mediaPlayers = mutableMapOf<Int, MediaPlayer>()
     private val customMediaPlayers = mutableMapOf<Int, MediaPlayer>()
     private var currentlyPlayingSounds: MutableList<Int> = mutableListOf()
@@ -59,7 +60,10 @@ class SoundManager(private val context: Context) {
     /**
      * Loads a custom sound from file path or content URI
      */
-    fun loadCustomSound(soundId: Int, filePath: String): Boolean {
+    fun loadCustomSound(
+        soundId: Int,
+        filePath: String,
+    ): Boolean {
         return try {
             Log.d("SoundManager", "Loading custom sound: $soundId from path: $filePath")
             val mediaPlayer = MediaPlayer()
@@ -114,14 +118,15 @@ class SoundManager(private val context: Context) {
     /**
      * Checks if any sound is playing.
      */
-    fun isAnySoundPlaying(): Boolean {
-        return mediaPlayers.values.any { it.isPlaying } || customMediaPlayers.values.any { it.isPlaying }
-    }
+    fun isAnySoundPlaying(): Boolean = mediaPlayers.values.any { it.isPlaying } || customMediaPlayers.values.any { it.isPlaying }
 
     /**
      * Plays a sound if it's not already playing.
      */
-    fun playSound(soundIndex: Int, volume: Float) {
+    fun playSound(
+        soundIndex: Int,
+        volume: Float,
+    ) {
         Log.d("SoundManager", "Play sound called for index: $soundIndex")
         mediaPlayers[soundIndex]?.let { mediaPlayer ->
             if (!mediaPlayer.isPlaying) {
@@ -136,13 +141,15 @@ class SoundManager(private val context: Context) {
         } ?: Log.e("SoundManager", "MediaPlayer not found for index: $soundIndex")
     }
 
-    fun isBuiltInPlaying(soundIndex: Int): Boolean =
-        mediaPlayers[soundIndex]?.isPlaying == true
+    fun isBuiltInPlaying(soundIndex: Int): Boolean = mediaPlayers[soundIndex]?.isPlaying == true
 
     /**
      * Plays a custom sound from file
      */
-    fun playCustomSound(soundId: Int, volume: Float) {
+    fun playCustomSound(
+        soundId: Int,
+        volume: Float,
+    ) {
         Log.d("SoundManager", "Play custom sound called for id: $soundId")
         customMediaPlayers[soundId]?.let { mediaPlayer ->
             if (!mediaPlayer.isPlaying) {
@@ -157,13 +164,15 @@ class SoundManager(private val context: Context) {
         } ?: Log.e("SoundManager", "Custom MediaPlayer not found for id: $soundId")
     }
 
-    fun isCustomSoundPlaying(soundId: Int): Boolean =
-        customMediaPlayers[soundId]?.isPlaying == true
+    fun isCustomSoundPlaying(soundId: Int): Boolean = customMediaPlayers[soundId]?.isPlaying == true
 
     /**
      * Adjusts the volume of a currently playing sound.
      */
-    fun controlSound(soundIndex: Int, volume: Float) {
+    fun controlSound(
+        soundIndex: Int,
+        volume: Float,
+    ) {
         mediaPlayers[soundIndex]?.let {
             it.setVolume(volume, volume)
         } ?: Log.e("SoundManager", "Cannot control sound at index: $soundIndex, not found.")
@@ -172,7 +181,10 @@ class SoundManager(private val context: Context) {
     /**
      * Adjusts the volume of a custom sound.
      */
-    fun controlCustomSound(soundId: Int, volume: Float) {
+    fun controlCustomSound(
+        soundId: Int,
+        volume: Float,
+    ) {
         customMediaPlayers[soundId]?.let {
             it.setVolume(volume, volume)
         } ?: Log.e("SoundManager", "Cannot control custom sound: $soundId, not found.")
@@ -225,7 +237,6 @@ class SoundManager(private val context: Context) {
         }
         Log.d("SoundManager", "All sounds paused.")
     }
-
 
     /**
      * Resumes all paused sounds.
@@ -283,5 +294,3 @@ class SoundManager(private val context: Context) {
         Log.d("SoundManager", "SoundManager resources released.")
     }
 }
-
-

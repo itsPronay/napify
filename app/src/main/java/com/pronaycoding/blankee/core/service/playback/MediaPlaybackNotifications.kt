@@ -37,7 +37,10 @@ class MediaPlaybackNotifications(
      * @see BlankeeMediaPlaybackService.intentUpdate for intent creation
      * @see ContextCompat.startForegroundService for foreground service requirements
      */
-    fun requestSync(canPlay: Boolean, hasAudibleMix: Boolean) {
+    fun requestSync(
+        canPlay: Boolean,
+        hasAudibleMix: Boolean,
+    ) {
         val intent = BlankeeMediaPlaybackService.intentUpdate(appContext, canPlay, hasAudibleMix)
         if (hasAudibleMix) {
             // Start as foreground service when there's something to play/show

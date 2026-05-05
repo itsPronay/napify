@@ -18,16 +18,14 @@ import kotlinx.coroutines.flow.Flow
  * @see PresetDao for lower-level database access
  */
 class PresetRepositoryImpl(
-    private val presetDao: PresetDao
+    private val presetDao: PresetDao,
 ) : PresetRepository {
-
     /**
      * Observes all presets from the database.
      *
      * @return A Flow from the DAO that emits updated preset lists on database changes
      */
-    override fun observePresets(): Flow<List<PresetEntity>> =
-        presetDao.observeAll()
+    override fun observePresets(): Flow<List<PresetEntity>> = presetDao.observeAll()
 
     /**
      * Saves a preset to the database.
@@ -35,14 +33,12 @@ class PresetRepositoryImpl(
      * @param entity The preset to save
      * @return The ID assigned to the new preset
      */
-    override suspend fun savePreset(entity: PresetEntity): Long =
-        presetDao.insertPreset(entity)
+    override suspend fun savePreset(entity: PresetEntity): Long = presetDao.insertPreset(entity)
 
     /**
      * Deletes a preset from the database.
      *
      * @param id The ID of the preset to delete
      */
-    override suspend fun deletePreset(id: Long) =
-        presetDao.deleteById(id)
+    override suspend fun deletePreset(id: Long) = presetDao.deleteById(id)
 }

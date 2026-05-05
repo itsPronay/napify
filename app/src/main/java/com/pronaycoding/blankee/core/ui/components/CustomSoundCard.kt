@@ -84,49 +84,58 @@ fun CustomSoundCard(
 
     Column(
         modifier = modifier.padding(12.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box {
             Icon(
-                modifier = Modifier
-                    .size(24.dp)
-                    .align(Alignment.TopEnd)
-                    .background(
-                        color = MaterialTheme.colorScheme.error.copy(alpha = 0.1f),
-                        shape = CircleShape
-                    )
-                    .clickable { showDeleteConfirmDialog = true },
+                modifier =
+                    Modifier
+                        .size(24.dp)
+                        .align(Alignment.TopEnd)
+                        .background(
+                            color = MaterialTheme.colorScheme.error.copy(alpha = 0.1f),
+                            shape = CircleShape,
+                        ).clickable { showDeleteConfirmDialog = true },
                 imageVector = Icons.Filled.Remove,
                 contentDescription = stringResource(R.string.delete_sound),
-                tint = MaterialTheme.colorScheme.error
+                tint = MaterialTheme.colorScheme.error,
             )
 
             Box(
                 contentAlignment = Alignment.TopEnd,
-                modifier = Modifier
-                    .size(100.dp)
-                    .clip(CircleShape)
-                    .clickable(
-                        interactionSource = interactionSource,
-                        indication = null,
-                        onClick = {
-                        viewModel.onCustomCardClick(soundId)
-                        }
-                    )
-                    .background(
-                        if (shouldUseActiveColor) MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
-                        else Color.Gray.copy(alpha = 0.1f)
-                    )
+                modifier =
+                    Modifier
+                        .size(100.dp)
+                        .clip(CircleShape)
+                        .clickable(
+                            interactionSource = interactionSource,
+                            indication = null,
+                            onClick = {
+                                viewModel.onCustomCardClick(soundId)
+                            },
+                        ).background(
+                            if (shouldUseActiveColor) {
+                                MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                            } else {
+                                Color.Gray.copy(alpha = 0.1f)
+                            },
+                        ),
             ) {
                 Icon(
                     imageVector = Icons.Filled.LibraryMusic,
                     contentDescription = stringResource(R.string.content_desc_sound_icon),
-                    modifier = Modifier
-                        .size(40.dp)
-                        .align(Alignment.Center),
-                    tint = if (shouldUseActiveColor) MaterialTheme.colorScheme.primary else Color.Gray.copy(
-                        .5f
-                    )
+                    modifier =
+                        Modifier
+                            .size(40.dp)
+                            .align(Alignment.Center),
+                    tint =
+                        if (shouldUseActiveColor) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            Color.Gray.copy(
+                                .5f,
+                            )
+                        },
                 )
             }
         }
@@ -135,25 +144,32 @@ fun CustomSoundCard(
 
         Text(
             text = displayName,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onSurface,
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
         Slider(
-            colors = SliderDefaults.colors(
-                thumbColor = when (playOrPause) {
-                    true -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-                    else -> Color.Gray.copy(.5f)
-                },
-                activeTrackColor = if (playOrPause) MaterialTheme.colorScheme.primary else Color.Gray.copy(
-                    .5f
+            colors =
+                SliderDefaults.colors(
+                    thumbColor =
+                        when (playOrPause) {
+                            true -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+                            else -> Color.Gray.copy(.5f)
+                        },
+                    activeTrackColor =
+                        if (playOrPause) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            Color.Gray.copy(
+                                .5f,
+                            )
+                        },
+                    inactiveTrackColor = Color.Gray.copy(.5f),
+                    disabledThumbColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                    disabledActiveTrackColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
+                    disabledInactiveTrackColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
                 ),
-                inactiveTrackColor = Color.Gray.copy(.5f),
-                disabledThumbColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
-                disabledActiveTrackColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
-                disabledInactiveTrackColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
-            ),
             value = displayVolume,
             onValueChange = { newValue ->
                 if (playOrPause) {
@@ -168,17 +184,19 @@ fun CustomSoundCard(
                 }
                 isDragging = false
                 if (!playOrPause) {
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.cant_play_sound_on_pause),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast
+                        .makeText(
+                            context,
+                            context.getString(R.string.cant_play_sound_on_pause),
+                            Toast.LENGTH_SHORT,
+                        ).show()
                 }
             },
             valueRange = 0f..1f,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(6.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(6.dp),
         )
     }
 
@@ -188,10 +206,11 @@ fun CustomSoundCard(
             title = { Text(text = stringResource(R.string.delete_sound_dialog_title)) },
             text = {
                 Text(
-                    text = stringResource(
-                        R.string.delete_sound_dialog_message,
-                        displayName
-                    )
+                    text =
+                        stringResource(
+                            R.string.delete_sound_dialog_message,
+                            displayName,
+                        ),
                 )
             },
             confirmButton = {
@@ -199,7 +218,7 @@ fun CustomSoundCard(
                     onClick = {
                         onDeleteClick(soundId)
                         showDeleteConfirmDialog = false
-                    }
+                    },
                 ) {
                     Text(text = stringResource(R.string.delete_sound_confirm))
                 }
@@ -208,7 +227,7 @@ fun CustomSoundCard(
                 TextButton(onClick = { showDeleteConfirmDialog = false }) {
                     Text(text = stringResource(R.string.dialog_cancel))
                 }
-            }
+            },
         )
     }
 }

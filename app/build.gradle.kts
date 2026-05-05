@@ -34,7 +34,7 @@ android {
             buildConfigField("boolean", "CUSTOM_SOUNDS_PREMIUM_LOCKED", "true")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -90,18 +90,18 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    //navigation
+    // navigation
     implementation(libs.androidx.navigation.compose)
 
-    //Exoplayer
+    // Exoplayer
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.exoplayer.dash)
     implementation(libs.androidx.media3.ui)
 
-    //await
-    implementation (libs.kotlinx.coroutines.core)
-    implementation (libs.kotlinx.coroutines.android)
-    implementation (libs.androidx.lifecycle.viewmodel.ktx)
+    // await
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
 //    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
 
     // Koin

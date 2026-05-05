@@ -8,7 +8,6 @@ import androidx.navigation.compose.rememberNavController
 import com.pronaycoding.blankee.feature.home.HomeScreenRoute
 import com.pronaycoding.blankee.feature.settings.SettingsScreenRoute
 
-
 /**
  * Navigation routes for the Blankee application.
  *
@@ -30,7 +29,6 @@ enum class Routes {
      */
     Settings,
 }
-
 
 /**
  * Sets up the navigation graph for the Blankee application.
@@ -57,7 +55,7 @@ fun Navigation() {
          */
         composable(Routes.Home.name) {
             HomeScreenRoute(
-                navigateToSettings = { navController.navigate(Routes.Settings.name) }
+                navigateToSettings = { navController.navigate(Routes.Settings.name) },
             )
         }
 
@@ -66,7 +64,7 @@ fun Navigation() {
          */
         composable(Routes.Settings.name) {
             SettingsScreenRoute(
-                onBackPressed = { navController.navigateUp() }
+                onBackPressed = { navController.navigateUp() },
             )
         }
     }

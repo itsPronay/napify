@@ -24,7 +24,6 @@ import org.koin.core.context.GlobalContext
  * @see BlankeeMediaPlaybackService for service integration
  */
 class MediaPlaybackActionReceiver : BroadcastReceiver() {
-
     /**
      * Handles broadcast intents for playback control actions.
      *
@@ -36,7 +35,10 @@ class MediaPlaybackActionReceiver : BroadcastReceiver() {
      * @param context The context in which the receiver is running
      * @param intent The intent being received (should have action [ACTION_TOGGLE_PLAYBACK])
      */
-    override fun onReceive(context: Context, intent: Intent?) {
+    override fun onReceive(
+        context: Context,
+        intent: Intent?,
+    ) {
         if (intent?.action != ACTION_TOGGLE_PLAYBACK) return
         val koin = GlobalContext.get()
         val global = koin.get<GlobalPlaybackState>()
@@ -44,7 +46,7 @@ class MediaPlaybackActionReceiver : BroadcastReceiver() {
         global.togglePlayPause()
         notifications.requestSync(
             global.canPlay.value,
-            global.lastHasAudibleMix
+            global.lastHasAudibleMix,
         )
     }
 

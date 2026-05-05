@@ -19,16 +19,15 @@ import kotlinx.coroutines.flow.Flow
  */
 @Dao
 interface PresetDao {
-
     @Insert
     suspend fun insertPreset(preset: PresetEntity): Long
 
-    @Query("SELECT * FROM presets ORDER BY createdAt DESC")
+    @Query("SELECT * FROM presets ORDER BY createdAt ASC")
     fun observeAll(): Flow<List<PresetEntity>>
 
     @Query("DELETE FROM presets WHERE id = :id")
     suspend fun deleteById(id: Long)
 
     @Update
-    suspend fun updatePreset(preset : PresetEntity)
+    suspend fun updatePreset(preset: PresetEntity)
 }

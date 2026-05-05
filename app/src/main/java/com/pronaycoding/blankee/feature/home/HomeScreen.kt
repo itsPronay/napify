@@ -67,6 +67,7 @@ import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
@@ -114,7 +115,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun HomeScreenRoute(
     navigateToSettings: () -> Unit,
-    viewmodel: HomeViewmodel = koinViewModel()
+    viewmodel: HomeViewmodel = koinViewModel(),
 ) {
     val canPlaySound by viewmodel.canPlay.collectAsStateWithLifecycle()
     val customSounds by viewmodel.customSounds.collectAsStateWithLifecycle()
@@ -125,7 +126,6 @@ fun HomeScreenRoute(
     val presets by viewmodel.presets.collectAsStateWithLifecycle()
     val builtinVolumes by viewmodel.builtinVolumes.collectAsStateWithLifecycle()
     val customVolumes by viewmodel.customVolumes.collectAsStateWithLifecycle()
-//    val sleepTimerRemainingMillis by viewModel.sleepTimerRemainingMillis.collectAsStateWithLifecycle()
 
     HomeScreen(
         canPlay = canPlay,
@@ -142,7 +142,7 @@ fun HomeScreenRoute(
         onAddCustomSound = { displayName, filePath ->
             viewmodel.addCustomSound(
                 displayName,
-                filePath
+                filePath,
             )
         },
         handlePlayPause = viewmodel::handlePlayPause,
@@ -151,7 +151,7 @@ fun HomeScreenRoute(
         sleepTimerRemainingMillis = sleepTimerRemainingMillis,
         onCancelSleepTimer = { viewmodel.cancelSleepTimer() },
         resetAllSounds = viewmodel::resetAllSounds,
-        deletePreset = viewmodel::deletePreset
+        deletePreset = viewmodel::deletePreset,
     )
 }
 
@@ -176,17 +176,18 @@ internal fun HomeScreen(
     onDeleteCustomSound: (Int) -> Unit = {},
     onLaunchPremiumPurchase: (Activity) -> Unit = {},
     sleepTimerRemainingMillis: Long? = null,
-    onCancelSleepTimer: () -> Unit = {}
+    onCancelSleepTimer: () -> Unit = {},
 ) {
     val context = LocalContext.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     var showCancelTimerDialog by rememberSaveable { mutableStateOf(false) }
     var showTimerDialog by rememberSaveable { mutableStateOf(false) }
 
-    val btnColors = IconButtonDefaults.filledTonalIconButtonColors(
-        containerColor = MaterialTheme.colorScheme.primaryContainer.copy(.1f),
-        contentColor = MaterialTheme.colorScheme.primaryContainer,
-    )
+    val btnColors =
+        IconButtonDefaults.filledTonalIconButtonColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer.copy(.1f),
+            contentColor = MaterialTheme.colorScheme.primaryContainer,
+        )
 
     var showDropdown by rememberSaveable { mutableStateOf(false) }
     var showSavePresetDialog by rememberSaveable { mutableStateOf(false) }
@@ -198,11 +199,12 @@ internal fun HomeScreen(
     var presetPendingDeleteName by rememberSaveable { mutableStateOf("") }
     var presetClicked by rememberSaveable { mutableStateOf(false) }
 
-    val canSavePreset = remember(builtinVolumes, customVolumes) {
-        val until = getCardList().size - 1
-        builtinVolumes.any { (i, v) -> i in 0 until until && v > 0f } ||
-            customVolumes.any { (_, v) -> v > 0f }
-    }
+    val canSavePreset =
+        remember(builtinVolumes, customVolumes) {
+            val until = getCardList().size - 1
+            builtinVolumes.any { (i, v) -> i in 0 until until && v > 0f } ||
+                customVolumes.any { (_, v) -> v > 0f }
+        }
 
     PresetClicked(
         context = context,
@@ -231,241 +233,174 @@ internal fun HomeScreen(
         startSleepTimer = startSleepTimer,
     )
 
-    val audioPickerLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        uri?.let {
-            val defaultName = context.getString(
-                R.string.custom_sound_default_name,
-                customSounds.size + 1
-            )
-            val displayName = defaultName
-            val filePath = it.toString()
-            if (filePath.isNotEmpty()) {
-                onAddCustomSound(displayName, filePath)
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.sound_added, displayName),
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.could_not_add_sound),
-                    Toast.LENGTH_SHORT
-                ).show()
+    val audioPickerLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.GetContent(),
+        ) { uri: Uri? ->
+            uri?.let {
+                val defaultName =
+                    context.getString(
+                        R.string.custom_sound_default_name,
+                        customSounds.size + 1,
+                    )
+                val displayName = defaultName
+                val filePath = it.toString()
+                if (filePath.isNotEmpty()) {
+                    onAddCustomSound(displayName, filePath)
+                    Toast
+                        .makeText(
+                            context,
+                            context.getString(R.string.sound_added, displayName),
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                } else {
+                    Toast
+                        .makeText(
+                            context,
+                            context.getString(R.string.could_not_add_sound),
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                }
             }
         }
-    }
-
-    val scheme = MaterialTheme.colorScheme
 
     Scaffold(
         bottomBar = {
-//            BottomAppBar() {
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 20.dp)
-                    .height(60.dp)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 20.dp)
+                        .height(60.dp),
             ) {
                 Row(
                     modifier = Modifier.align(Alignment.Center),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(20.dp)
+                    horizontalArrangement = Arrangement.spacedBy(20.dp),
                 ) {
                     FilledTonalIconButton(
                         onClick = {
                             presetClicked = true
-                        }, colors = btnColors
+                        },
+                        colors = btnColors,
                     ) {
                         Icon(
                             imageVector = Icons.Default.Save,
                             contentDescription = stringResource(R.string.content_desc_more_options),
-                            modifier = Modifier.size(18.dp)
+                            modifier = Modifier.size(18.dp),
                         )
                     }
 
                     FilledTonalIconButton(
                         onClick = {
                             resetAllSounds()
-                            Toast.makeText(
-                                context,
-                                context.getString(R.string.sounds_reset),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }, colors = btnColors
+                            Toast
+                                .makeText(
+                                    context,
+                                    context.getString(R.string.sounds_reset),
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                        },
+                        colors = btnColors,
                     ) {
                         Icon(
                             imageVector = Icons.Default.Refresh,
                             contentDescription = stringResource(R.string.menu_reset),
-//                            modifier = Modifier.size(20.dp)
                         )
                     }
 
                     FilledTonalIconButton(
-                        modifier = Modifier
-                            .size(60.dp),
+                        modifier =
+                            Modifier
+                                .size(60.dp),
                         onClick = { handlePlayPause(!canPlay) },
                         shape = CircleShape,
-                        colors = filledTonalIconButtonColors(
-                            containerColor = MaterialTheme.colorScheme.error.copy(.1f),
-                            contentColor = MaterialTheme.colorScheme.error,
-                        ),
+                        colors =
+                            filledTonalIconButtonColors(
+                                containerColor = MaterialTheme.colorScheme.error.copy(.1f),
+                                contentColor = MaterialTheme.colorScheme.error,
+                            ),
                     ) {
                         Icon(
-                            imageVector = when (canPlay) {
-                                true -> Icons.Default.Pause
-                                false -> Icons.Default.PlayArrow
-                            },
-                            contentDescription = if (canPlay) {
-                                stringResource(R.string.menu_pause)
-                            } else {
-                                stringResource(R.string.menu_play)
-                            },
-                            modifier = Modifier.size(42.dp)
+                            imageVector =
+                                when (canPlay) {
+                                    true -> Icons.Default.Pause
+                                    false -> Icons.Default.PlayArrow
+                                },
+                            contentDescription =
+                                if (canPlay) {
+                                    stringResource(R.string.menu_pause)
+                                } else {
+                                    stringResource(R.string.menu_play)
+                                },
+                            modifier = Modifier.size(42.dp),
                         )
                     }
-//                    IconButton(
-//                        onClick = {}) {
-//                    Icon(
-//                        modifier = Modifier
-//                            .size(50.dp),
-//                        imageVector = Icons.Filled.PlayArrow,
-//                        contentDescription = null
-//                    )
-//                    }
 
                     FilledTonalIconButton(
                         onClick = { showTimerDialog = true },
                         shape = CircleShape,
-                        colors = IconButtonDefaults.filledTonalIconButtonColors(
-                            containerColor = if (sleepTimerRemainingMillis != null) {
-                                MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.45f)
-                            } else {
-                                MaterialTheme.colorScheme.primaryContainer.copy(.1f)
-                            },
-                            contentColor = if (sleepTimerRemainingMillis != null) {
-                                MaterialTheme.colorScheme.error
-                            } else {
-                                MaterialTheme.colorScheme.primaryContainer
-                            },
-                        ),
+                        colors =
+                            filledTonalIconButtonColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer.copy(.1f)
+                            ),
                     ) {
                         Icon(
                             imageVector = Icons.Default.Timer,
                             contentDescription = stringResource(R.string.menu_timer),
-                            tint = if (sleepTimerRemainingMillis != null) {
-                                MaterialTheme.colorScheme.error
-                            } else {
-                                MaterialTheme.colorScheme.primaryContainer
-                            },
-//                            modifier = Modifier.size(20.dp)
+                            tint = MaterialTheme.colorScheme.primaryContainer
                         )
                     }
 
                     FilledTonalIconButton(
                         onClick = {
-
-                        }, colors = btnColors
+                            navigateToSettings()
+                        },
+                        colors = btnColors,
                     ) {
                         Icon(
                             imageVector = Icons.Default.Settings,
                             contentDescription = stringResource(R.string.content_desc_more_options),
-                            modifier = Modifier.size(18.dp)
+                            modifier = Modifier.size(18.dp),
                         )
                     }
                 }
-
-
             }
-//            }
-//            BlankeeTopAppBar(
-//                navigateToSettings = navigateToSettings
-//            )
-//            val madeBy = AnnotatedString.Builder().apply {
-//                append("Made with ❤️ by ")
-//                pushStringAnnotation(tag = "pronay", annotation = "pronay")
-//                withStyle(
-//                    SpanStyle(
-//                        color = MaterialTheme.colorScheme.primary,
-//                        fontWeight = FontWeight.SemiBold
-//                    )
-//                ) {
-//                    append("Pronay")
-//                }
-//                pop()
-//            }.toAnnotatedString()
-//
-//            Box(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .background(MaterialTheme.colorScheme.background)
-//                    .padding(horizontal = 16.dp, vertical = 10.dp),
-//                contentAlignment = Alignment.Center
-//            ) {
-//                ClickableText(
-//                    text = madeBy,
-//                    style = MaterialTheme.typography.bodySmall.copy(
-//                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-//                        textAlign = TextAlign.Center
-//                    ),
-//                    onClick = { offset ->
-//                        madeBy.getStringAnnotations(
-//                            tag = "pronay",
-//                            start = offset,
-//                            end = offset
-//                        ).firstOrNull()?.let {
-//                            openExternalUrl(context, Constants.PRONAY_GITHUB)
-//                        }
-//                    }
-//                )
-//            }
-        }
+        },
     ) {
         Column(
-            modifier = Modifier
-                .padding(it)
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
+            modifier =
+                Modifier
+                    .padding(it)
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background),
         ) {
             LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp)
-                    .padding(bottom = 16.dp),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp)
+                        .padding(bottom = 16.dp),
                 content = {
+                    // responsible for sleep timer countdown showing on UI
                     if (sleepTimerRemainingMillis != null) {
                         item {
-                            CustomCard {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.SpaceBetween
-                                ) {
-                                    Text(
-                                        text = stringResource(
-                                            R.string.timer_countdown_label,
-                                            formatTimer(sleepTimerRemainingMillis)
-                                        ),
-                                        style = MaterialTheme.typography.titleMedium
-                                    )
-                                    IconButton(onClick = { showCancelTimerDialog = true }) {
-                                        Icon(
-                                            imageVector = Icons.Filled.Close,
-                                            contentDescription = stringResource(R.string.timer_cancel)
-                                        )
-                                    }
-                                }
-                            }
+                            Spacer(modifier = Modifier.height(16.dp))
+                            SleepTimerActiveCard(
+                                sleepTimerRemainingMillis = sleepTimerRemainingMillis,
+                                setShowCancelTimerDialogTrue = {
+                                    showCancelTimerDialog = true
+                                },
+                            )
                         }
                     }
 
                     item {
                         Spacer(modifier = Modifier.height(8.dp))
                         CustomCard {
-                            TwoColumnGrid(
+                            SoundGrid(
                                 items = homeGridCardItems(customSoundsUnlocked),
-                                canPlaySound = canPlaySound
+                                canPlaySound = canPlaySound,
                             )
                         }
                     }
@@ -478,7 +413,7 @@ internal fun HomeScreen(
                                 chunks.forEach { chunk ->
                                     Row(
                                         modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                        horizontalArrangement = Arrangement.spacedBy(8.dp),
                                     ) {
                                         chunk.forEach { customSound ->
                                             CustomSoundCard(
@@ -486,7 +421,7 @@ internal fun HomeScreen(
                                                 soundId = customSound.id,
                                                 displayName = customSound.displayName,
                                                 playOrPause = canPlaySound,
-                                                onDeleteClick = onDeleteCustomSound
+                                                onDeleteClick = onDeleteCustomSound,
                                             )
                                         }
                                         // Fill empty slot if odd number
@@ -506,47 +441,58 @@ internal fun HomeScreen(
                             Text(
                                 text = stringResource(R.string.custom_sounds_premium_message),
                                 style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                             Spacer(modifier = Modifier.height(12.dp))
                             Button(
                                 onClick = {
                                     context.findActivity()?.let { onLaunchPremiumPurchase(it) }
                                 },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(56.dp),
-                                shape = RoundedCornerShape(16.dp)
+                                modifier =
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .height(56.dp),
+                                shape = RoundedCornerShape(16.dp),
                             ) {
                                 Text(
                                     stringResource(R.string.buy_premium),
-                                    style = MaterialTheme.typography.titleSmall
+                                    style = MaterialTheme.typography.titleSmall,
                                 )
                             }
                         } else {
-                            Button(
-                                onClick = { audioPickerLauncher.launch("audio/*") },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(56.dp),
-                                shape = RoundedCornerShape(16.dp)
+                            Box(
+                                modifier = Modifier.fillMaxWidth(),
                             ) {
-                                Icon(
-                                    imageVector = Icons.Filled.Add,
-                                    contentDescription = stringResource(R.string.content_desc_add_custom_sound),
-                                    modifier = Modifier.size(24.dp)
-                                )
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Text(
-                                    stringResource(R.string.add_custom_sound),
-                                    style = MaterialTheme.typography.titleSmall
-                                )
+                                Button(
+                                    onClick = { audioPickerLauncher.launch("audio/*") },
+                                    modifier =
+                                        Modifier
+//                                    .fillMaxWidth()
+                                            .height(56.dp)
+                                            .align(Alignment.Center),
+                                    shape = RoundedCornerShape(16.dp),
+                                    colors =
+                                        ButtonDefaults.buttonColors(
+                                            containerColor = MaterialTheme.colorScheme.background,
+                                        ),
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Filled.Add,
+                                        contentDescription = stringResource(R.string.content_desc_add_custom_sound),
+                                        modifier = Modifier.size(24.dp),
+                                    )
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Text(
+                                        stringResource(R.string.add_custom_sound),
+                                        style = MaterialTheme.typography.titleSmall,
+                                    )
+                                }
                             }
                         }
 
                         Spacer(modifier = Modifier.height(24.dp))
                     }
-                }
+                },
             )
         }
     }
@@ -561,7 +507,7 @@ internal fun HomeScreen(
                     onClick = {
                         onCancelSleepTimer()
                         showCancelTimerDialog = false
-                    }
+                    },
                 ) {
                     Text(stringResource(R.string.timer_cancel))
                 }
@@ -570,7 +516,7 @@ internal fun HomeScreen(
                 TextButton(onClick = { showCancelTimerDialog = false }) {
                     Text(stringResource(R.string.dialog_cancel))
                 }
-            }
+            },
         )
     }
 }
@@ -589,31 +535,27 @@ private fun formatTimer(remainingMillis: Long): String {
 
 @SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
-private fun TwoColumnGrid(
+private fun SoundGrid(
     items: List<CardItems>,
-    canPlaySound: Boolean
+    canPlaySound: Boolean,
 ) {
     BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
-        // 'this' is BoxWithConstraintsScope, maxWidth is available here
-        val columns = when {
-            maxWidth >= 840.dp -> 4
-            maxWidth >= 600.dp -> 3
-            else -> 2
-        }
+        val itemMinWidth = 140.dp
+        val columns = ((maxWidth - 8.dp) / (itemMinWidth + 8.dp)).toInt().coerceAtLeast(1).coerceAtMost(5)
 
         Column {
             val chunks = items.chunked(columns)
             chunks.forEach { chunk ->
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     chunk.forEach { cardItem ->
                         PrettyCardView(
                             modifier = Modifier.weight(1f),
                             index = getCardList().indexOf(cardItem),
                             cardItem = cardItem,
-                            playOrPause = canPlaySound
+                            playOrPause = canPlaySound,
                         )
                     }
                     repeat(columns - chunk.size) {
@@ -625,14 +567,26 @@ private fun TwoColumnGrid(
     }
 }
 
-fun getCardList(): List<CardItems> = listOf(
-    CardItems.Rain, CardItems.Wind, CardItems.Storm,
-    CardItems.Wave, CardItems.Stream, CardItems.Birds, CardItems.SummerNight,
-    CardItems.Train, CardItems.Boat, CardItems.City,
-    CardItems.CoffeeShop, CardItems.FirePlace, CardItems.BusyRestaurant,
-    CardItems.PinkNoise, CardItems.WhiteNoise, CardItems.Custom
-)
+fun getCardList(): List<CardItems> =
+    listOf(
+        CardItems.Rain,
+        CardItems.Wind,
+        CardItems.Storm,
+        CardItems.Wave,
+        CardItems.Stream,
+        CardItems.Birds,
+        CardItems.SummerNight,
+        CardItems.Train,
+        CardItems.Boat,
+        CardItems.City,
+        CardItems.CoffeeShop,
+        CardItems.FirePlace,
+        CardItems.BusyRestaurant,
+        CardItems.PinkNoise,
+        CardItems.WhiteNoise,
+    )
 
+// TODO need to fix this logic
 private fun homeGridCardItems(customSoundsUnlocked: Boolean): List<CardItems> =
     if (!customSoundsUnlocked) {
         getCardList().filter { it != CardItems.Custom }
@@ -646,9 +600,10 @@ fun CustomCard(content: @Composable () -> Unit) {
         modifier = Modifier.padding(vertical = 8.dp),
         shape = RoundedCornerShape(20.dp),
         elevation = CardDefaults.cardElevation(0.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        )
+        colors =
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface,
+            ),
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             content()
@@ -673,23 +628,24 @@ fun PresetClicked(
 
     DropdownMenu(
         expanded = dropdownEnabled,
-        onDismissRequest = setDropdownFalse
+        onDismissRequest = setDropdownFalse,
     ) {
         DropdownMenuItem(
             text = { Text(stringResource(R.string.presets_save_mix)) },
             onClick = {
                 setDropdownFalse()
                 if (!canSavePreset) {
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.preset_nothing_to_save),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast
+                        .makeText(
+                            context,
+                            context.getString(R.string.preset_nothing_to_save),
+                            Toast.LENGTH_SHORT,
+                        ).show()
                 } else {
                     presetNameInput = ""
                     showSavePresetDialog = true
                 }
-            }
+            },
         )
         HorizontalDivider()
         if (presets.isEmpty()) {
@@ -698,11 +654,11 @@ fun PresetClicked(
                     Text(
                         stringResource(R.string.presets_empty),
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 },
                 onClick = { },
-                enabled = false
+                enabled = false,
             )
         } else {
             presets.forEach { preset ->
@@ -711,7 +667,7 @@ fun PresetClicked(
                         Text(
                             preset.name,
                             maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
+                            overflow = TextOverflow.Ellipsis,
                         )
                     },
                     onClick = {
@@ -724,15 +680,15 @@ fun PresetClicked(
                                 setDropdownFalse()
                                 setPresentPendingDeleteId(preset.id)
                                 setPresetPendingDeleteName(preset.name)
-                            }
+                            },
                         ) {
                             Icon(
                                 imageVector = Icons.Outlined.Delete,
                                 tint = MaterialTheme.colorScheme.error,
-                                contentDescription = stringResource(R.string.preset_delete_desc)
+                                contentDescription = stringResource(R.string.preset_delete_desc),
                             )
                         }
-                    }
+                    },
                 )
             }
         }
@@ -744,12 +700,12 @@ fun PresetClicked(
             title = { Text(stringResource(R.string.save_preset_dialog_title)) },
             text = {
                 OutlinedTextField(
-                    supportingText = { Text("If you keep empty it will be saved as Untitled mix") },
+                    supportingText = { Text(stringResource(R.string.preset_name_hint)) },
                     value = presetNameInput,
                     onValueChange = { presetNameInput = it },
                     label = { Text(stringResource(R.string.preset_name_label)) },
                     singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
             },
             confirmButton = {
@@ -758,7 +714,7 @@ fun PresetClicked(
                         savePreset(presetNameInput)
                         presetNameInput = ""
                         showSavePresetDialog = false
-                    }
+                    },
                 ) {
                     Text(stringResource(R.string.preset_dialog_save))
                 }
@@ -767,7 +723,7 @@ fun PresetClicked(
                 TextButton(onClick = { showSavePresetDialog = false }) {
                     Text(stringResource(R.string.dialog_cancel))
                 }
-            }
+            },
         )
     }
 }
@@ -789,8 +745,8 @@ fun DeletePresetDialog(
                 Text(
                     stringResource(
                         R.string.preset_delete_confirm_message,
-                        presetPendingDeleteName
-                    )
+                        presetPendingDeleteName,
+                    ),
                 )
             },
             confirmButton = {
@@ -798,7 +754,7 @@ fun DeletePresetDialog(
                     onClick = {
                         deletePreset(presetPendingDeleteId!!)
                         setPresetPendingDeleteId(null)
-                    }
+                    },
                 ) {
                     Text(stringResource(R.string.delete_sound_confirm))
                 }
@@ -807,11 +763,10 @@ fun DeletePresetDialog(
                 TextButton(onClick = { setPresetPendingDeleteId.invoke(null) }) {
                     Text(stringResource(R.string.dialog_cancel))
                 }
-            }
+            },
         )
     }
 }
-
 
 @Composable
 fun TimerDialog(
@@ -819,7 +774,7 @@ fun TimerDialog(
     showTimerDialog: Boolean,
     sleepTimerRemainingMillis: Long?,
     startSleepTimer: (Long) -> Unit,
-    setTimerDialogFalse: () -> Unit
+    setTimerDialogFalse: () -> Unit,
 ) {
     var selectedTimerOption by rememberSaveable { mutableIntStateOf(5) }
     var customTimerInput by rememberSaveable { mutableStateOf("") }
@@ -832,11 +787,12 @@ fun TimerDialog(
                     Icon(
                         imageVector = Icons.Default.Timer,
                         contentDescription = null,
-                        tint = if (sleepTimerRemainingMillis != null) {
-                            MaterialTheme.colorScheme.error
-                        } else {
-                            MaterialTheme.colorScheme.primary
-                        }
+                        tint =
+                            if (sleepTimerRemainingMillis != null) {
+                                MaterialTheme.colorScheme.error
+                            } else {
+                                MaterialTheme.colorScheme.primary
+                            },
                     )
                     Spacer(modifier = Modifier.size(8.dp))
                     Text(stringResource(R.string.timer_dialog_title))
@@ -846,13 +802,14 @@ fun TimerDialog(
                 Column {
                     if (sleepTimerRemainingMillis != null) {
                         Text(
-                            text = stringResource(
-                                R.string.timer_countdown_label,
-                                formatRemainingTimerLabel(sleepTimerRemainingMillis ?: 0L)
-                            ),
+                            text =
+                                stringResource(
+                                    R.string.timer_countdown_label,
+                                    formatRemainingTimerLabel(sleepTimerRemainingMillis ?: 0L),
+                                ),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.error,
-                            modifier = Modifier.padding(bottom = 10.dp)
+                            modifier = Modifier.padding(bottom = 10.dp),
                         )
                     }
 
@@ -860,31 +817,34 @@ fun TimerDialog(
                     timerOptions.forEach { option ->
                         val isSelected = selectedTimerOption == option
                         Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 4.dp)
-                                .background(
-                                    color = if (isSelected) {
-                                        MaterialTheme.colorScheme.primary.copy(alpha = 0.10f)
-                                    } else {
-                                        MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.35f)
-                                    },
-                                    shape = RoundedCornerShape(12.dp)
-                                )
-                                .clickable { selectedTimerOption = option }
-                                .padding(horizontal = 8.dp, vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 4.dp)
+                                    .background(
+                                        color =
+                                            if (isSelected) {
+                                                MaterialTheme.colorScheme.primary.copy(alpha = 0.10f)
+                                            } else {
+                                                MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.35f)
+                                            },
+                                        shape = RoundedCornerShape(12.dp),
+                                    )
+                                    .clickable { selectedTimerOption = option }
+                                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically,
                         ) {
                             RadioButton(
                                 selected = isSelected,
-                                onClick = { selectedTimerOption = option }
+                                onClick = { selectedTimerOption = option },
                             )
                             Text(
-                                text = if (option == -1) {
-                                    stringResource(R.string.timer_custom)
-                                } else {
-                                    stringResource(R.string.timer_minutes_format, option)
-                                }
+                                text =
+                                    if (option == -1) {
+                                        stringResource(R.string.timer_custom)
+                                    } else {
+                                        stringResource(R.string.timer_minutes_format, option)
+                                    },
                             )
                         }
                     }
@@ -895,7 +855,7 @@ fun TimerDialog(
                             label = { Text(stringResource(R.string.timer_custom_label)) },
                             singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
                         )
                     }
                 }
@@ -903,27 +863,30 @@ fun TimerDialog(
             confirmButton = {
                 TextButton(
                     onClick = {
-                        val selectedMinutes = if (selectedTimerOption == -1) {
-                            customTimerInput.toLongOrNull()
-                        } else {
-                            selectedTimerOption.toLong()
-                        }
+                        val selectedMinutes =
+                            if (selectedTimerOption == -1) {
+                                customTimerInput.toLongOrNull()
+                            } else {
+                                selectedTimerOption.toLong()
+                            }
                         if (selectedMinutes == null || selectedMinutes <= 0L) {
-                            Toast.makeText(
-                                context,
-                                context.getString(R.string.timer_invalid_input),
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast
+                                .makeText(
+                                    context,
+                                    context.getString(R.string.timer_invalid_input),
+                                    Toast.LENGTH_SHORT,
+                                ).show()
                             return@TextButton
                         }
                         startSleepTimer(selectedMinutes * 60_000L)
-                        Toast.makeText(
-                            context,
-                            context.getString(R.string.timer_set, selectedMinutes),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast
+                            .makeText(
+                                context,
+                                context.getString(R.string.timer_set, selectedMinutes),
+                                Toast.LENGTH_SHORT,
+                            ).show()
                         setTimerDialogFalse.invoke()
-                    }
+                    },
                 ) {
                     Text(stringResource(R.string.timer_start))
                 }
@@ -932,8 +895,40 @@ fun TimerDialog(
                 TextButton(onClick = { setTimerDialogFalse() }) {
                     Text(stringResource(R.string.dialog_cancel))
                 }
-            }
+            },
         )
+    }
+}
+
+@Composable
+fun SleepTimerActiveCard(
+    sleepTimerRemainingMillis: Long,
+    setShowCancelTimerDialogTrue: () -> Unit,
+) {
+    CustomCard {
+        Row(
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text =
+                    stringResource(
+                        R.string.timer_countdown_label,
+                        formatTimer(sleepTimerRemainingMillis),
+                    ),
+                style = MaterialTheme.typography.titleMedium,
+            )
+            IconButton(onClick = { setShowCancelTimerDialogTrue.invoke() }) {
+                Icon(
+                    imageVector = Icons.Filled.Close,
+                    contentDescription = stringResource(R.string.timer_cancel),
+                )
+            }
+        }
     }
 }
 

@@ -17,17 +17,14 @@ import kotlinx.coroutines.flow.Flow
  * @see CustomSoundDao for lower-level database access
  */
 class CustomSoundRepositoryImpl(
-    private val customSoundDao: CustomSoundDao
+    private val customSoundDao: CustomSoundDao,
 ) : com.pronaycoding.blankee.core.data.repository.CustomSoundRepository {
-
     /**
      * Retrieves all custom sounds from the database as a Flow.
      *
      * @return A Flow from the DAO that emits updated custom sound lists on database changes
      */
-    override fun getAllCustomSounds(): Flow<List<CustomSoundEntity>> {
-        return customSoundDao.getAllCustomSounds()
-    }
+    override fun getAllCustomSounds(): Flow<List<CustomSoundEntity>> = customSoundDao.getAllCustomSounds()
 
     /**
      * Adds a new custom sound to the database.
@@ -38,10 +35,14 @@ class CustomSoundRepositoryImpl(
      * @param displayName User-friendly name for the custom sound
      * @param filePath Full path or URI to the audio file
      */
-    override suspend fun addCustomSound(displayName: String, filePath: String) {
-        val entity = CustomSoundEntity(
+    override suspend fun addCustomSound(
+        displayName: String,
+        filePath: String,
+    ) {
+        val entity =
+            CustomSoundEntity(
                 displayName = displayName,
-                filePath = filePath
+                filePath = filePath,
             )
         customSoundDao.insertCustomSound(entity)
     }
@@ -70,9 +71,7 @@ class CustomSoundRepositoryImpl(
      * @param id The ID of the custom sound to retrieve
      * @return The [CustomSoundEntity] if found, null otherwise
      */
-    override suspend fun getCustomSoundById(id: Int): CustomSoundEntity? {
-        return customSoundDao.getCustomSoundById(id)
-    }
+    override suspend fun getCustomSoundById(id: Int): CustomSoundEntity? = customSoundDao.getCustomSoundById(id)
 
     /**
      * Updates the display name of an existing custom sound.
@@ -80,7 +79,10 @@ class CustomSoundRepositoryImpl(
      * @param id The ID of the custom sound to update
      * @param displayName The new display name for the custom sound
      */
-    override suspend fun updateCustomSoundDisplayName(id: Int, displayName: String) {
+    override suspend fun updateCustomSoundDisplayName(
+        id: Int,
+        displayName: String,
+    ) {
         customSoundDao.updateCustomSoundDisplayName(id, displayName)
     }
 }

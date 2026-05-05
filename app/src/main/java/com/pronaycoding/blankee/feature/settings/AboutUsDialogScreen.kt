@@ -5,12 +5,9 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun AboutUsDialogScreen(modifier: Modifier = Modifier) {
-
 }
 
 @Composable
 private fun PreviewAboutUsDialogScreen(modifier: Modifier = Modifier) {
-    AboutUsDialogScreen(
-
-    )
+    AboutUsDialogScreen()
 }

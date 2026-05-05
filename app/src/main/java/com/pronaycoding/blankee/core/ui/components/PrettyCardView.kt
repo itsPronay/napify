@@ -54,7 +54,6 @@ import com.pronaycoding.blankee.core.model.CardItems
 import com.pronaycoding.blankee.feature.home.HomeViewmodel
 import org.koin.androidx.compose.koinViewModel
 
-
 @Composable
 fun PrettyCardView(
     modifier: Modifier = Modifier,
@@ -78,30 +77,33 @@ fun PrettyCardView(
 
     Column(
         modifier = modifier.padding(12.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .size(100.dp)
-                .clip(CircleShape)
-                .clickable(
-                    interactionSource = interactionSource,
-                    indication = null,
-                    onClick = {
-                        viewModel.onBuiltInCardClick(index)
-                    }
-                )
-                .background(
-                    if (shouldUseActiveColor) MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
-                    else Color.Gray.copy(alpha = 0.1f)
-                )
+            modifier =
+                Modifier
+                    .size(100.dp)
+                    .clip(CircleShape)
+                    .clickable(
+                        interactionSource = interactionSource,
+                        indication = null,
+                        onClick = {
+                            viewModel.onBuiltInCardClick(index)
+                        },
+                    ).background(
+                        if (shouldUseActiveColor) {
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                        } else {
+                            Color.Gray.copy(alpha = 0.1f)
+                        },
+                    ),
         ) {
             Icon(
                 painter = painterResource(id = cardItem.icon),
                 contentDescription = stringResource(R.string.content_desc_sound_icon),
                 modifier = Modifier.size(40.dp),
-                tint = if (shouldUseActiveColor) MaterialTheme.colorScheme.primary else Color.Gray.copy(.5f)
+                tint = if (shouldUseActiveColor) MaterialTheme.colorScheme.primary else Color.Gray.copy(.5f),
             )
         }
 
@@ -109,23 +111,25 @@ fun PrettyCardView(
 
         Text(
             text = cardItem.localizedTitle(),
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onSurface,
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
         Slider(
-            colors = SliderDefaults.colors(
-                thumbColor = when (playOrPause) {
-                    true -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-                    else -> Color.Gray.copy(.5f)
-                },
-                activeTrackColor = if (playOrPause) MaterialTheme.colorScheme.primary else Color.Gray.copy(.5f),
-                inactiveTrackColor = Color.Gray.copy(.5f),
-                disabledThumbColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
-                disabledActiveTrackColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
-                disabledInactiveTrackColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
-            ),
+            colors =
+                SliderDefaults.colors(
+                    thumbColor =
+                        when (playOrPause) {
+                            true -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+                            else -> Color.Gray.copy(.5f)
+                        },
+                    activeTrackColor = if (playOrPause) MaterialTheme.colorScheme.primary else Color.Gray.copy(.5f),
+                    inactiveTrackColor = Color.Gray.copy(.5f),
+                    disabledThumbColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                    disabledActiveTrackColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
+                    disabledInactiveTrackColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
+                ),
             value = displayVolume,
             onValueChange = { newValue ->
                 if (playOrPause) {
@@ -140,17 +144,19 @@ fun PrettyCardView(
                 }
                 isDragging = false
                 if (!playOrPause) {
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.cant_play_sound_on_pause),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast
+                        .makeText(
+                            context,
+                            context.getString(R.string.cant_play_sound_on_pause),
+                            Toast.LENGTH_SHORT,
+                        ).show()
                 }
             },
             valueRange = 0f..1f,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(6.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(6.dp),
         )
     }
 }

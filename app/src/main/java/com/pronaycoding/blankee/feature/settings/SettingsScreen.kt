@@ -85,7 +85,6 @@ import com.pronaycoding.blankee.core.common.util.findActivity
 import com.pronaycoding.blankee.core.common.util.openExternalUrl
 import org.koin.androidx.compose.koinViewModel
 
-
 @Composable
 fun SettingsScreenRoute(
     onBackPressed: () -> Unit,
@@ -105,9 +104,8 @@ fun SettingsScreenRoute(
         updateTheme = viewModel::updateTheme,
         updateLanguage = viewModel::updateLanguage,
         restorePurchases = viewModel::restorePurchases,
-        launchPremiumPurchase = viewModel::launchPremiumPurchase
+        launchPremiumPurchase = viewModel::launchPremiumPurchase,
     )
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -122,7 +120,7 @@ fun SettingsScreen(
     updateLanguage: (String) -> Unit,
     restorePurchases: (Context) -> Unit,
     onBackPressed: () -> Unit,
-    launchPremiumPurchase: (Activity) -> Unit
+    launchPremiumPurchase: (Activity) -> Unit,
 ) {
     val context = LocalContext.current
     val scheme = MaterialTheme.colorScheme
@@ -135,31 +133,33 @@ fun SettingsScreen(
                 title = {
                     Text(
                         text = stringResource(R.string.settings_title),
-                        style = MaterialTheme.typography.titleLarge
+                        style = MaterialTheme.typography.titleLarge,
                     )
                 },
                 navigationIcon = {
                     IconButton(onClick = onBackPressed) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.content_desc_back)
+                            contentDescription = stringResource(R.string.content_desc_back),
                         )
                     }
                 },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = scheme.surface,
-                    scrolledContainerColor = scheme.surface
-                )
+                colors =
+                    TopAppBarDefaults.centerAlignedTopAppBarColors(
+                        containerColor = scheme.surface,
+                        scrolledContainerColor = scheme.surface,
+                    ),
             )
-        }
+        },
     ) { padding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(horizontal = 20.dp)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .padding(horizontal = 20.dp)
+                    .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             Spacer(modifier = Modifier.height(4.dp))
 
@@ -167,28 +167,29 @@ fun SettingsScreen(
                 text = stringResource(R.string.settings_section_display),
                 style = MaterialTheme.typography.labelLarge,
                 color = scheme.primary,
-                modifier = Modifier.padding(start = 4.dp, bottom = 2.dp)
+                modifier = Modifier.padding(start = 4.dp, bottom = 2.dp),
             )
 
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = MaterialTheme.shapes.extraLarge,
-                colors = CardDefaults.cardColors(
-                    containerColor = scheme.surfaceContainerLow
-                ),
-                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor = scheme.surfaceContainerLow,
+                    ),
+                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
             ) {
                 Column(Modifier.padding(20.dp)) {
                     Text(
                         text = stringResource(R.string.settings_theme),
                         style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.SemiBold,
                     )
                     Text(
                         text = stringResource(R.string.settings_theme_hint),
                         style = MaterialTheme.typography.bodySmall,
                         color = scheme.onSurfaceVariant,
-                        modifier = Modifier.padding(top = 6.dp, bottom = 16.dp)
+                        modifier = Modifier.padding(top = 6.dp, bottom = 16.dp),
                     )
 
                     SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
@@ -201,36 +202,39 @@ fun SettingsScreen(
                                     updateTheme(choice.mode)
                                     context.findActivity()?.recreate()
                                 },
-                                shape = SegmentedButtonDefaults.itemShape(
-                                    index = index,
-                                    count = themeChoices.size
-                                ),
-                                colors = SegmentedButtonDefaults.colors(
-                                    activeContainerColor = scheme.primaryContainer,
-                                    activeContentColor = scheme.onPrimaryContainer,
-                                    inactiveContainerColor = scheme.surfaceContainerHighest,
-                                    inactiveContentColor = scheme.onSurface
-                                )
+                                shape =
+                                    SegmentedButtonDefaults.itemShape(
+                                        index = index,
+                                        count = themeChoices.size,
+                                    ),
+                                colors =
+                                    SegmentedButtonDefaults.colors(
+                                        activeContainerColor = scheme.primaryContainer,
+                                        activeContentColor = scheme.onPrimaryContainer,
+                                        inactiveContainerColor = scheme.surfaceContainerHighest,
+                                        inactiveContentColor = scheme.onSurface,
+                                    ),
                             ) {
                                 Row(
                                     horizontalArrangement = Arrangement.Center,
                                     verticalAlignment = Alignment.CenterVertically,
-                                    modifier = Modifier.padding(vertical = 4.dp)
+                                    modifier = Modifier.padding(vertical = 4.dp),
                                 ) {
                                     Icon(
-                                        imageVector = when (choice.mode) {
-                                            Constants.MODE_LIGHT -> Icons.Outlined.LightMode
-                                            Constants.MODE_DARK -> Icons.Outlined.DarkMode
-                                            else -> Icons.Outlined.BrightnessAuto
-                                        },
+                                        imageVector =
+                                            when (choice.mode) {
+                                                Constants.MODE_LIGHT -> Icons.Outlined.LightMode
+                                                Constants.MODE_DARK -> Icons.Outlined.DarkMode
+                                                else -> Icons.Outlined.BrightnessAuto
+                                            },
                                         contentDescription = null,
-                                        modifier = Modifier.size(20.dp)
+                                        modifier = Modifier.size(20.dp),
                                     )
                                     Spacer(modifier = Modifier.size(6.dp))
                                     Text(
                                         text = stringResource(choice.labelRes),
                                         style = MaterialTheme.typography.labelLarge,
-                                        maxLines = 1
+                                        maxLines = 1,
                                     )
                                 }
                             }
@@ -245,38 +249,41 @@ fun SettingsScreen(
                 text = stringResource(R.string.settings_section_language),
                 style = MaterialTheme.typography.labelLarge,
                 color = scheme.primary,
-                modifier = Modifier.padding(start = 4.dp, bottom = 2.dp, top = 4.dp)
+                modifier = Modifier.padding(start = 4.dp, bottom = 2.dp, top = 4.dp),
             )
 
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = MaterialTheme.shapes.extraLarge,
-                colors = CardDefaults.cardColors(
-                    containerColor = scheme.surfaceContainerLow
-                ),
-                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor = scheme.surfaceContainerLow,
+                    ),
+                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
             ) {
                 Column(Modifier.padding(vertical = 8.dp)) {
                     Text(
                         text = stringResource(R.string.settings_language),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp)
+                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
                     )
                     Text(
                         text = stringResource(R.string.settings_language_hint),
                         style = MaterialTheme.typography.bodySmall,
                         color = scheme.onSurfaceVariant,
-                        modifier = Modifier
-                            .padding(horizontal = 20.dp)
-                            .padding(bottom = 8.dp)
+                        modifier =
+                            Modifier
+                                .padding(horizontal = 20.dp)
+                                .padding(bottom = 8.dp),
                     )
 
                     Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 12.dp, vertical = 4.dp),
-                        verticalArrangement = Arrangement.spacedBy(6.dp)
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 12.dp, vertical = 4.dp),
+                        verticalArrangement = Arrangement.spacedBy(6.dp),
                     ) {
                         languageChoices.forEach { choice ->
                             val label = stringResource(choice.labelRes)
@@ -288,33 +295,34 @@ fun SettingsScreen(
                                     context.findActivity()?.recreate()
                                 },
                                 shape = MaterialTheme.shapes.large,
-                                color = if (selected) {
-                                    scheme.primary.copy(alpha = 0.14f)
-                                } else {
-                                    scheme.surfaceContainerHighest.copy(alpha = 0.45f)
-                                },
-                                modifier = Modifier.fillMaxWidth()
+                                color =
+                                    if (selected) {
+                                        scheme.primary.copy(alpha = 0.14f)
+                                    } else {
+                                        scheme.surfaceContainerHighest.copy(alpha = 0.45f)
+                                    },
+                                modifier = Modifier.fillMaxWidth(),
                             ) {
                                 Row(
                                     Modifier
                                         .fillMaxWidth()
                                         .padding(horizontal = 16.dp, vertical = 14.dp),
                                     verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.SpaceBetween
+                                    horizontalArrangement = Arrangement.SpaceBetween,
                                 ) {
                                     Text(
                                         text = label,
                                         style = MaterialTheme.typography.bodyLarge,
                                         fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal,
                                         color = scheme.onSurface,
-                                        modifier = Modifier.weight(1f)
+                                        modifier = Modifier.weight(1f),
                                     )
                                     if (selected) {
                                         Icon(
                                             imageVector = Icons.Default.Check,
                                             contentDescription = null,
                                             tint = scheme.primary,
-                                            modifier = Modifier.size(22.dp)
+                                            modifier = Modifier.size(22.dp),
                                         )
                                     }
                                 }
@@ -331,28 +339,29 @@ fun SettingsScreen(
                     text = stringResource(R.string.settings_section_premium),
                     style = MaterialTheme.typography.labelLarge,
                     color = scheme.primary,
-                    modifier = Modifier.padding(start = 4.dp, bottom = 2.dp, top = 4.dp)
+                    modifier = Modifier.padding(start = 4.dp, bottom = 2.dp, top = 4.dp),
                 )
 
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = MaterialTheme.shapes.extraLarge,
-                    colors = CardDefaults.cardColors(
-                        containerColor = scheme.surfaceContainerLow
-                    ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+                    colors =
+                        CardDefaults.cardColors(
+                            containerColor = scheme.surfaceContainerLow,
+                        ),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
                 ) {
                     Column(Modifier.padding(20.dp)) {
                         if (customSoundsUnlocked) {
                             Text(
                                 text = stringResource(R.string.premium_active),
                                 style = MaterialTheme.typography.bodyMedium,
-                                color = scheme.onSurfaceVariant
+                                color = scheme.onSurfaceVariant,
                             )
                             Spacer(modifier = Modifier.height(12.dp))
                             TextButton(
                                 onClick = { restorePurchases(context) },
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier.fillMaxWidth(),
                             ) {
                                 Text(stringResource(R.string.restore_purchases))
                             }
@@ -360,23 +369,24 @@ fun SettingsScreen(
                             Text(
                                 text = stringResource(R.string.custom_sounds_premium_message),
                                 style = MaterialTheme.typography.bodyMedium,
-                                color = scheme.onSurfaceVariant
+                                color = scheme.onSurfaceVariant,
                             )
                             Spacer(modifier = Modifier.height(16.dp))
                             Button(
                                 onClick = {
-                                    context.findActivity()
+                                    context
+                                        .findActivity()
                                         ?.let { launchPremiumPurchase(it) }
                                 },
                                 modifier = Modifier.fillMaxWidth(),
-                                shape = MaterialTheme.shapes.large
+                                shape = MaterialTheme.shapes.large,
                             ) {
                                 Text(stringResource(R.string.buy_premium))
                             }
                             Spacer(modifier = Modifier.height(8.dp))
                             TextButton(
                                 onClick = { restorePurchases(context) },
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier.fillMaxWidth(),
                             ) {
                                 Text(stringResource(R.string.restore_purchases))
                             }
@@ -391,37 +401,39 @@ fun SettingsScreen(
                 text = stringResource(R.string.settings_section_others),
                 style = MaterialTheme.typography.labelLarge,
                 color = scheme.primary,
-                modifier = Modifier.padding(start = 4.dp, bottom = 2.dp, top = 4.dp)
+                modifier = Modifier.padding(start = 4.dp, bottom = 2.dp, top = 4.dp),
             )
 
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = MaterialTheme.shapes.extraLarge,
-                colors = CardDefaults.cardColors(
-                    containerColor = scheme.surfaceContainerLow
-                ),
-                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor = scheme.surfaceContainerLow,
+                    ),
+                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
             ) {
                 Surface(
                     onClick = { openExternalUrl(context, Constants.GITHUB_REPO) },
                     color = Color.Transparent,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 20.dp, vertical = 16.dp)
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 20.dp, vertical = 16.dp),
                     ) {
                         Text(
                             text = stringResource(R.string.settings_report_bug_feature),
                             style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.SemiBold
+                            fontWeight = FontWeight.SemiBold,
                         )
                         Text(
                             text = stringResource(R.string.settings_report_bug_feature_hint),
                             style = MaterialTheme.typography.bodySmall,
                             color = scheme.onSurfaceVariant,
-                            modifier = Modifier.padding(top = 4.dp)
+                            modifier = Modifier.padding(top = 4.dp),
                         )
                     }
                 }
@@ -446,53 +458,65 @@ private fun AttributionFooter(
 
     Spacer(modifier = Modifier.height(12.dp))
 
-    val linkStyle = SpanStyle(
-        color = scheme.primary,
-        fontWeight = FontWeight.SemiBold
-    )
+    val linkStyle =
+        SpanStyle(
+            color = scheme.primary,
+            fontWeight = FontWeight.SemiBold,
+        )
 
-    val inspired = AnnotatedString.Builder().apply {
-        append("Inspired by ")
-        pushStringAnnotation(tag = "rafael", annotation = "rafael")
-        withStyle(linkStyle) { append("Rafael Mardojai") }
-        pop()
-        append("'s Blanket")
-    }.toAnnotatedString()
+    val inspired =
+        AnnotatedString
+            .Builder()
+            .apply {
+                append("Inspired by ")
+                pushStringAnnotation(tag = "rafael", annotation = "rafael")
+                withStyle(linkStyle) { append("Rafael Mardojai") }
+                pop()
+                append("'s Blanket")
+            }.toAnnotatedString()
 
     ClickableText(
         text = inspired,
-        style = MaterialTheme.typography.bodySmall.copy(
-            color = scheme.onSurfaceVariant,
-            textAlign = TextAlign.Center
-        ),
+        style =
+            MaterialTheme.typography.bodySmall.copy(
+                color = scheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+            ),
         modifier = Modifier.fillMaxWidth(),
         onClick = { offset ->
-            inspired.getStringAnnotations(tag = "rafael", start = offset, end = offset)
+            inspired
+                .getStringAnnotations(tag = "rafael", start = offset, end = offset)
                 .firstOrNull()
                 ?.let { onOpenRafael() }
-        }
+        },
     )
 
-    val madeBy = AnnotatedString.Builder().apply {
-        append("Made with ❤️ by ")
-        pushStringAnnotation(tag = "pronay", annotation = "pronay")
-        withStyle(linkStyle) { append("Pronay") }
-        pop()
-    }.toAnnotatedString()
+    val madeBy =
+        AnnotatedString
+            .Builder()
+            .apply {
+                append("Made with ❤️ by ")
+                pushStringAnnotation(tag = "pronay", annotation = "pronay")
+                withStyle(linkStyle) { append("Pronay") }
+                pop()
+            }.toAnnotatedString()
 
     ClickableText(
         text = madeBy,
-        style = MaterialTheme.typography.bodySmall.copy(
-            color = scheme.onSurfaceVariant,
-            textAlign = TextAlign.Center
-        ),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 4.dp, bottom = 8.dp),
+        style =
+            MaterialTheme.typography.bodySmall.copy(
+                color = scheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+            ),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 4.dp, bottom = 8.dp),
         onClick = { offset ->
-            madeBy.getStringAnnotations(tag = "pronay", start = offset, end = offset)
+            madeBy
+                .getStringAnnotations(tag = "pronay", start = offset, end = offset)
                 .firstOrNull()
                 ?.let { onOpenPronay() }
-        }
+        },
     )
 }

@@ -26,8 +26,9 @@ import android.content.ContextWrapper
  *
  * @return The Activity if found, null if the context doesn't wrap an Activity
  */
-tailrec fun Context.findActivity(): Activity? = when (this) {
-    is Activity -> this
-    is ContextWrapper -> baseContext.findActivity()
-    else -> null
-}
+tailrec fun Context.findActivity(): Activity? =
+    when (this) {
+        is Activity -> this
+        is ContextWrapper -> baseContext.findActivity()
+        else -> null
+    }

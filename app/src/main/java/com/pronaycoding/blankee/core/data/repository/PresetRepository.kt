@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.Flow
  * @see PresetDao for lower-level database access
  */
 interface PresetRepository {
-
     /**
      * Observes all presets as a continuous Flow.
      *
